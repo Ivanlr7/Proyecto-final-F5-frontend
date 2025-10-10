@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff, ArrowLeft, User, CheckCircle2, AlertCircle } from "lucide-react";
-import authService from "../../api/services/AuthService";
+import { loginThunk, clearError } from "../../store/slices/authSlice";
 import "./LoginPage.css";
 import { Link } from "react-router-dom";
 
 export default function LoginPage({ onNavigateToHome, onNavigateToRegister, onLoginSuccess }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  // Estado de Redux
+  const { 
+    isAuthenticated, 
+    loading: isLoading, 
+    error: authError 
+  } = useSelector(state => state.auth);
+
   const [formData, setFormData] = useState({
     usernameOrEmail: "",
     password: ""
@@ -12,8 +24,26 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister, onLo
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+
+  // Redirigir si ya está autenticado
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
+
+  // Manejar errores de Redux
+  useEffect(() => {
+    if (authError) {
+      setMessage({ type: 'error', text: authError });
+      // Limpiar el error después de mostrarlo
+      const timer = setTimeout(() => {
+        dispatch(clearError());
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [authError, dispatch]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -73,47 +103,46 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister, onLo
     const isPasswordValid = validateField("password", formData.password);
 
     if (isUsernameValid && isPasswordValid) {
-      setIsLoading(true);
-      
       try {
-        // Preparar datos para el AuthService (usar identifier como espera el backend)
+        // Preparar datos para Redux (usar identifier como espera el backend)
         const loginData = {
           identifier: formData.usernameOrEmail, // El backend espera 'identifier'
           password: formData.password
         };
         
-        // Llamar al service de login
-        const result = await authService.login(loginData);
+        // Usar Redux thunk en lugar del AuthService directamente
+        const result = await dispatch(loginThunk(loginData)).unwrap();
         
-        if (result.success) {
-          // Login exitoso
-          setMessage({ 
-            type: 'success', 
-            text: result.message || '¡Login exitoso!' 
-          });
-          
-          // Limpiar formulario
-          setFormData({
-            usernameOrEmail: "",
-            password: ""
-          });
-          
-          // Opcional: Llamar callback de éxito
-          if (onLoginSuccess) {
-            setTimeout(() => {
-              onLoginSuccess(result.user, result.token);
-            }, 1000);
-          }
+        // Login exitoso
+        setMessage({ 
+          type: 'success', 
+          text: result.message || '¡Login exitoso!' 
+        });
+        
+        // Limpiar formulario
+        setFormData({
+          usernameOrEmail: "",
+          password: ""
+        });
+        
+        // Opcional: Llamar callback de éxito
+        if (onLoginSuccess) {
+          setTimeout(() => {
+            onLoginSuccess(result.user, result.token);
+          }, 1000);
         }
+        
+        // Redirigir después del login exitoso
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
         
       } catch (error) {
         console.error('Error en el login:', error);
         setMessage({ 
           type: 'error', 
-          text: error.message || 'Error al iniciar sesión. Inténtalo de nuevo.' 
+          text: error || 'Error al iniciar sesión. Inténtalo de nuevo.' 
         });
-      } finally {
-        setIsLoading(false);
       }
     }
   };

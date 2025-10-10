@@ -7,6 +7,7 @@ import Contact from './pages/contact/Contact'
 import RegisterPage from './pages/register/RegisterPage'
 import LoginPage from './pages/login/LoginPage'
 
+
 function App() {
   return (
     <div className="App">
@@ -20,6 +21,8 @@ function App() {
           <Route path="/login" element={<LoginPage/>} />
         </Routes>
       </main>
+      
+
     </div>
   )
 }
