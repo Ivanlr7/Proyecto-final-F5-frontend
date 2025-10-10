@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, ArrowLeft, User, CheckCircle2, AlertCircle } from "lucide-react";
+import authService from "../../api/services/AuthService";
 import "./LoginPage.css";
 import { Link } from "react-router-dom";
 
-export default function LoginPage({ onNavigateToHome, onNavigateToRegister }) {
+export default function LoginPage({ onNavigateToHome, onNavigateToRegister, onLoginSuccess }) {
   const [formData, setFormData] = useState({
     usernameOrEmail: "",
     password: ""
@@ -11,6 +12,8 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister }) {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -55,23 +58,63 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister }) {
     return !error;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Limpiar mensajes previos
+    setMessage({ type: '', text: '' });
     
     setTouched({
       usernameOrEmail: true,
       password: true
     });
 
-   
     const isUsernameValid = validateField("usernameOrEmail", formData.usernameOrEmail);
     const isPasswordValid = validateField("password", formData.password);
 
     if (isUsernameValid && isPasswordValid) {
-      console.log("Login successful:", formData);
-    
-      alert("¡Inicio de sesión exitoso!");
+      setIsLoading(true);
+      
+      try {
+        // Preparar datos para el AuthService (usar identifier como espera el backend)
+        const loginData = {
+          identifier: formData.usernameOrEmail, // El backend espera 'identifier'
+          password: formData.password
+        };
+        
+        // Llamar al service de login
+        const result = await authService.login(loginData);
+        
+        if (result.success) {
+          // Login exitoso
+          setMessage({ 
+            type: 'success', 
+            text: result.message || '¡Login exitoso!' 
+          });
+          
+          // Limpiar formulario
+          setFormData({
+            usernameOrEmail: "",
+            password: ""
+          });
+          
+          // Opcional: Llamar callback de éxito
+          if (onLoginSuccess) {
+            setTimeout(() => {
+              onLoginSuccess(result.user, result.token);
+            }, 1000);
+          }
+        }
+        
+      } catch (error) {
+        console.error('Error en el login:', error);
+        setMessage({ 
+          type: 'error', 
+          text: error.message || 'Error al iniciar sesión. Inténtalo de nuevo.' 
+        });
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -120,6 +163,17 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister }) {
 
           {/* Form */}
           <form className="login-page__form" onSubmit={handleSubmit}>
+            {/* Mostrar mensaje de éxito o error */}
+            {message.text && (
+              <div className={`login-page__message login-page__message--${message.type}`}>
+                {message.type === 'success' ? (
+                  <CheckCircle2 className="login-page__message-icon" />
+                ) : (
+                  <AlertCircle className="login-page__message-icon" />
+                )}
+                {message.text}
+              </div>
+            )}
       
             <div className="login-page__field">
               <label htmlFor="usernameOrEmail" className="login-page__label">
@@ -201,8 +255,12 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister }) {
             </div>
 
             {/* Submit Button */}
-            <button type="submit" className="login-page__submit">
-              Iniciar Sesión
+            <button 
+              type="submit" 
+              className="login-page__submit"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </button>
           </form>
 
