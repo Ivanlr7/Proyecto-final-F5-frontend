@@ -10,7 +10,7 @@ class RegisterRepository {
       },
     });
 
-    // Interceptor para manejar errores
+
     this.apiClient.interceptors.response.use(
       (response) => response,
       (error) => {
@@ -21,7 +21,7 @@ class RegisterRepository {
   }
 
   async register(userData, profileImage) {
-    // Crear el DTO de datos
+
     const registerData = {
       userName: userData.userName,
       email: userData.email,
@@ -29,21 +29,19 @@ class RegisterRepository {
       profileImagePath: profileImage?.name || "",
     };
 
-    // Crear FormData para multipart/form-data
+
     const formDataBody = new FormData();
-    
-    // Añadir datos como JSON blob
+
     const dataBlob = new Blob([JSON.stringify(registerData)], { 
       type: "application/json" 
     });
     formDataBody.append("data", dataBlob);
 
-    // Añadir imagen si existe
+
     if (profileImage) {
       formDataBody.append("profileImage", profileImage, profileImage.name);
     }
 
-    // Realizar petición POST
     const response = await this.apiClient.post("/register", formDataBody, {
       headers: { 
         "Content-Type": "multipart/form-data" 
