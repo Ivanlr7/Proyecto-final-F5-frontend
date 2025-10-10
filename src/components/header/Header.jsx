@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import './Header.css'
 
-function Navigation() {
+function Header() {
   return (
     <nav className="navigation">
       <div className="nav-brand">
@@ -17,9 +17,12 @@ function Navigation() {
         <li>
           <Link to="/contact">Contacto</Link>
         </li>
+        <li>
+          <Link to="/register">Registrarse</Link>
+        </li>
       </ul>
     </nav>
   )
 }
 
-export default Navigation
+export default Header

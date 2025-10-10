@@ -1,0 +1,459 @@
+.register-page {
+  min-height: 100vh;
+  background-color: #020617;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow: hidden;
+}
+
+/* Back Button */
+.register-page__back-btn {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background-color: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  border-radius: 0.5rem;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.register-page__back-btn:hover {
+  background-color: rgba(30, 41, 59, 1);
+  border-color: #3b82f6;
+  color: #ffffff;
+  transform: translateX(-4px);
+}
+
+.register-page__back-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Background Elements */
+.register-page__background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.register-page__background-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  animation: float 6s ease-in-out infinite;
+}
+
+.register-page__background-blob--blue {
+  top: 10%;
+  left: 10%;
+  width: 20rem;
+  height: 20rem;
+  background-color: rgba(59, 130, 246, 0.3);
+  animation-delay: 0s;
+}
+
+.register-page__background-blob--purple {
+  bottom: 10%;
+  right: 10%;
+  width: 24rem;
+  height: 24rem;
+  background-color: rgba(139, 92, 246, 0.3);
+  animation-delay: 3s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+/* Container */
+.register-page__container {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+  z-index: 10;
+}
+
+/* Card */
+.register-page__card {
+  background-color: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+.register-page__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.register-page__logo {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+}
+
+.register-page__logo-text {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.register-page__title {
+  color: #ffffff;
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.register-page__subtitle {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Form */
+.register-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Image Upload */
+.register-page__image-upload {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.register-page__file-input {
+  display: none;
+}
+
+.register-page__image-label {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  border: 2px dashed #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: rgba(30, 41, 59, 0.5);
+}
+
+.register-page__image-label:hover {
+  border-color: #3b82f6;
+  transform: scale(1.05);
+}
+
+.register-page__image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.register-page__image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.register-page__upload-icon {
+  width: 2rem;
+  height: 2rem;
+  color: #9ca3af;
+}
+
+.register-page__upload-text {
+  color: #9ca3af;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+/* Form Fields */
+.register-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.register-page__label {
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.register-page__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.register-page__input-icon {
+  position: absolute;
+  left: 1rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.register-page__input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  background-color: rgba(30, 41, 59, 0.5);
+  border: 1px solid #334155;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.register-page__input::placeholder {
+  color: #6b7280;
+}
+
+.register-page__input:focus {
+  border-color: #3b82f6;
+  background-color: rgba(30, 41, 59, 0.7);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.register-page__input--error {
+  border-color: #ef4444;
+}
+
+.register-page__input--error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.register-page__toggle-password {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.register-page__toggle-password:hover {
+  color: #3b82f6;
+}
+
+/* Error and Success Messages */
+.register-page__error {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: -0.25rem;
+}
+
+.register-page__error-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.register-page__success {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #22c55e;
+  font-size: 0.75rem;
+  margin-top: -0.25rem;
+}
+
+.register-page__success-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* Password Strength Indicator */
+.register-page__password-strength {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: -0.25rem;
+}
+
+.register-page__strength-bars {
+  display: flex;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.register-page__strength-bar {
+  height: 0.25rem;
+  flex: 1;
+  background-color: #334155;
+  border-radius: 0.125rem;
+  transition: all 0.3s ease;
+}
+
+.register-page__strength-bar--weak {
+  background-color: #ef4444;
+}
+
+.register-page__strength-bar--medium {
+  background-color: #f59e0b;
+}
+
+.register-page__strength-bar--good {
+  background-color: #3b82f6;
+}
+
+.register-page__strength-bar--strong {
+  background-color: #22c55e;
+}
+
+.register-page__strength-text {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  min-width: 3rem;
+}
+
+/* Submit Button */
+.register-page__submit {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.register-page__submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.4);
+}
+
+.register-page__submit:active {
+  transform: translateY(0);
+}
+
+/* Login Link */
+.register-page__login-link {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.register-page__link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+}
+
+.register-page__link:hover {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .register-page__back-btn {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .register-page__back-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .register-page__card {
+    padding: 2rem 1.5rem;
+  }
+
+  .register-page__title {
+    font-size: 1.5rem;
+  }
+
+  .register-page__logo {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .register-page__logo-text {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .register-page {
+    padding: 1rem 0.5rem;
+  }
+
+  .register-page__back-btn {
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.375rem 0.625rem;
+  }
+
+  .register-page__card {
+    padding: 1.5rem 1rem;
+  }
+
+  .register-page__image-label {
+    width: 6rem;
+    height: 6rem;
+  }
+}
