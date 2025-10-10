@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Eye, EyeOff, Upload, User, Mail, Lock, Check, X, ArrowLeft } from "lucide-react";
 import registerService from "../../api/services/RegisterService";
 import "./RegisterPage.css";
+import { Link } from "react-router-dom";
 
 
 export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
@@ -90,7 +91,7 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Limpiar mensajes y errores previos
+
     setMessage({ type: '', text: '' });
     setErrors({});
     
@@ -98,17 +99,17 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
       setIsLoading(true);
       
       try {
-        // Llamar al service de registro usando tu implementación
+
         const result = await registerService.registerUser(formData);
         
         if (result.success) {
-          // Registro exitoso
+
           setMessage({ 
             type: 'success', 
             text: '¡Registro completado con éxito!' 
           });
           
-          // Limpiar formulario
+   
           setFormData({
             userName: "",
             email: "",
@@ -118,7 +119,7 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
           });
           setImagePreview(null);
           
-          // Opcional: Redirigir después de un tiempo
+
           setTimeout(() => {
             if (onNavigateToLogin) {
               onNavigateToLogin();
@@ -126,7 +127,7 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
           }, 2000);
           
         } else {
-          // Este caso no debería ocurrir con tu implementación actual
+
           setMessage({ 
             type: 'error', 
             text: 'Error inesperado en el registro' 
@@ -192,7 +193,7 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
           </div>
 
           <form className="register-page__form" onSubmit={handleSubmit}>
-            {/* Mostrar mensaje de éxito o error */}
+
             {message.text && (
               <div className={`register-page__message register-page__message--${message.type}`}>
                 {message.type === 'success' ? (
@@ -395,9 +396,9 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
                   Iniciar sesión
                 </button>
               ) : (
-                <a href="#" className="register-page__link">
+                <Link to="/login" className="register-page__link">
                   Iniciar sesión
-                </a>
+                </Link>
               )}
             </p>
           </form>
