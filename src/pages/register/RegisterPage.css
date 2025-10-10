@@ -9,7 +9,7 @@
   overflow: hidden;
 }
 
-/* Back Button */
+
 .register-page__back-btn {
   position: absolute;
   top: 2rem;
@@ -42,7 +42,7 @@
   height: 1rem;
 }
 
-/* Background Elements */
+
 .register-page__background {
   position: absolute;
   inset: 0;
@@ -88,7 +88,7 @@
   }
 }
 
-/* Container */
+
 .register-page__container {
   position: relative;
   width: 100%;
@@ -96,7 +96,7 @@
   z-index: 10;
 }
 
-/* Card */
+
 .register-page__card {
   background-color: rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(16px);
@@ -106,7 +106,7 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
-/* Header */
+
 .register-page__header {
   text-align: center;
   margin-bottom: 2rem;
@@ -143,14 +143,14 @@
   line-height: 1.5;
 }
 
-/* Form */
+
 .register-page__form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-/* Image Upload */
+
 .register-page__image-upload {
   display: flex;
   justify-content: center;
@@ -206,7 +206,7 @@
   text-align: center;
 }
 
-/* Form Fields */
+
 .register-page__field {
   display: flex;
   flex-direction: column;
@@ -282,7 +282,7 @@
   color: #3b82f6;
 }
 
-/* Error and Success Messages */
+
 .register-page__error {
   display: flex;
   align-items: center;
@@ -311,7 +311,7 @@
   height: 0.875rem;
 }
 
-/* Password Strength Indicator */
+
 .register-page__password-strength {
   display: flex;
   align-items: center;
@@ -355,7 +355,7 @@
   min-width: 3rem;
 }
 
-/* Submit Button */
+
 .register-page__submit {
   width: 100%;
   padding: 0.875rem 1.5rem;
@@ -380,7 +380,7 @@
   transform: translateY(0);
 }
 
-/* Login Link */
+
 .register-page__login-link {
   text-align: center;
   color: #9ca3af;
@@ -405,7 +405,7 @@
   text-decoration: underline;
 }
 
-/* Responsive Design */
+
 @media (max-width: 640px) {
   .register-page__back-btn {
     top: 1rem;
@@ -456,4 +456,47 @@
     width: 6rem;
     height: 6rem;
   }
+}
+
+/* Estilos para mensajes de éxito/error */
+.register-page__message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  border: 1px solid transparent;
+}
+
+.register-page__message--success {
+  background-color: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+}
+
+.register-page__message--error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.register-page__message-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+/* Estilos para botón en estado de loading */
+.register-page__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.register-page__submit:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeOff, Upload, User, Mail, Lock, Check, X, ArrowLeft } from "lucide-react";
+import registerService from "../../api/services/RegisterService";
 import "./RegisterPage.css";
 
 
@@ -16,6 +17,8 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -84,13 +87,61 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Limpiar mensajes y errores previos
+    setMessage({ type: '', text: '' });
+    setErrors({});
+    
     if (validateForm()) {
-      console.log("Form submitted:", formData);
-   
-      alert("¡Registro completado con éxito!");
+      setIsLoading(true);
+      
+      try {
+        // Llamar al service de registro usando tu implementación
+        const result = await registerService.registerUser(formData);
+        
+        if (result.success) {
+          // Registro exitoso
+          setMessage({ 
+            type: 'success', 
+            text: '¡Registro completado con éxito!' 
+          });
+          
+          // Limpiar formulario
+          setFormData({
+            userName: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            profileImage: null
+          });
+          setImagePreview(null);
+          
+          // Opcional: Redirigir después de un tiempo
+          setTimeout(() => {
+            if (onNavigateToLogin) {
+              onNavigateToLogin();
+            }
+          }, 2000);
+          
+        } else {
+          // Este caso no debería ocurrir con tu implementación actual
+          setMessage({ 
+            type: 'error', 
+            text: 'Error inesperado en el registro' 
+          });
+        }
+        
+      } catch (error) {
+        console.error('Error en el registro:', error);
+        setMessage({ 
+          type: 'error', 
+          text: error.message || 'Error al registrar usuario. Inténtalo de nuevo.' 
+        });
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -141,6 +192,17 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
           </div>
 
           <form className="register-page__form" onSubmit={handleSubmit}>
+            {/* Mostrar mensaje de éxito o error */}
+            {message.text && (
+              <div className={`register-page__message register-page__message--${message.type}`}>
+                {message.type === 'success' ? (
+                  <Check className="register-page__message-icon" />
+                ) : (
+                  <X className="register-page__message-icon" />
+                )}
+                {message.text}
+              </div>
+            )}
        
             <div className="register-page__image-upload">
               <input
@@ -313,8 +375,12 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
               )}
             </div>
 
-            <button type="submit" className="register-page__submit">
-              Crear Cuenta
+            <button 
+              type="submit" 
+              className="register-page__submit"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Registrando...' : 'Crear Cuenta'}
             </button>
 
 
