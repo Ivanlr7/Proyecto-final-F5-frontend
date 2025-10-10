@@ -10,7 +10,6 @@ class AuthRepository {
       },
     });
 
-    // Interceptor para manejar errores
     this.apiClient.interceptors.response.use(
       (response) => response,
       (error) => {
@@ -37,23 +36,8 @@ class AuthRepository {
     };
   }
 
-  async refreshToken(refreshToken) {
-    const response = await this.apiClient.post("/auth/refresh", {
-      refreshToken: refreshToken
-    });
 
-    return {
-      success: true,
-      status: response.status,
-      data: response.data,
-    };
-  }
 
-  /**
-   * Logout (invalidar token en servidor si tu backend lo soporta)
-   * @param {string} token - Token a invalidar
-   * @returns {Promise<Object>} - Respuesta de logout
-   */
   async logout(token) {
     const response = await this.apiClient.post("/auth/logout", {}, {
       headers: {
