@@ -95,6 +95,32 @@ function Header() {
           // Usuario autenticado
           <>
             <li>
+              <div className="profile-image-container">
+                {user?.profileImage ? (
+                  <img
+                    src={user.profileImage}
+                    alt={`Avatar de ${user?.sub || user?.username || 'Usuario'}`}
+                    className="profile-image"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextElementSibling.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                {/* Avatar por defecto con iniciales */}
+                <div 
+                  className="profile-avatar" 
+                  style={{ 
+                    display: user?.profileImage ? 'none' : 'flex' 
+                  }}
+                  title={`Avatar de ${user?.sub || user?.username || 'Usuario'}`}
+                >
+                  {(user?.sub || user?.username || 'U').charAt(0).toUpperCase()}
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* Nombre del usuario */}
               <span className="user-welcome">
                 Hola, {user?.sub || user?.username || 'Usuario'}
               </span>
