@@ -274,7 +274,7 @@
   transform: translateY(0);
 }
 
-/* Hacer que los enlaces funcionen como botones */
+
 .header__login-btn,
 .header__register-btn {
   text-decoration: none;
