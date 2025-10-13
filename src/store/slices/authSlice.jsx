@@ -1,17 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from '../../api/services/AuthService'
 
-// Estado inicial
+
 const initialState = {
   isAuthenticated: false,
   user: null,
   token: null,
   loading: false,
   error: null,
-  isInitialized: false, // Para saber si ya verificamos el token al cargar la app
+  isInitialized: false, 
 }
 
-// Thunks asíncronas
+
 export const loginThunk = createAsyncThunk(
   'auth/login',
   async (loginData, { rejectWithValue }) => {
@@ -35,7 +35,7 @@ export const logoutThunk = createAsyncThunk(
       const result = await authService.logout()
       return result
     } catch (error) {
-      // Incluso si falla el logout en servidor, limpiamos local
+ 
       return rejectWithValue(error.message)
     }
   }
@@ -57,7 +57,7 @@ export const checkAuthThunk = createAsyncThunk(
           isAuthenticated: true
         }
       } else {
-        // Limpiar datos si el token no es válido
+
         authService.clearAuthData()
         return {
           user: null,
@@ -72,12 +72,12 @@ export const checkAuthThunk = createAsyncThunk(
   }
 )
 
-// Slice
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // Acciones síncronas
+ 
     clearError: (state) => {
       state.error = null
     },
@@ -93,7 +93,7 @@ const authSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    // Login
+
     builder
       .addCase(loginThunk.pending, (state) => {
         state.loading = true
@@ -127,7 +127,7 @@ const authSlice = createSlice({
         state.error = null
       })
       .addCase(logoutThunk.rejected, (state, action) => {
-        // Incluso si falla, limpiamos el estado local
+    
         state.loading = false
         state.isAuthenticated = false
         state.user = null
@@ -135,7 +135,7 @@ const authSlice = createSlice({
         state.error = action.payload
       })
       
-    // Check Auth
+
     builder
       .addCase(checkAuthThunk.pending, (state) => {
         state.loading = true
@@ -159,8 +159,8 @@ const authSlice = createSlice({
   }
 })
 
-// Export actions
+
 export const { clearError, clearAuth, setInitialized } = authSlice.actions
 
-// Export reducer
+
 export default authSlice.reducer

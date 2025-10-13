@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+
   margin: 0 auto;
   text-align: center;
 }
@@ -8,11 +8,11 @@
   min-height: 100vh;
 }
 
-.main-content {
+/* .main-content {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-}
+} */
 
 .logo {
   height: 6em;

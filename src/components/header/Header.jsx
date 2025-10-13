@@ -1,14 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { logoutThunk, checkAuthThunk, clearError } from '../../store/slices/authSlice'
 import './Header.css'
 
 function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [showDropdown, setShowDropdown] = useState(false)
   
-
+  // Seleccionar estado del store
   const { 
     isAuthenticated, 
     user, 
@@ -34,13 +35,24 @@ function Header() {
     }
   }, [error, dispatch])
 
+  // Cerrar dropdown cuando se hace click fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showDropdown && !event.target.closest('.user-profile')) {
+        setShowDropdown(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [showDropdown])
+
   const handleLogout = async () => {
     try {
       await dispatch(logoutThunk()).unwrap()
       navigate('/')
     } catch (error) {
       console.error('Error al cerrar sesión:', error)
-
     }
   }
 
@@ -94,45 +106,69 @@ function Header() {
         ) : (
           // Usuario autenticado
           <>
-            <li>
-              <div className="profile-image-container">
-                {user?.profileImage ? (
-                  <img
-                    src={user.profileImage}
-                    alt={`Avatar de ${user?.sub || user?.username || 'Usuario'}`}
-                    className="profile-image"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextElementSibling.style.display = 'flex';
-                    }}
-                  />
-                ) : null}
-                {/* Avatar por defecto con iniciales */}
-                <div 
-                  className="profile-avatar" 
-                  style={{ 
-                    display: user?.profileImage ? 'none' : 'flex' 
-                  }}
-                  title={`Avatar de ${user?.sub || user?.username || 'Usuario'}`}
-                >
-                  {(user?.sub || user?.username || 'U').charAt(0).toUpperCase()}
-                </div>
-              </div>
-            </li>
-            <li>
-              {/* Nombre del usuario */}
-              <span className="user-welcome">
-                Hola, {user?.sub || user?.username || 'Usuario'}
-              </span>
-            </li>
-            <li>
-              <button 
-                onClick={handleLogout}
-                className="logout-button"
-                disabled={loading}
+            <li className="user-profile">
+              <div 
+                className="user-info"
+                onClick={() => setShowDropdown(!showDropdown)}
               >
-                {loading ? 'Cerrando...' : 'Cerrar Sesión'}
-              </button>
+                {/* Imagen de perfil */}
+                <div className="profile-image-container">
+                  {user?.profileImage ? (
+                    <img 
+                      src={user.profileImage} 
+                      alt="Perfil" 
+                      className="profile-image"
+                      onError={(e) => {
+                        // Si falla cargar la imagen, mostrar avatar por defecto
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  {/* Avatar por defecto con iniciales */}
+                  <div 
+                    className="profile-avatar" 
+                    style={{ 
+                      display: user?.profileImage ? 'none' : 'flex' 
+                    }}
+                  >
+                    {(user?.sub || user?.username || 'U').charAt(0).toUpperCase()}
+                  </div>
+                </div>
+                
+                {/* Nombre del usuario */}
+                <span className="user-welcome">
+                  Hola, {user?.sub || user?.username || 'Usuario'}
+                </span>
+                
+                {/* Icono dropdown */}
+                <span className={`dropdown-arrow ${showDropdown ? 'open' : ''}`}>
+                  ▼
+                </span>
+              </div>
+              
+              {/* Dropdown menu */}
+              {showDropdown && (
+                <div className="user-dropdown">
+                  <div className="dropdown-item">
+                    <span>👤 Ver Perfil</span>
+                  </div>
+                  <div className="dropdown-item">
+                    <span>⚙️ Configuración</span>
+                  </div>
+                  <div className="dropdown-divider"></div>
+                  <div 
+                    className="dropdown-item logout-item"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowDropdown(false);
+                      handleLogout();
+                    }}
+                  >
+                    <span>{loading ? '⏳ Cerrando...' : '🚪 Cerrar Sesión'}</span>
+                  </div>
+                </div>
+              )}
             </li>
           </>
         )}
