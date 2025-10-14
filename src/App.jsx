@@ -7,6 +7,7 @@ import Contact from './pages/contact/Contact'
 import RegisterPage from './pages/register/RegisterPage'
 import LoginPage from './pages/login/LoginPage'
 import UserPage from './pages/user/UserPage'
+import Footer from './components/footer/Footer'
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
           <Route path="/me" element={<UserPage />} />
         </Routes>
       </main>
-      
+      <Footer />
 
     </div>
   )
