@@ -78,6 +78,7 @@ export default function Header() {
               <div className="header__user-info">
                 <span className="header__username">
                   Hola, {user?.sub || user?.username || 'Usuario'}
+                         <Link to="/me"></Link>
                 </span>
               </div>
               <div className="header__avatar">
@@ -90,6 +91,7 @@ export default function Header() {
                       e.target.nextElementSibling.style.display = 'flex';
                     }}
                   />
+                 
                 ) : (
                   <div className="header__avatar-initials">
                     {(user?.sub || user?.username || 'U').charAt(0).toUpperCase()}
