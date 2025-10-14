@@ -3,16 +3,16 @@
   margin: 0 auto;
   text-align: center;
 }
-
+/* 
 .App {
   min-height: 100vh;
 }
 
-/* .main-content {
+.main-content {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-} */
+}
 
 .logo {
   height: 6em;
@@ -48,4 +48,4 @@
 
 .read-the-docs {
   color: #888;
-}
+} */

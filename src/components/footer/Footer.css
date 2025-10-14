@@ -3,7 +3,7 @@
   background-color: rgba(15, 23, 42, 0.95);
   border-top: 1px solid #1e293b;
   padding: 2rem 0;
-  margin-top: 4rem;
+
 }
 
 .footer__container {
@@ -70,14 +70,14 @@
 
 @media (max-width: 768px) {
   .footer {
-    margin-top: 3rem;
+
   }
 }
 
 @media (max-width: 640px) {
   .footer {
     padding: 1.5rem 0;
-    margin-top: 2rem;
+  
   }
 
   .footer__brand-name {
