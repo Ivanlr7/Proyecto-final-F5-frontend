@@ -1,6 +1,9 @@
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="footer">
       <div className="footer__container">
@@ -10,8 +13,21 @@ export default function Footer() {
           </div>
           <span className="footer__brand-name">ReviewVerso</span>
         </div>
+        
+        <div className="footer__links">
+          <Link to="/contact" className="footer__link">
+            Contacto
+          </Link>
+          <Link to="/legal" className="footer__link">
+            Aviso Legal
+          </Link>
+          <Link to="/cookies" className="footer__link">
+            Política de Cookies
+          </Link>
+        </div>
+        
         <p className="footer__copyright">
-          © 2024 ReviewVerso. Todos los derechos reservados.
+          © {currentYear} ReviewVerso. Todos los derechos reservados.
         </p>
       </div>
     </footer>
