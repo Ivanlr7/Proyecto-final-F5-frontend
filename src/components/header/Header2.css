@@ -185,8 +185,8 @@
 }
 
 .header__avatar {
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
@@ -200,6 +200,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.header__avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .header__avatar-fallback {

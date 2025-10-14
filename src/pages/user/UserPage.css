@@ -1,4 +1,4 @@
-/* User Profile Page Component Styles - BEM Methodology */
+
 
 .user-profile {
   min-height: 100vh;
@@ -7,7 +7,6 @@
   overflow: hidden;
 }
 
-/* Background */
 .user-profile__background {
   position: fixed;
   top: 0;

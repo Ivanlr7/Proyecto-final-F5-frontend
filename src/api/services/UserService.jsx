@@ -3,6 +3,18 @@ import UserRepository from "../repositories/UserRepository";
 class UserService {
   constructor() {
     this.userRepository = new UserRepository();
+    this.baseImageUrl = 'http://localhost:8080/api/v1/files/images';
+  }
+
+  // Helper method para construir URL de imagen
+  getImageUrl(profileImage) {
+    if (!profileImage) return null;
+    // Si ya es una URL completa (data:image o http), usarla tal como está
+    if (profileImage.startsWith('data:image') || profileImage.startsWith('http')) {
+      return profileImage;
+    }
+    // Si es solo el nombre del archivo, construir la URL completa
+    return `${this.baseImageUrl}/${profileImage}`;
   }
 
   // Obtener usuario actual con validación
@@ -15,10 +27,16 @@ class UserService {
       const result = await this.userRepository.getCurrentUser(token);
       
       if (result.success && result.data) {
+        // Procesar la URL de la imagen automáticamente
+        const userData = {
+          ...result.data,
+          profileImage: this.getImageUrl(result.data.profileImage)
+        };
+        
         return {
           success: true,
           message: 'Usuario obtenido exitosamente',
-          data: result.data
+          data: userData
         };
       } else {
         throw new Error('Respuesta inválida del servidor');
@@ -90,10 +108,16 @@ class UserService {
       const result = await this.userRepository.updateUser(id, userData, token);
       
       if (result.success && result.data) {
+        // Procesar la URL de la imagen automáticamente
+        const updatedUserData = {
+          ...result.data,
+          profileImage: this.getImageUrl(result.data.profileImage)
+        };
+        
         return {
           success: true,
           message: 'Usuario actualizado exitosamente',
-          data: result.data
+          data: updatedUserData
         };
       } else {
         throw new Error('Respuesta inválida del servidor');
@@ -164,7 +188,6 @@ class UserService {
       throw new Error('Datos de usuario inválidos');
     }
 
-    // Validaciones opcionales según tus necesidades
     if (userData.email && !this.isValidEmail(userData.email)) {
       throw new Error('Email inválido');
     }
