@@ -6,18 +6,18 @@ class UserService {
     this.baseImageUrl = 'http://localhost:8080/api/v1/files/images';
   }
 
-  // Helper method para construir URL de imagen
+
   getImageUrl(profileImage) {
     if (!profileImage) return null;
-    // Si ya es una URL completa (data:image o http), usarla tal como está
+
     if (profileImage.startsWith('data:image') || profileImage.startsWith('http')) {
       return profileImage;
     }
-    // Si es solo el nombre del archivo, construir la URL completa
+  
     return `${this.baseImageUrl}/${profileImage}`;
   }
 
-  // Obtener usuario actual con validación
+
   async getCurrentUser(token) {
     try {
       if (!token) {
@@ -27,7 +27,7 @@ class UserService {
       const result = await this.userRepository.getCurrentUser(token);
       
       if (result.success && result.data) {
-        // Procesar la URL de la imagen automáticamente
+
         const userData = {
           ...result.data,
           profileImage: this.getImageUrl(result.data.profileImage)
