@@ -1,17 +1,72 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { ArrowLeft, User, Mail, Camera, Edit2, Save, X } from "lucide-react";
+import userService from "../../api/services/UserService";
 import "./UserPage.css";
 
 export default function UserPage({ onNavigateToHome }) {
+  const { user: authUser, token, isAuthenticated } = useSelector(state => state.auth);
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [profileData, setProfileData] = useState({
-    profileImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG_iO53fDAGLbMQW8GS9R6m_RLD03XXUS2Tw&s",
-    userName: "Usuario Prueba",
-    email: "Usuario@prueba.com"
+    profileImage: null,
+    userName: "",
+    email: ""
   });
 
   const [editedData, setEditedData] = useState({ ...profileData });
   const [imagePreview, setImagePreview] = useState(null);
+
+  // Cargar datos del usuario al montar el componente
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const result = await userService.getCurrentUser(token);
+        
+        if (result.success && result.data) {
+          const userData = result.data;
+          setProfileData({
+            profileImage: userData.profileImage || null,
+            userName: userData.userName || "",
+            email: userData.email || "",
+            idUser: userData.idUser
+          });
+          setEditedData({
+            profileImage: userData.profileImage || null,
+            userName: userData.userName || "",
+            email: userData.email || "",
+            idUser: userData.idUser
+          });
+          console.log('✅ Perfil cargado:', userData);
+        }
+      } catch (error) {
+        console.error('Error cargando perfil:', error);
+        setError(error.message);
+        // Usar datos del authUser como fallback
+        if (authUser) {
+          const fallbackData = {
+            profileImage: authUser.profileImage || null,
+            userName: authUser.userName || authUser.sub || "",
+            email: authUser.email || ""
+          };
+          setProfileData(fallbackData);
+          setEditedData(fallbackData);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (isAuthenticated && token) {
+      loadUserProfile();
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, token, authUser]);
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
@@ -36,12 +91,26 @@ export default function UserPage({ onNavigateToHome }) {
     setImagePreview(null);
   };
 
-  const handleSave = () => {
-    setProfileData({ ...editedData });
-    setIsEditing(false);
-    setImagePreview(null);
-   
-    console.log("Datos guardados:", editedData);
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Usar UserService para actualizar el perfil
+      const result = await userService.updateUser(profileData.idUser, editedData, token);
+      
+      if (result.success && result.data) {
+        setProfileData({ ...result.data });
+        setIsEditing(false);
+        setImagePreview(null);
+        console.log("✅ Perfil actualizado:", result.data);
+      }
+    } catch (error) {
+      console.error('Error actualizando perfil:', error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCancel = () => {
@@ -78,111 +147,135 @@ export default function UserPage({ onNavigateToHome }) {
             </p>
           </div>
 
+          {/* Loading State */}
+          {loading && !profileData.userName && (
+            <div className="user-profile__loading">
+              <div className="loading-spinner"></div>
+              <p>Cargando perfil...</p>
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && (
+            <div className="user-profile__error">
+              <p>❌ {error}</p>
+            </div>
+          )}
+
+          {/* Not Authenticated State */}
+          {!isAuthenticated && !loading && (
+            <div className="user-profile__error">
+              <p>🔒 Debes iniciar sesión para ver tu perfil</p>
+            </div>
+          )}
+
           {/* Profile Content */}
-          <div className="user-profile__content">
-            {/* Profile Image */}
-            <div className="user-profile__image-section">
-              <div className="user-profile__image-container">
-                {(imagePreview || editedData.profileImage) ? (
-                  <img
-                    src={imagePreview || editedData.profileImage}
-                    alt="Profile"
-                    className="user-profile__image"
-                  />
-                ) : (
-                  <div className="user-profile__image-placeholder">
-                    <User className="user-profile__placeholder-icon" />
-                  </div>
-                )}
-                
-                {isEditing && (
-                  <label className="user-profile__image-overlay">
-                    <Camera className="user-profile__camera-icon" />
-                    <span className="user-profile__change-text">Cambiar foto</span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="user-profile__file-input"
+          {isAuthenticated && !loading && (
+            <div className="user-profile__content">
+              {/* Profile Image */}
+              <div className="user-profile__image-section">
+                <div className="user-profile__image-container">
+                  {(imagePreview || editedData.profileImage) ? (
+                    <img
+                      src={imagePreview || editedData.profileImage}
+                      alt="Profile"
+                      className="user-profile__image"
                     />
+                  ) : (
+                    <div className="user-profile__image-placeholder">
+                      <User className="user-profile__placeholder-icon" />
+                    </div>
+                  )}
+                  
+                  {isEditing && (
+                    <label className="user-profile__image-overlay">
+                      <Camera className="user-profile__camera-icon" />
+                      <span className="user-profile__change-text">Cambiar foto</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="user-profile__file-input"
+                      />
+                    </label>
+                  )}
+                </div>
+              </div>
+
+              {/* Profile Form */}
+              <div className="user-profile__form">
+                {/* User Name Field */}
+                <div className="user-profile__field">
+                  <label className="user-profile__label">
+                    <User className="user-profile__label-icon" />
+                    Nombre de Usuario
                   </label>
-                )}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="userName"
+                      value={editedData.userName}
+                      onChange={handleInputChange}
+                      className="user-profile__input"
+                      placeholder="Ingresa tu nombre"
+                    />
+                  ) : (
+                    <div className="user-profile__value">{profileData.userName}</div>
+                  )}
+                </div>
+
+                {/* Email Field */}
+                <div className="user-profile__field">
+                  <label className="user-profile__label">
+                    <Mail className="user-profile__label-icon" />
+                    Correo Electrónico
+                  </label>
+                  {isEditing ? (
+                    <input
+                      type="email"
+                      name="email"
+                      value={editedData.email}
+                      onChange={handleInputChange}
+                      className="user-profile__input"
+                      placeholder="tu@email.com"
+                    />
+                  ) : (
+                    <div className="user-profile__value">{profileData.email}</div>
+                  )}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="user-profile__actions">
+                  {isEditing ? (
+                    <>
+                      <button 
+                        className="user-profile__btn user-profile__btn--save"
+                        onClick={handleSave}
+                      >
+                        <Save className="user-profile__btn-icon" />
+                        Guardar Cambios
+                      </button>
+                      <button 
+                        className="user-profile__btn user-profile__btn--cancel"
+                        onClick={handleCancel}
+                      >
+                        <X className="user-profile__btn-icon" />
+                        Cancelar
+                      </button>
+                    </>
+                  ) : (
+                    <button 
+                      className="user-profile__btn user-profile__btn--edit"
+                      onClick={handleEdit}
+                    >
+                      <Edit2 className="user-profile__btn-icon" />
+                      Editar Perfil
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-
-            {/* Profile Form */}
-            <div className="user-profile__form">
-              {/* User Name Field */}
-              <div className="user-profile__field">
-                <label className="user-profile__label">
-                  <User className="user-profile__label-icon" />
-                  Nombre de Usuario
-                </label>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    name="userName"
-                    value={editedData.userName}
-                    onChange={handleInputChange}
-                    className="user-profile__input"
-                    placeholder="Ingresa tu nombre"
-                  />
-                ) : (
-                  <div className="user-profile__value">{profileData.userName}</div>
-                )}
-              </div>
-
-              {/* Email Field */}
-              <div className="user-profile__field">
-                <label className="user-profile__label">
-                  <Mail className="user-profile__label-icon" />
-                  Correo Electrónico
-                </label>
-                {isEditing ? (
-                  <input
-                    type="email"
-                    name="email"
-                    value={editedData.email}
-                    onChange={handleInputChange}
-                    className="user-profile__input"
-                    placeholder="tu@email.com"
-                  />
-                ) : (
-                  <div className="user-profile__value">{profileData.email}</div>
-                )}
-              </div>
-
-              {/* Action Buttons */}
-              <div className="user-profile__actions">
-                {isEditing ? (
-                  <>
-                    <button 
-                      className="user-profile__btn user-profile__btn--save"
-                      onClick={handleSave}
-                    >
-                      <Save className="user-profile__btn-icon" />
-                      Guardar Cambios
-                    </button>
-                    <button 
-                      className="user-profile__btn user-profile__btn--cancel"
-                      onClick={handleCancel}
-                    >
-                      <X className="user-profile__btn-icon" />
-                      Cancelar
-                    </button>
-                  </>
-                ) : (
-                  <button 
-                    className="user-profile__btn user-profile__btn--edit"
-                    onClick={handleEdit}
-                  >
-                    <Edit2 className="user-profile__btn-icon" />
-                    Editar Perfil
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
+          )}
 
           {/* Additional test Info */}
           <div className="user-profile__footer">

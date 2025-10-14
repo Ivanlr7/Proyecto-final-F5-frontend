@@ -150,7 +150,13 @@ function Header() {
               {/* Dropdown menu */}
               {showDropdown && (
                 <div className="user-dropdown">
-                  <div className="dropdown-item">
+                  <div 
+                    className="dropdown-item"
+                    onClick={() => {
+                      setShowDropdown(false);
+                      navigate('/me');
+                    }}
+                  >
                     <span>👤 Ver Perfil</span>
                   </div>
                   <div className="dropdown-item">

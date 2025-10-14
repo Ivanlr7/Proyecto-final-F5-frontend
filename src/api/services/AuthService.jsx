@@ -1,4 +1,5 @@
 import AuthRepository from "../repositories/AuthRepository";
+import userService from "./UserService";
 
 class AuthService {
   constructor() {
@@ -20,16 +21,33 @@ class AuthService {
         this.setToken(result.data.token);
         
     
-        const userInfo = this.decodeTokenPayload(result.data.token);
-        if (userInfo) {
-          this.setUser(userInfo);
+        // Decodificar información básica del JWT
+        const tokenInfo = this.decodeTokenPayload(result.data.token);
+        
+        // Intentar obtener datos completos del usuario usando UserService
+        let completeUserInfo = tokenInfo;
+        try {
+          const userResult = await userService.getCurrentUser(result.data.token);
+          if (userResult.success && userResult.data) {
+            completeUserInfo = {
+              ...tokenInfo, // Mantener datos del JWT
+              ...userResult.data // Agregar datos completos del backend
+            };
+            console.log('✅ Datos completos del usuario obtenidos:', completeUserInfo);
+          }
+        } catch (profileError) {
+          console.warn('⚠️ No se pudieron obtener datos completos del usuario, usando datos del JWT:', profileError.message);
+        }
+        
+        if (completeUserInfo) {
+          this.setUser(completeUserInfo);
         }
 
         return {
           success: true,
           message: 'Login exitoso',
           token: result.data.token,
-          user: userInfo
+          user: completeUserInfo
         };
       } else {
         throw new Error('Respuesta inválida del servidor');
@@ -168,6 +186,35 @@ class AuthService {
       return new Date(payload.exp * 1000);
     } catch {
       return null;
+    }
+  }
+
+  // Método para actualizar datos del usuario usando UserService
+  async refreshUserProfile() {
+    try {
+      const token = this.getToken();
+      if (!token || !this.isTokenValid(token)) {
+        throw new Error('No hay token válido');
+      }
+
+      const result = await userService.getCurrentUser(token);
+      if (result.success && result.data) {
+        // Mantener datos existentes del JWT y agregar datos del backend
+        const currentUser = this.getUser() || {};
+        const updatedUser = {
+          ...currentUser,
+          ...result.data
+        };
+        
+        this.setUser(updatedUser);
+        console.log('✅ Perfil de usuario actualizado:', updatedUser);
+        return updatedUser;
+      }
+      
+      throw new Error('No se pudieron obtener datos del usuario');
+    } catch (error) {
+      console.error('Error al actualizar perfil del usuario:', error);
+      throw error;
     }
   }
 }
