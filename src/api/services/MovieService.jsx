@@ -5,7 +5,7 @@ class MovieService {
     this.movieRepository = new MovieRepository();
   }
 
-  // Obtener películas populares con validación y procesamiento
+
   async getPopularMovies(page = 1) {
     try {
       // Validar página
@@ -16,7 +16,7 @@ class MovieService {
       const result = await this.movieRepository.getPopularMovies(page);
       
       if (result.success && result.data) {
-        // Procesar las películas para añadir URLs de imagen completas
+
         const processedMovies = this.processMovieList(result.data.results);
         
         return {
@@ -37,10 +37,10 @@ class MovieService {
     }
   }
 
-  // Obtener detalles de película con procesamiento
+
   async getMovieDetails(movieId) {
     try {
-      // Validar ID de película
+
       if (!movieId || movieId <= 0) {
         throw new Error('ID de película inválido');
       }
@@ -48,7 +48,7 @@ class MovieService {
       const result = await this.movieRepository.getMovieDetails(movieId);
       
       if (result.success && result.data) {
-        // Procesar película para añadir URLs de imagen completas
+
         const processedMovie = this.processMovie(result.data);
         
         return {
@@ -66,15 +66,15 @@ class MovieService {
     }
   }
 
-  // Buscar películas con validación
+
   async searchMovies(query, page = 1) {
     try {
-      // Validar query
+
       if (!query || query.trim().length < 2) {
         throw new Error('La búsqueda debe tener al menos 2 caracteres');
       }
 
-      // Validar página
+
       if (page < 1 || page > 1000) {
         throw new Error('La página debe estar entre 1 y 1000');
       }
@@ -102,7 +102,7 @@ class MovieService {
     }
   }
 
-  // Obtener películas por categoría
+
   async getMoviesByCategory(category, page = 1) {
     try {
       const validCategories = ['now_playing', 'top_rated', 'upcoming', 'popular'];
@@ -138,10 +138,10 @@ class MovieService {
     }
   }
 
-  // Obtener películas con filtros avanzados
+
   async getMoviesWithFilters(filters = {}) {
     try {
-      // Validar página
+  
       if (filters.page && (filters.page < 1 || filters.page > 1000)) {
         throw new Error('La página debe estar entre 1 y 1000');
       }
@@ -169,7 +169,7 @@ class MovieService {
     }
   }
 
-  // Obtener géneros de películas
+
   async getMovieGenres() {
     try {
       const result = await this.movieRepository.getMovieGenres();
@@ -190,34 +190,34 @@ class MovieService {
     }
   }
 
-  // Procesar lista de películas
+
   processMovieList(movies) {
     if (!Array.isArray(movies)) return [];
     
     return movies.map(movie => this.processMovie(movie));
   }
 
-  // Procesar una película individual
+
   processMovie(movie) {
     if (!movie) return null;
 
     return {
       ...movie,
-      // Añadir URLs completas de imágenes
+
       poster_url: this.movieRepository.getImageUrl(movie.poster_path, 'w500'),
       backdrop_url: this.movieRepository.getImageUrl(movie.backdrop_path, 'w1280'),
       poster_small: this.movieRepository.getImageUrl(movie.poster_path, 'w342'),
       poster_large: this.movieRepository.getImageUrl(movie.poster_path, 'w780'),
-      // Formatear fecha
+
       formatted_release_date: movie.release_date ? this.formatDate(movie.release_date) : null,
-      // Calcular año
+
       release_year: movie.release_date ? new Date(movie.release_date).getFullYear() : null,
-      // Formatear rating
+
       formatted_vote_average: movie.vote_average ? Math.round(movie.vote_average * 10) / 10 : 0
     };
   }
 
-  // Formatear fecha
+
   formatDate(dateString) {
     try {
       const date = new Date(dateString);
@@ -231,7 +231,7 @@ class MovieService {
     }
   }
 
-  // Manejo centralizado de errores
+
   handleMovieServiceError(error) {
     if (error.response) {
       const status = error.response.status;
@@ -284,6 +284,6 @@ class MovieService {
   }
 }
 
-// Crear instancia singleton
+
 const movieService = new MovieService();
 export default movieService;

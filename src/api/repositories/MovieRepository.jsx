@@ -4,8 +4,7 @@ class MovieRepository {
   constructor() {
     this.baseURL = 'https://api.themoviedb.org/3';
     this.apiKey = import.meta.env.VITE_API_TMDB_KEY;
-    
-    // Crear instancia de axios con configuración base
+
     this.client = axios.create({
       baseURL: this.baseURL,
       timeout: 10000,
@@ -15,7 +14,7 @@ class MovieRepository {
     });
   }
 
-  // Obtener películas populares
+
   async getPopularMovies(page = 1) {
     try {
       const response = await this.client.get('/movie/popular', {
@@ -41,7 +40,6 @@ class MovieRepository {
     }
   }
 
-  // Obtener detalles de una película específica
   async getMovieDetails(movieId) {
     try {
       const response = await this.client.get(`/movie/${movieId}`, {
@@ -93,7 +91,7 @@ class MovieRepository {
     }
   }
 
-  // Obtener películas por categoría (now_playing, top_rated, upcoming)
+  // Categoría general
   async getMoviesByCategory(category, page = 1) {
     try {
       const response = await this.client.get(`/movie/${category}`, {
@@ -119,7 +117,7 @@ class MovieRepository {
     }
   }
 
-  // Obtener películas con filtros avanzados usando /discover/movie
+  // Filtros avanzados 
   async getMoviesWithFilters(filters = {}) {
     try {
       const params = {
@@ -129,7 +127,7 @@ class MovieRepository {
         sort_by: filters.sortBy || 'popularity.desc'
       };
 
-      // Añadir filtros opcionales
+
       if (filters.genres && filters.genres.length > 0) {
         params.with_genres = filters.genres.join(',');
       }
@@ -140,7 +138,7 @@ class MovieRepository {
       
       if (filters.minRating) {
         params['vote_average.gte'] = filters.minRating;
-        params['vote_count.gte'] = filters.minVotes || 100; // Mínimo de votos para ser confiable
+        params['vote_count.gte'] = filters.minVotes || 100; 
       }
 
       const response = await this.client.get('/discover/movie', { params });
@@ -160,7 +158,7 @@ class MovieRepository {
     }
   }
 
-  // Obtener géneros de películas
+
   async getMovieGenres() {
     try {
       const response = await this.client.get('/genre/movie/list', {
@@ -185,7 +183,7 @@ class MovieRepository {
     }
   }
 
-  // Helper para construir URL de imagen
+
   getImageUrl(path, size = 'w500') {
     if (!path) return null;
     return `https://image.tmdb.org/t/p/${size}${path}`;

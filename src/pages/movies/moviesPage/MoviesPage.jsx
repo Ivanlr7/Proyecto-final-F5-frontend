@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import movieService from '../../api/services/MovieService';
+import movieService from '../../../api/services/MovieService';
 import './MoviesPage.css';
 
 export default function MoviesPage() {
@@ -290,7 +290,6 @@ export default function MoviesPage() {
                       ⭐ {formatRating(movie.formatted_vote_average)}
                     </div>
 
-                    {/* Hover Info Overlay */}
                     <div className="movie-card__overlay">
                       <div className="movie-card__info">
                         <h3 className="movie-card__title">{movie.title}</h3>

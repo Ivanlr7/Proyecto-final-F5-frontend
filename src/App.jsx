@@ -8,7 +8,7 @@ import RegisterPage from './pages/register/RegisterPage'
 import LoginPage from './pages/login/LoginPage'
 import UserPage from './pages/user/UserPage'
 import Footer from './components/footer/Footer'
-import MoviesPage from './pages/movies/MoviesPage'
+import MoviesPage from './pages/movies/moviesPage/MoviesPage'
 
 
 function App() {
