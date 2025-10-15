@@ -1,0 +1,421 @@
+.movie-details-page {
+  min-height: 100vh;
+  background: #0a0e1a;
+  color: white;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.movie-details-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 3rem;
+  padding: 2rem;
+  align-items: start;
+}
+
+.movie-poster-section {
+  margin-top: 3rem;
+}
+
+.movie-poster {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.movie-poster:hover {
+  transform: scale(1.02);
+}
+
+.movie-info-section {
+  padding: 0;
+}
+
+.movie-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+  line-height: 1.2;
+}
+
+.movie-meta-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #8b9dc3;
+}
+
+.meta-year,
+.meta-duration,
+.meta-genres {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.meta-year svg,
+.meta-duration svg {
+  color: #6366f1;
+}
+
+.rating-section {
+  margin-bottom: 2rem;
+}
+
+.rating-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.8rem 1.2rem;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 8px;
+  width: fit-content;
+  flex-wrap: wrap;
+}
+
+.star {
+  color: #fbbf24;
+}
+
+.star.filled {
+  color: #fbbf24;
+}
+
+.rating-text {
+  margin-left: 0.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.movie-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: white;
+}
+
+.synopsis-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #d1d5db;
+  text-align: justify;
+}
+
+.movie-details-info {
+  margin-bottom: 2rem;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 0.8rem;
+  gap: 1rem;
+}
+
+.info-label {
+  font-weight: 600;
+  color: white;
+  min-width: 80px;
+}
+
+.info-value {
+  color: #d1d5db;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.btn-primary {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.btn-primary:hover {
+  background: #5855eb;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #d1d5db;
+  border: 1px solid #374151;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.btn-secondary:hover {
+  background: #374151;
+  border-color: #4b5563;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.back-button {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
+  border: 1px solid #374151;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.back-button:hover {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+.reviews-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-top: 1px solid #1f2937;
+}
+
+.reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.reviews-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+}
+
+.reviews-count {
+  color: #8b9dc3;
+  font-size: 0.95rem;
+}
+
+.review-card {
+  background: rgba(31, 41, 55, 0.5);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #374151;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.reviewer-avatar {
+  width: 40px;
+  height: 40px;
+  background: #6366f1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.reviewer-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.reviewer-name {
+  font-weight: 600;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.review-date {
+  color: #8b9dc3;
+  font-size: 0.85rem;
+}
+
+.review-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.review-rating .star {
+  color: #fbbf24;
+}
+
+.review-rating-text {
+  margin-left: 0.3rem;
+  font-weight: 600;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.review-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.8rem;
+}
+
+.review-content {
+  color: #d1d5db;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.loading-spinner,
+.error-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  gap: 1rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #374151;
+  border-top: 3px solid #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  color: #ef4444;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .movie-details-page {
+    padding: 0;
+  }
+
+  .movie-details-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .movie-poster-section {
+    position: static;
+    text-align: center;
+  }
+
+  .movie-poster {
+    max-width: 250px;
+    margin: 0 auto;
+  }
+
+  .movie-title {
+    font-size: 1.8rem;
+  }
+
+  .movie-meta-inline {
+    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rating-stars {
+    gap: 0.15rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .rating-stars .star {
+    width: 16px;
+    height: 16px;
+  }
+
+  .rating-text {
+    font-size: 1rem;
+    margin-left: 0.3rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .reviews-section {
+    padding: 1rem;
+  }
+
+  .reviews-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .back-button {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.movie-details-container,
+.reviews-section {
+  animation: fadeIn 0.6s ease-out;
+}

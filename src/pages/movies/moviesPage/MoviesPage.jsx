@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import movieService from '../../../api/services/MovieService';
 import './MoviesPage.css';
 
 export default function MoviesPage() {
+  const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -116,6 +118,10 @@ export default function MoviesPage() {
     setMinRating('');
     setUseFilters(false);
     setCurrentPage(1);
+  };
+
+  const handleMovieClick = (movieId) => {
+    navigate(`/peliculas/${movieId}`);
   };
 
   const handleRetry = () => {
@@ -265,7 +271,11 @@ export default function MoviesPage() {
           <>
             <div className="movies-page__grid">
               {movies.map((movie) => (
-                <div key={movie.id} className="movie-card">
+                <div 
+                  key={movie.id} 
+                  className="movie-card"
+                  onClick={() => handleMovieClick(movie.id)}
+                >
                   <div className="movie-card__image-container">
                     {movie.poster_url ? (
                       <img 

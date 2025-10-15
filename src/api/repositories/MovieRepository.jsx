@@ -45,7 +45,8 @@ class MovieRepository {
       const response = await this.client.get(`/movie/${movieId}`, {
         params: {
           api_key: this.apiKey,
-          language: 'es-ES'
+          language: 'es-ES',
+          append_to_response: 'credits'
         }
       });
 

@@ -9,6 +9,7 @@ import LoginPage from './pages/login/LoginPage'
 import UserPage from './pages/user/UserPage'
 import Footer from './components/footer/Footer'
 import MoviesPage from './pages/movies/moviesPage/MoviesPage'
+import MovieDetailsPage from './pages/movies/MovieDetails/MovieDetailsPage'
 
 
 function App() {
@@ -24,8 +25,7 @@ function App() {
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/me" element={<UserPage />} />
           <Route path="/peliculas" element={<MoviesPage />} />
-          <Route path="/movies" element={<MoviesPage />} />
-
+          <Route path="/peliculas/:id" element={<MovieDetailsPage />} />
         </Routes>
       </main>
       <Footer />
