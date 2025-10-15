@@ -3,20 +3,19 @@ import './MediaCard.css';
 
 export default function MediaCard({ 
   item, 
-  type = 'movie', // 'movie', 'series', 'game'
+  type = 'movie', 
   onClick,
   className = ''
 }) {
   const navigate = useNavigate();
 
-  // Formatear rating a una escala de 10
+// Formateo de la puntuación
   const formatRating = (rating) => {
     if (!rating) return 'N/A';
     const numericRating = typeof rating === 'string' ? parseFloat(rating) : rating;
     return isNaN(numericRating) ? 'N/A' : numericRating.toFixed(1);
   };
 
-  // Obtener la imagen según el tipo de media
   const getImageUrl = () => {
     switch (type) {
       case 'movie':
@@ -86,7 +85,7 @@ export default function MediaCard({
     }
   };
 
-  // Manejar el click
+
   const handleClick = () => {
     if (onClick) {
       onClick(item.id);
