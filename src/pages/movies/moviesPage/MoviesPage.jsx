@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import movieService from '../../../api/services/MovieService';
+import SearchBar from '../../../components/SearchBar/SearchBar';
 import './MoviesPage.css';
 
 export default function MoviesPage() {
@@ -146,13 +147,6 @@ export default function MoviesPage() {
     setCurrentPage(1);
   };
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const query = formData.get('search');
-    handleSearch(query);
-  };
-
   const handleMovieClick = (movieId) => {
     navigate(`/peliculas/${movieId}`);
   };
@@ -186,36 +180,12 @@ export default function MoviesPage() {
         </div>
 
         {/* Search Bar */}
-        <div className="movies-page__search">
-          <form onSubmit={handleSearchSubmit} className="search-form">
-            <div className="search-input-container">
-              <input
-                type="text"
-                name="search"
-                placeholder="Buscar películas por título..."
-                className="search-input"
-                defaultValue={searchQuery}
-              />
-              <button type="submit" className="search-button">
-                🔍 Buscar
-              </button>
-              {isSearching && (
-                <button 
-                  type="button" 
-                  onClick={clearSearch}
-                  className="clear-search-button"
-                >
-                  ✕ Limpiar
-                </button>
-              )}
-            </div>
-          </form>
-          {isSearching && searchQuery && (
-            <p className="search-info">
-              Mostrando resultados para: "<strong>{searchQuery}</strong>"
-            </p>
-          )}
-        </div>
+        <SearchBar 
+          onSearch={handleSearch}
+          onClear={clearSearch}
+          isSearching={isSearching}
+          searchQuery={searchQuery}
+        />
 
         {/* Category Filter */}
         <div className="movies-page__filters">
