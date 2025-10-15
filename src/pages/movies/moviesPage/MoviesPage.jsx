@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import movieService from '../../../api/services/MovieService';
 import SearchBar from '../../../components/SearchBar/SearchBar';
+import MediaCard from '../../../components/MediaCard/MediaCard';
 import './MoviesPage.css';
 
 export default function MoviesPage() {
@@ -164,10 +165,6 @@ export default function MoviesPage() {
     }
   };
 
-  const formatRating = (rating) => {
-    return rating ? `${rating}/10` : 'N/A';
-  };
-
   return (
     <div className="movies-page">
       <div className="movies-page__container">
@@ -306,43 +303,12 @@ export default function MoviesPage() {
           <>
             <div className="movies-page__grid">
               {movies.map((movie) => (
-                <div 
-                  key={movie.id} 
-                  className="movie-card"
-                  onClick={() => handleMovieClick(movie.id)}
-                >
-                  <div className="movie-card__image-container">
-                    {movie.poster_url ? (
-                      <img 
-                        src={movie.poster_url} 
-                        alt={movie.title}
-                        className="movie-card__image"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.nextElementSibling.style.display = 'flex';
-                        }}
-                      />
-                    ) : null}
-                    <div 
-                      className="movie-card__image-fallback"
-                      style={{ display: movie.poster_url ? 'none' : 'flex' }}
-                    >
-                      <span>🎬</span>
-                    </div>
-                    
-                    {/* Rating Badge */}
-                    <div className="movie-card__rating">
-                      ⭐ {formatRating(movie.formatted_vote_average)}
-                    </div>
-
-                    <div className="movie-card__overlay">
-                      <div className="movie-card__info">
-                        <h3 className="movie-card__title">{movie.title}</h3>
-                        <p className="movie-card__year">{movie.release_year}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <MediaCard
+                  key={movie.id}
+                  item={movie}
+                  type="movie"
+                  onClick={handleMovieClick}
+                />
               ))}
             </div>
 

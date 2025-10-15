@@ -222,7 +222,9 @@
   margin-bottom: 3rem;
 }
 
-/* Movie Card */
+/* Media Card in Movies Page - specific overrides can be added here if needed */
+
+/* Legacy Movie Card Styles (can be removed after migration) */
 .movie-card {
   border-radius: 1rem;
   overflow: hidden;

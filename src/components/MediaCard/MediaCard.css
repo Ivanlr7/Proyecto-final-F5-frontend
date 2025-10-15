@@ -1,0 +1,130 @@
+/* Media Card Styles - Reusable for Movies, Series, and Games */
+/* Based on original movie-card styles */
+
+.media-card {
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.media-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.media-card__image-container {
+  position: relative;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.media-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.media-card:hover .media-card__image {
+  transform: scale(1.05);
+}
+
+.media-card__image-fallback {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1e293b, #334155);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  border-radius: 1rem;
+}
+
+.media-card__rating {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+/* Hover Overlay */
+.media-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.95));
+  padding: 2rem 1.5rem 1.5rem;
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  z-index: 1;
+}
+
+.media-card:hover .media-card__overlay {
+  transform: translateY(0);
+}
+
+.media-card__info {
+  color: #ffffff;
+  text-align: center;
+}
+
+.media-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.media-card__year {
+  color: #3b82f6;
+  font-weight: 600;
+  font-size: 1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+
+@media (max-width: 768px) {
+  /* Mobile hover adjustments */
+  .media-card__overlay {
+    padding: 1.5rem 1rem 1rem;
+  }
+  
+  .media-card__title {
+    font-size: 1.125rem;
+  }
+  
+  .media-card__year {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .media-card__overlay {
+    padding: 1rem 0.75rem 0.75rem;
+  }
+  
+  .media-card__title {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .media-card__year {
+    font-size: 0.8rem;
+  }
+  
+  .media-card__rating {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.4rem;
+  }
+}
