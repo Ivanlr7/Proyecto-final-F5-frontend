@@ -19,6 +19,10 @@ export default function MoviesPage() {
   const [minRating, setMinRating] = useState('');
   const [useFilters, setUseFilters] = useState(false);
 
+  // Estados para búsqueda
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+
   // Cargar géneros al montar el componente
   useEffect(() => {
     const loadGenres = async () => {
@@ -44,7 +48,10 @@ export default function MoviesPage() {
         
         let result;
         
-        if (useFilters) {
+        if (isSearching && searchQuery) {
+
+          result = await movieService.searchMovies(searchQuery, currentPage);
+        } else if (useFilters) {
           // Filtros avanzados
           const filters = {
             page: currentPage,
@@ -80,7 +87,7 @@ export default function MoviesPage() {
     };
 
     loadMovies();
-  }, [category, currentPage, useFilters, selectedGenres, selectedYear, minRating]);
+  }, [category, currentPage, useFilters, selectedGenres, selectedYear, minRating, isSearching, searchQuery]);
 
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
@@ -120,6 +127,32 @@ export default function MoviesPage() {
     setCurrentPage(1);
   };
 
+  // Funciones para búsqueda
+  const handleSearch = (query) => {
+    const trimmedQuery = query.trim();
+    if (trimmedQuery.length < 2) {
+      clearSearch();
+      return;
+    }
+    setSearchQuery(trimmedQuery);
+    setIsSearching(true);
+    setCurrentPage(1);
+    setUseFilters(false);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setIsSearching(false);
+    setCurrentPage(1);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const query = formData.get('search');
+    handleSearch(query);
+  };
+
   const handleMovieClick = (movieId) => {
     navigate(`/peliculas/${movieId}`);
   };
@@ -150,6 +183,38 @@ export default function MoviesPage() {
           <p className="movies-page__subtitle">
             Descubre las mejores películas desde TMDB
           </p>
+        </div>
+
+        {/* Search Bar */}
+        <div className="movies-page__search">
+          <form onSubmit={handleSearchSubmit} className="search-form">
+            <div className="search-input-container">
+              <input
+                type="text"
+                name="search"
+                placeholder="Buscar películas por título..."
+                className="search-input"
+                defaultValue={searchQuery}
+              />
+              <button type="submit" className="search-button">
+                🔍 Buscar
+              </button>
+              {isSearching && (
+                <button 
+                  type="button" 
+                  onClick={clearSearch}
+                  className="clear-search-button"
+                >
+                  ✕ Limpiar
+                </button>
+              )}
+            </div>
+          </form>
+          {isSearching && searchQuery && (
+            <p className="search-info">
+              Mostrando resultados para: "<strong>{searchQuery}</strong>"
+            </p>
+          )}
         </div>
 
         {/* Category Filter */}
