@@ -1,8 +1,10 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, Calendar, Clock, Tv, User, MessageSquare } from 'lucide-react';
 import showService from '../../../api/services/ShowService';
 import './ShowDetailsPage.css';
+import MediaCard from '../../../components/MediaCard/MediaCard';
 
 const ShowDetailsPage = () => {
   const { id } = useParams();
@@ -11,6 +13,40 @@ const ShowDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('detalles');
+  const [suggestedShows, setSuggestedShows] = useState([]);
+  const [suggestedLoading, setSuggestedLoading] = useState(false);
+  const [suggestedError, setSuggestedError] = useState(null);
+
+  // Cargar sugerencias al cambiar a la pestaña
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (activeTab !== 'sugerencias' || !id) return;
+      setSuggestedLoading(true);
+      setSuggestedError(null);
+      try {
+        // Obtener similares y recomendaciones en paralelo
+        const [similarRes, recRes] = await Promise.all([
+          showService.showRepository.getSimilarShows(id, 1),
+          showService.showRepository.getShowRecommendations(id, 1)
+        ]);
+        let results = [];
+        if (similarRes.success && Array.isArray(similarRes.data.results)) {
+          results = results.concat(showService.processShowList(similarRes.data.results));
+        }
+        if (recRes.success && Array.isArray(recRes.data.results)) {
+          // Evitar duplicados por id
+          const recFiltered = showService.processShowList(recRes.data.results).filter(r => !results.some(s => s.id === r.id));
+          results = results.concat(recFiltered);
+        }
+        setSuggestedShows(results);
+      } catch (err) {
+        setSuggestedError('Error al cargar sugerencias');
+      } finally {
+        setSuggestedLoading(false);
+      }
+    };
+    fetchSuggestions();
+  }, [activeTab, id]);
 
   useEffect(() => {
     const fetchShowDetails = async () => {
@@ -48,6 +84,12 @@ const ShowDetailsPage = () => {
           <div className="spinner"></div>
           <p>Cargando detalles de la serie...</p>
         </div>
+        <button 
+          className={`show-details__tab ${activeTab === 'sugerencias' ? 'active' : ''}`}
+          onClick={() => setActiveTab('sugerencias')}
+        >
+          SUGERENCIAS
+        </button>
       </div>
     );
   }
@@ -62,6 +104,23 @@ const ShowDetailsPage = () => {
             Volver a Series
           </button>
         </div>
+        {activeTab === 'sugerencias' && (
+          <div className="show-details__tab-content">
+            <section className="show-details__section">
+              <h2 className="show-details__section-title">Sugerencias</h2>
+              {suggestedLoading && <p>Cargando sugerencias...</p>}
+              {suggestedError && <p className="error-message">{suggestedError}</p>}
+              {!suggestedLoading && !suggestedError && suggestedShows.length === 0 && (
+                <p>No hay sugerencias disponibles para esta serie.</p>
+              )}
+              <div className="show-details__suggested-list" style={{display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'flex-start'}}>
+                {suggestedShows.map((item) => (
+                  <MediaCard key={item.id} item={item} type="series" className="suggested-card" />
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
       </div>
     );
   }
@@ -174,6 +233,12 @@ const ShowDetailsPage = () => {
           onClick={() => setActiveTab('resenas')}
         >
           RESEÑAS
+        </button>
+        <button 
+          className={`show-details__tab ${activeTab === 'sugerencias' ? 'active' : ''}`}
+          onClick={() => setActiveTab('sugerencias')}
+        >
+          SUGERENCIAS
         </button>
       </div>
 
@@ -419,6 +484,24 @@ const ShowDetailsPage = () => {
                     No puedo decir lo suficiente sobre esta serie. Desde el primer episodio me tuvo enganchado. La calidad de producción es espectacular...
                   </p>
                 </div>
+              </div>
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'sugerencias' && (
+          <div className="show-details__tab-content">
+            <section className="show-details__section">
+              <h2 className="show-details__section-title">Sugerencias</h2>
+              {suggestedLoading && <p>Cargando sugerencias...</p>}
+              {suggestedError && <p className="error-message">{suggestedError}</p>}
+              {!suggestedLoading && !suggestedError && suggestedShows.length === 0 && (
+                <p>No hay sugerencias disponibles para esta serie.</p>
+              )}
+              <div className="show-details__suggested-list" style={{display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'flex-start'}}>
+                {suggestedShows.map((item) => (
+                  <MediaCard key={item.id} item={item} type="series" className="suggested-card" />
+                ))}
               </div>
             </section>
           </div>
