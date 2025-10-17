@@ -10,6 +10,8 @@ import UserPage from './pages/user/UserPage'
 import Footer from './components/footer/Footer'
 import MoviesPage from './pages/movies/moviesPage/MoviesPage'
 import MovieDetailsPage from './pages/movies/MovieDetails/MovieDetailsPage'
+import ShowsPage from './pages/shows/showsPage/ShowsPage'
+import ShowDetailsPage from './pages/shows/ShowDetails/ShowDetailsPage'
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
           <Route path="/me" element={<UserPage />} />
           <Route path="/peliculas" element={<MoviesPage />} />
           <Route path="/peliculas/:id" element={<MovieDetailsPage />} />
+          <Route path="/series" element={<ShowsPage />} />
+          <Route path="/series/:id" element={<ShowDetailsPage />} />
         </Routes>
       </main>
       <Footer />
