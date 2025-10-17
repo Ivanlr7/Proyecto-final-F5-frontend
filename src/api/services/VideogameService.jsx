@@ -1,13 +1,12 @@
 import VideogameRepository from '../repositories/VideogameRepository';
 
 class VideogameService {
-  // Helper to construct IGDB image URL
   getImageUrl(imageId, size = 'cover_big') {
     if (!imageId) return null;
     return `https://images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`;
   }
 
-  // Helper to format game data
+
   formatGame(game) {
     const coverImageId = game.cover?.image_id;
     const screenshotImageId = game.screenshots?.[0]?.image_id || game.artworks?.[0]?.image_id;
@@ -92,6 +91,6 @@ class VideogameService {
     const games = await VideogameRepository.getRecentGames(page);
     return games.map(game => this.formatGame(game));
   }
-}
 
+}
 export default new VideogameService();
