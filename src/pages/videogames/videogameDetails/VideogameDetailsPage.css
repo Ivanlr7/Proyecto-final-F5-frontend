@@ -1,10 +1,12 @@
+/* Movie Details Page Styles - Azul (#10b981) para diferenciar de series */
 
-.movie-details-page {
+.videogame-details-page {
   min-height: 100vh;
   background-color: #0f172a;
   color: #ffffff;
 }
 
+/* Loading and Error States */
 .loading-spinner,
 .error-container {
   display: flex;
@@ -19,7 +21,7 @@
   width: 40px;
   height: 40px;
   border: 4px solid #1e293b;
-  border-top: 4px solid #3b82f6;
+  border-top: 4px solid #10b981;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
@@ -32,7 +34,7 @@
 
 .back-button {
   padding: 0.75rem 1.5rem;
-  background-color: #3b82f6;
+  background-color: #10b981;
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
@@ -43,29 +45,29 @@
 }
 
 .back-button:hover {
-  background-color: #2563eb;
+  background-color: #059669;
 }
 
 
 
-.movie-details__back-btn {
+.videogame-details__back-btn {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   background: none;
   border: none;
-  color: #3b82f6;
+  color: #10b981;
   font-size: 1rem;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
-.movie-details__back-btn:hover {
-  color: #2563eb;
+.videogame-details__back-btn:hover {
+  color: #059669;
 }
 
 /* Hero Section */
-.movie-details__hero {
+.videogame-details__hero {
   position: relative;
   min-height: 100vh;
   background-size: cover;
@@ -76,7 +78,7 @@
   padding-top: 80px;
 }
 
-.movie-details__hero-overlay {
+.videogame-details__hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -89,7 +91,7 @@
   align-items: flex-end;
 }
 
-.movie-details__hero-content {
+.videogame-details__hero-content {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
@@ -99,11 +101,11 @@
   align-items: flex-end;
 }
 
-.movie-details__poster-container {
+.videogame-details__poster-container {
   flex-shrink: 0;
 }
 
-.movie-details__poster {
+.videogame-details__poster {
   width: 300px;
   height: 450px;
   object-fit: cover;
@@ -111,7 +113,7 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-.movie-details__poster-fallback {
+.videogame-details__poster-fallback {
   width: 300px;
   height: 450px;
   background: linear-gradient(135deg, #1e293b, #334155);
@@ -123,23 +125,23 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-.movie-details__info {
+.videogame-details__info {
   flex: 1;
   padding-bottom: 1rem;
 }
 
-.movie-details__title {
+.videogame-details__title {
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
   /* text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(135deg, #3b82f6, #3b82f6);
+  background: linear-gradient(135deg, #10b981, #10b981);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; */
 }
 
-.movie-details__original-title {
+.videogame-details__original-title {
   font-size: 1.25rem;
   color: #94a3b8;
   font-style: italic;
@@ -147,14 +149,14 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.movie-details__meta {
+.videogame-details__meta {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   margin-bottom: 1.5rem;
 }
 
-.movie-details__meta-item {
+.videogame-details__meta-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -162,7 +164,7 @@
   font-weight: 500;
 }
 
-.movie-details__rating {
+.videogame-details__rating {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -171,24 +173,24 @@
   font-size: 1.125rem;
 }
 
-.movie-details__genres {
+.videogame-details__genres {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
 
-.movie-details__genre {
-  background-color: rgba(59, 130, 246, 0.2);
-  color: #3b82f6;
+.videogame-details__genre {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #10b981;
   padding: 0.5rem 1rem;
   border-radius: 1rem;
   font-size: 0.875rem;
   font-weight: 500;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
-.movie-details__tagline {
+.videogame-details__tagline {
   font-size: 1.25rem;
   font-style: italic;
   color: #94a3b8;
@@ -197,67 +199,67 @@
 }
 
 /* Content */
-.movie-details__content {
+.videogame-details__content {
   max-width: 1280px;
   margin: 0 auto;
   padding: 3rem 2rem;
 }
 
-.movie-details__section {
+.videogame-details__section {
   margin-bottom: 3rem;
 }
 
-.movie-details__section-title {
+.videogame-details__section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #3b82f6;
+  color: #10b981;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+  border-bottom: 2px solid rgba(16, 185, 129, 0.3);
   padding-bottom: 0.5rem;
 }
 
-.movie-details__overview {
+.videogame-details__overview {
   font-size: 1.125rem;
   line-height: 1.8;
   color: #e2e8f0;
   text-align: justify;
 }
 
-.movie-details__info-grid {
+.videogame-details__info-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
-.movie-details__info-item {
+.videogame-details__info-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
   background-color: #1e293b;
   border-radius: 0.5rem;
-  border-left: 4px solid #3b82f6;
+  border-left: 4px solid #10b981;
 }
 
-.movie-details__info-item strong {
-  color: #3b82f6;
+.videogame-details__info-item strong {
+  color: #10b981;
   font-weight: 600;
 }
 
-.movie-details__info-item span {
+.videogame-details__info-item span {
   color: #e2e8f0;
   text-align: right;
   max-width: 60%;
 }
 
 /* Creators */
-.movie-details__creators {
+.videogame-details__creators {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
 }
 
-.movie-details__creator {
+.videogame-details__creator {
   display: flex;
   width: 205px;
   align-items: center;
@@ -268,21 +270,21 @@
   transition: transform 0.3s ease;
 }
 
-.movie-details__creator:hover {
+.videogame-details__creator:hover {
   transform: translateY(-2px);
 }
 
-.movie-details__creator-photo {
+.videogame-details__creator-photo {
   width: 60px;
   height: 60px;
   object-fit: cover;
   border-radius: 50%;
 }
 
-.movie-details__creator-photo-fallback {
+.videogame-details__creator-photo-fallback {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #3b82f6, #3b82f6);
+  background: linear-gradient(135deg, #10b981, #10b981);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -292,27 +294,27 @@
   color: #ffffff;
 }
 
-.movie-details__creator-info h3 {
+.videogame-details__creator-info h3 {
   font-size: 1.125rem;
   font-weight: 600;
   color: #e2e8f0;
   margin: 0;
 }
 
-.movie-details__creator-info p {
+.videogame-details__creator-info p {
   font-size: 0.875rem;
-  color: #3b82f6;
+  color: #10b981;
   margin: 0;
 }
 
 /* Production Companies */
-.movie-details__companies {
+.videogame-details__companies {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
 }
 
-.movie-details__company {
+.videogame-details__company {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -322,14 +324,14 @@
   min-height: 100px;
 }
 
-.movie-details__company-logo {
+.videogame-details__company-logo {
   max-width: 100%;
   max-height: 60px;
   object-fit: contain;
   filter: brightness(0.9);
 }
 
-.movie-details__company-name {
+.videogame-details__company-name {
   color: #e2e8f0;
   text-align: center;
   font-weight: 500;
@@ -337,15 +339,15 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .movie-details__header {
+  .videogame-details__header {
     padding: 1rem;
   }
 
-  .movie-details__hero {
+  .videogame-details__hero {
     min-height: 100vh;
   }
 
-  .movie-details__hero-content {
+  .videogame-details__hero-content {
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -353,162 +355,162 @@
     gap: 2rem;
   }
 
-  .movie-details__poster-container {
+  .videogame-details__poster-container {
     order: 1;
   }
 
-  .movie-details__info {
+  .videogame-details__info {
     order: 2;
     padding-bottom: 0;
     width: 100%;
   }
 
-  .movie-details__poster {
+  .videogame-details__poster {
     width: 280px;
     height: 420px;
     margin: 0 auto;
   }
 
-  .movie-details__poster-fallback {
+  .videogame-details__poster-fallback {
     width: 280px;
     height: 420px;
     margin: 0 auto;
   }
 
-  .movie-details__title {
+  .videogame-details__title {
     font-size: 2.25rem;
     margin-bottom: 1rem;
   }
 
-  .movie-details__meta {
+  .videogame-details__meta {
     justify-content: center;
     gap: 1.5rem;
     margin-bottom: 2rem;
   }
 
-  .movie-details__genres {
+  .videogame-details__genres {
     justify-content: center;
     margin-bottom: 2rem;
   }
 
-  .movie-details__content {
+  .videogame-details__content {
     padding: 2rem 1rem;
   }
 
-  .movie-details__info-grid {
+  .videogame-details__info-grid {
     grid-template-columns: 1fr;
   }
 
-  .movie-details__info-item {
+  .videogame-details__info-item {
     flex-direction: column;
     gap: 0.5rem;
     text-align: center;
   }
 
-  .movie-details__info-item span {
+  .videogame-details__info-item span {
     max-width: 100%;
     text-align: center;
   }
 
-  .movie-details__creators {
+  .videogame-details__creators {
     grid-template-columns: 1fr;
   }
 
-  .movie-details__companies {
+  .videogame-details__companies {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 }
 
 @media (max-width: 480px) {
-  .movie-details__hero {
+  .videogame-details__hero {
     min-height: 100vh;
   }
 
-  .movie-details__hero-content {
+  .videogame-details__hero-content {
     padding: 1.5rem 1rem;
     gap: 1.5rem;
   }
 
-  .movie-details__poster {
+  .videogame-details__poster {
     width: 220px;
     height: 330px;
   }
 
-  .movie-details__poster-fallback {
+  .videogame-details__poster-fallback {
     width: 220px;
     height: 330px;
   }
 
-  .movie-details__title {
+  .videogame-details__title {
     font-size: 1.75rem;
     margin-bottom: 0.75rem;
   }
 
-  .movie-details__meta {
+  .videogame-details__meta {
     gap: 1rem;
     margin-bottom: 1.5rem;
   }
 
-  .movie-details__meta-item {
+  .videogame-details__meta-item {
     font-size: 0.875rem;
   }
 
-  .movie-details__genres {
+  .videogame-details__genres {
     margin-bottom: 1.5rem;
   }
 
-  .movie-details__section-title {
+  .videogame-details__section-title {
     font-size: 1.5rem;
   }
 
-  .movie-details__companies {
+  .videogame-details__companies {
     grid-template-columns: 1fr;
   }
 
-  .movie-details__content {
+  .videogame-details__content {
     padding: 1.5rem 1rem;
   }
 
-  .movie-details__tabs {
+  .videogame-details__tabs {
     padding: 0 1rem;
   }
 
-  .movie-details__tab {
+  .videogame-details__tab {
     font-size: 0.875rem;
     padding: 1rem 1.5rem;
   }
 
-  .movie-details__review-actions {
+  .videogame-details__review-actions {
     flex-direction: column;
     gap: 1rem;
   }
 
-  .movie-details__write-review-btn,
-  .movie-details__add-favorites-btn {
+  .videogame-details__write-review-btn,
+  .videogame-details__add-favorites-btn {
     width: 100%;
   }
 
-  .movie-details__review {
+  .videogame-details__review {
     padding: 1rem;
   }
 
-  .movie-details__review-header {
+  .videogame-details__review-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
 
-  .movie-details__reviewer-info h4 {
+  .videogame-details__reviewer-info h4 {
     font-size: 1rem;
   }
 
-  .movie-details__review-title {
+  .videogame-details__review-title {
     font-size: 1rem;
   }
 }
 
 /* Tabs Navigation */
-.movie-details__tabs {
+.videogame-details__tabs {
   /* background-color: #1e293b;
   border-bottom: 1px solid #334155; */
   margin-top: 2%;
@@ -519,7 +521,7 @@
   gap: 0;
 }
 
-.movie-details__tab {
+.videogame-details__tab {
   background: none;
   border: none;
   color: #94a3b8;
@@ -533,19 +535,19 @@
   position: relative;
 }
 
-.movie-details__tab:hover {
-  color: #3b82f6;
-  background-color: rgba(59, 130, 246, 0.05);
+.videogame-details__tab:hover {
+  color: #10b981;
+  background-color: rgba(16, 185, 129, 0.05);
 }
 
-.movie-details__tab.active {
-  color: #3b82f6;
-  border-bottom-color: #3b82f6;
-  background-color: rgba(59, 130, 246, 0.1);
+.videogame-details__tab.active {
+  color: #10b981;
+  border-bottom-color: #10b981;
+  background-color: rgba(16, 185, 129, 0.1);
 }
 
 /* Tab Content */
-.movie-details__tab-content {
+.videogame-details__tab-content {
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -561,14 +563,14 @@
 }
 
 /* Review Actions */
-.movie-details__review-actions {
+.videogame-details__review-actions {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
-.movie-details__write-review-btn,
-.movie-details__add-favorites-btn {
+.videogame-details__write-review-btn,
+.videogame-details__add-favorites-btn {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -581,42 +583,42 @@
   font-size: 1rem;
 }
 
-.movie-details__write-review-btn {
-  background-color: #3b82f6;
+.videogame-details__write-review-btn {
+  background-color: #10b981;
   color: #ffffff;
 }
 
-.movie-details__write-review-btn:hover {
-  background-color: #2563eb;
+.videogame-details__write-review-btn:hover {
+  background-color: #059669;
   transform: translateY(-2px);
 }
 
-.movie-details__add-favorites-btn {
+.videogame-details__add-favorites-btn {
   background-color: rgba(251, 191, 36, 0.1);
   color: #fbbf24;
   border: 1px solid rgba(251, 191, 36, 0.3);
 }
 
-.movie-details__add-favorites-btn:hover {
+.videogame-details__add-favorites-btn:hover {
   background-color: rgba(251, 191, 36, 0.2);
   transform: translateY(-2px);
 }
 
 /* Reviews Section */
-.movie-details__reviews-count {
+.videogame-details__reviews-count {
   font-size: 1rem;
   color: #94a3b8;
   font-weight: 400;
   margin-left: 1rem;
 }
 
-.movie-details__reviews {
+.videogame-details__reviews {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.movie-details__review {
+.videogame-details__review {
   background-color: #1e293b;
   border-radius: 1rem;
   padding: 1.5rem;
@@ -624,27 +626,27 @@
   transition: border-color 0.3s ease;
 }
 
-.movie-details__review:hover {
+.videogame-details__review:hover {
   border-color: #475569;
 }
 
-.movie-details__review-header {
+.videogame-details__review-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
 }
 
-.movie-details__reviewer {
+.videogame-details__reviewer {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.movie-details__reviewer-avatar {
+.videogame-details__reviewer-avatar {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #3b82f6, #3b82f6);
+  background: linear-gradient(135deg, #10b981, #10b981);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -652,46 +654,46 @@
   color: #ffffff;
 }
 
-.movie-details__reviewer-info h4 {
+.videogame-details__reviewer-info h4 {
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
   color: #ffffff;
 }
 
-.movie-details__reviewer-info span {
+.videogame-details__reviewer-info span {
   color: #94a3b8;
   font-size: 0.875rem;
 }
 
-.movie-details__review-rating {
+.videogame-details__review-rating {
   display: flex;
   align-items: center;
   gap: 0.25rem;
 }
 
-.movie-details__review-rating .star-filled {
+.videogame-details__review-rating .star-filled {
   color: #fbbf24;
 }
 
-.movie-details__review-rating .star-empty {
+.videogame-details__review-rating .star-empty {
   color: #64748b;
 }
 
-.movie-details__review-rating span {
+.videogame-details__review-rating span {
   margin-left: 0.5rem;
   font-weight: 600;
   color: #fbbf24;
 }
 
-.movie-details__review-title {
+.videogame-details__review-title {
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0 0 0.75rem 0;
   color: #ffffff;
 }
 
-.movie-details__review-content {
+.videogame-details__review-content {
   color: #e2e8f0;
   line-height: 1.6;
   margin: 0;

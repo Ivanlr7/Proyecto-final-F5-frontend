@@ -80,7 +80,7 @@ export default function Header() {
           <Link to="/" className="header__nav-link header__nav-link--active">Inicio</Link>
           <Link to="peliculas" className="header__nav-link header__nav-link--active">Películas</Link>
           <Link to="series" className="header__nav-link header__nav-link--active">Series</Link>
-          <a href="#" className="header__nav-link">Videojuegos</a>
+          <Link to="videojuegos" className="header__nav-link header__nav-link--active">Videojuegos</Link>
           <a href="#" className="header__nav-link">Libros</a>
         </nav>
 

@@ -12,6 +12,8 @@ import MoviesPage from './pages/movies/moviesPage/MoviesPage'
 import MovieDetailsPage from './pages/movies/MovieDetails/MovieDetailsPage'
 import ShowsPage from './pages/shows/showsPage/ShowsPage'
 import ShowDetailsPage from './pages/shows/ShowDetails/ShowDetailsPage'
+import VideogamesPage from './pages/videogames/videogamesPage/VideogamesPage'
+import VideogameDetailsPage from './pages/videogames/videogameDetails/VideogameDetailsPage'
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
           <Route path="/peliculas/:id" element={<MovieDetailsPage />} />
           <Route path="/series" element={<ShowsPage />} />
           <Route path="/series/:id" element={<ShowDetailsPage />} />
+          <Route path="/videojuegos" element={<VideogamesPage />} />
+          <Route path="/videojuegos/:id" element={<VideogameDetailsPage />} />
         </Routes>
       </main>
       <Footer />

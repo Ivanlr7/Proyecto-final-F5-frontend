@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+﻿import { useNavigate } from 'react-router-dom';
 import './MediaCard.css';
 
 export default function MediaCard({ 
@@ -24,6 +24,8 @@ export default function MediaCard({
         return item.poster_url || item.backdrop_url;
       case 'game':
         return item.cover_url || item.screenshot_url;
+      case 'videogame':
+        return item.cover_url || item.screenshot_url;
       default:
         return item.poster_url;
     }
@@ -37,6 +39,8 @@ export default function MediaCard({
       case 'series':
         return item.name || item.title;
       case 'game':
+        return item.name || item.title;
+      case 'videogame':
         return item.name || item.title;
       default:
         return item.title;
@@ -52,6 +56,8 @@ export default function MediaCard({
         return item.first_air_date ? new Date(item.first_air_date).getFullYear() : item.release_year;
       case 'game':
         return item.release_date ? new Date(item.release_date).getFullYear() : item.release_year;
+      case 'videogame':
+        return item.release_date ? new Date(item.release_date).getFullYear() : item.release_year;
       default:
         return item.release_year;
     }
@@ -66,6 +72,8 @@ export default function MediaCard({
         return `/series/${item.id}`;
       case 'game':
         return `/juegos/${item.id}`;
+      case 'videogame':
+        return `/videojuegos/${item.id}`;
       default:
         return `/peliculas/${item.id}`;
     }
@@ -79,6 +87,8 @@ export default function MediaCard({
       case 'series':
         return '📺';
       case 'game':
+        return '🎮';
+      case 'videogame':
         return '🎮';
       default:
         return '🎬';

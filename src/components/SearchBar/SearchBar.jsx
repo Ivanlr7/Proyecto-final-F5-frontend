@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './SearchBar.css';
 
-const SearchBar = ({ onSearch, onClear, isSearching, searchQuery }) => {
+const SearchBar = ({ onSearch, onClear, isSearching, searchQuery, placeholder = 'Buscar películas por título...' }) => {
   const [inputValue, setInputValue] = useState(searchQuery || '');
 
   const handleSubmit = (e) => {
@@ -29,7 +29,7 @@ const SearchBar = ({ onSearch, onClear, isSearching, searchQuery }) => {
             type="text"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder="Buscar películas por título..."
+            placeholder={placeholder}
             className="search-input"
             minLength={2}
           />
