@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, Calendar, Clock } from 'lucide-react';
+import { ArrowLeft, Star, Calendar, Clock, Film, User, MessageSquare } from 'lucide-react';
 import movieService from '../../../api/services/MovieService';
+import MediaCard from '../../../components/MediaCard/MediaCard';
 import './MovieDetailsPage.css';
 
 const MovieDetailsPage = () => {
@@ -10,6 +11,10 @@ const MovieDetailsPage = () => {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState('detalles');
+  const [suggestedMovies, setSuggestedMovies] = useState([]);
+  const [suggestedLoading, setSuggestedLoading] = useState(false);
+  const [suggestedError, setSuggestedError] = useState(null);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -35,6 +40,37 @@ const MovieDetailsPage = () => {
       fetchMovieDetails();
     }
   }, [id]);
+
+  // Cargar sugerencias al cambiar a la pestaña
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (activeTab !== 'sugerencias' || !id) return;
+      setSuggestedLoading(true);
+      setSuggestedError(null);
+      try {
+        // Obtener similares y recomendaciones en paralelo
+        const [similarRes, recRes] = await Promise.all([
+          movieService.movieRepository.getSimilarMovies(id, 1),
+          movieService.movieRepository.getMovieRecommendations(id, 1)
+        ]);
+        let results = [];
+        if (similarRes.success && Array.isArray(similarRes.data.results)) {
+          results = results.concat(movieService.processMovieList(similarRes.data.results));
+        }
+        if (recRes.success && Array.isArray(recRes.data.results)) {
+          // Evitar duplicados por id
+          const recFiltered = movieService.processMovieList(recRes.data.results).filter(r => !results.some(s => s.id === r.id));
+          results = results.concat(recFiltered);
+        }
+        setSuggestedMovies(results);
+      } catch (err) {
+        setSuggestedError('Error al cargar sugerencias');
+      } finally {
+        setSuggestedLoading(false);
+      }
+    };
+    fetchSuggestions();
+  }, [activeTab, id]);
 
   const handleGoBack = () => {
     navigate('/peliculas');
@@ -79,118 +115,340 @@ const MovieDetailsPage = () => {
 
   return (
     <div className="movie-details-page">
-      <button className="back-button" onClick={handleGoBack}>
-        <ArrowLeft size={20} /> Volver
-      </button>
-      
-      <div className="movie-details-container">
-        <div className="movie-poster-section">
-          <img 
-            src={movie.poster_url || movie.poster_path} 
-            alt={movie.title}
-            className="movie-poster"
-          />
-        </div>
-
-        <div className="movie-info-section">
-          <h1 className="movie-title">{movie.title}</h1>
-          
-          <div className="movie-meta-inline">
-            <span className="meta-year">
-              <Calendar size={16} />
-              {movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A'}
-            </span>
-            <span className="meta-duration">
-              <Clock size={16} />
-              {movie.runtime ? `${movie.runtime} min` : 'N/A'}
-            </span>
-            <span className="meta-genres">
-              {movie.genres && movie.genres.length > 0 ? (
-                movie.genres.map(genre => genre.name).join(', ')
+      {/* Hero Section */}
+      <div 
+        className="movie-details__hero"
+        style={{
+          backgroundImage: movie.backdrop_path ? `url(https://image.tmdb.org/t/p/w1280${movie.backdrop_path})` : 'none'
+        }}
+      >
+        <div className="movie-details__hero-overlay">
+          <div className="movie-details__hero-content">
+            <div className="movie-details__poster-container">
+              {movie.poster_url || movie.poster_path ? (
+                <img 
+                  src={movie.poster_url || `https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
+                  alt={movie.title}
+                  className="movie-details__poster"
+                />
               ) : (
-                'Sin género'
+                <div className="movie-details__poster-fallback">
+                  <Film size={80} />
+                </div>
               )}
-            </span>
-          </div>
-
-          <div className="rating-section">
-            <div className="rating-stars">
-              {[...Array(10)].map((_, index) => {
-                const rating = movie.vote_average ? movie.vote_average : 0;
-                const isFilled = index < Math.floor(rating);
-                const isHalf = index === Math.floor(rating) && rating % 1 >= 0.5;
+            </div>
+            
+            <div className="movie-details__info">
+              <h1 className="movie-details__title">{movie.title}</h1>
+              {movie.original_title && movie.original_title !== movie.title && (
+                <p className="movie-details__original-title">"{movie.original_title}"</p>
+              )}
+              
+              <div className="movie-details__meta">
+                {movie.release_date && (
+                  <div className="movie-details__meta-item">
+                    <Calendar size={16} />
+                    <span>{new Date(movie.release_date).getFullYear()}</span>
+                  </div>
+                )}
                 
-                return (
-                  <Star 
-                    key={index} 
-                    size={20} 
-                    className={`star ${isFilled ? 'filled' : ''} ${isHalf ? 'half' : ''}`}
-                    fill={isFilled || isHalf ? 'currentColor' : 'none'}
-                  />
-                );
-              })}
-              <span className="rating-text">
-                {movie.vote_average ? movie.vote_average.toFixed(1) : '0.0'} / 10.0
-              </span>
-            </div>
-          </div>
+                {movie.runtime && (
+                  <div className="movie-details__meta-item">
+                    <Clock size={16} />
+                    <span>{movie.runtime} min</span>
+                  </div>
+                )}
+                
+                {movie.vote_average && (
+                  <div className="movie-details__rating">
+                    <Star size={16} fill="currentColor" />
+                    <span>{movie.vote_average.toFixed(1)}/10</span>
+                  </div>
+                )}
+              </div>
 
-          <div className="movie-section">
-            <h2 className="section-title">Sinopsis</h2>
-            <p className="synopsis-text">
-              {movie.overview || 'No hay sinopsis disponible.'}
-            </p>
-          </div>
+              {movie.genres && movie.genres.length > 0 && (
+                <div className="movie-details__genres">
+                  {movie.genres.map((genre) => (
+                    <span key={genre.id} className="movie-details__genre">
+                      {genre.name}
+                    </span>
+                  ))}
+                </div>
+              )}
 
-          <div className="movie-details-info">
-            <div className="info-row">
-              <span className="info-label">Director:</span>
-              <span className="info-value">
-                {movie.credits?.crew?.find(person => person.job === 'Director')?.name || 'No disponible'}
-              </span>
+              {movie.tagline && (
+                <p className="movie-details__tagline">"{movie.tagline}"</p>
+              )}
             </div>
-            <div className="info-row">
-              <span className="info-label">Reparto:</span>
-              <span className="info-value">
-                {movie.credits?.cast?.slice(0, 3).map(actor => actor.name).join(', ') || 'No disponible'}
-              </span>
-            </div>
-          </div>
-
-          <div className="action-buttons">
-            <button className="btn-primary">Escribir Reseña</button>
-            <button className="btn-secondary">Agregar a Favoritos</button>
           </div>
         </div>
       </div>
 
-      <div className="reviews-section">
-        <div className="reviews-header">
-          <h2 className="reviews-title">Reseñas de Usuarios</h2>
-          <span className="reviews-count">4 reseñas</span>
-        </div>
-        
-        <div className="review-card">
-          <div className="review-header">
-            <div className="reviewer-info">
-              <div className="reviewer-avatar">UP</div>
-              <div className="reviewer-details">
-                <span className="reviewer-name">Usuario Prueba</span>
-                <span className="review-date">Hace 2 días</span>
+      {/* Tabs Navigation */}
+      <div className="movie-details__tabs">
+        <button 
+          className={`movie-details__tab ${activeTab === 'detalles' ? 'active' : ''}`}
+          onClick={() => setActiveTab('detalles')}
+        >
+          DETALLES
+        </button>
+        <button 
+          className={`movie-details__tab ${activeTab === 'resenas' ? 'active' : ''}`}
+          onClick={() => setActiveTab('resenas')}
+        >
+          RESEÑAS
+        </button>
+        <button 
+          className={`movie-details__tab ${activeTab === 'sugerencias' ? 'active' : ''}`}
+          onClick={() => setActiveTab('sugerencias')}
+        >
+          SUGERENCIAS
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="movie-details__content">
+        {activeTab === 'detalles' && (
+          <div className="movie-details__tab-content">
+            {/* Synopsis */}
+            {movie.overview && (
+              <section className="movie-details__section">
+                <h2 className="movie-details__section-title">Sinopsis</h2>
+                <p className="movie-details__overview">{movie.overview}</p>
+              </section>
+            )}
+
+            {/* Director and Cast */}
+            <section className="movie-details__section">
+              <h2 className="movie-details__section-title">Director y Reparto</h2>
+              <div className="movie-details__info-grid">
+                {movie.credits?.crew?.find(person => person.job === 'Director') && (
+                  <div className="movie-details__info-item">
+                    <strong>Director:</strong>
+                    <span>{movie.credits.crew.find(person => person.job === 'Director').name}</span>
+                  </div>
+                )}
+                
+                {movie.credits?.cast && movie.credits.cast.length > 0 && (
+                  <div className="movie-details__info-item">
+                    <strong>Reparto principal:</strong>
+                    <span>{movie.credits.cast.slice(0, 5).map(actor => actor.name).join(', ')}</span>
+                  </div>
+                )}
               </div>
-            </div>
-            <div className="review-rating">
-              {[...Array(5)].map((_, index) => (
-                <Star key={index} size={16} className="star filled" fill="currentColor" />
-              ))}
-              <span className="review-rating-text">5.0</span>
-            </div>
+            </section>
+
+            {/* Additional Information */}
+            <section className="movie-details__section">
+              <h2 className="movie-details__section-title">Información Adicional</h2>
+              <div className="movie-details__info-grid">
+                {movie.status && (
+                  <div className="movie-details__info-item">
+                    <strong>Estado:</strong>
+                    <span>{movie.status}</span>
+                  </div>
+                )}
+                
+                {movie.release_date && (
+                  <div className="movie-details__info-item">
+                    <strong>Fecha de estreno:</strong>
+                    <span>{new Date(movie.release_date).toLocaleDateString('es-ES')}</span>
+                  </div>
+                )}
+
+                {movie.budget && movie.budget > 0 && (
+                  <div className="movie-details__info-item">
+                    <strong>Presupuesto:</strong>
+                    <span>${movie.budget.toLocaleString()}</span>
+                  </div>
+                )}
+
+                {movie.revenue && movie.revenue > 0 && (
+                  <div className="movie-details__info-item">
+                    <strong>Recaudación:</strong>
+                    <span>${movie.revenue.toLocaleString()}</span>
+                  </div>
+                )}
+
+                {movie.original_language && (
+                  <div className="movie-details__info-item">
+                    <strong>Idioma original:</strong>
+                    <span>{movie.original_language.toUpperCase()}</span>
+                  </div>
+                )}
+
+                {movie.vote_count && (
+                  <div className="movie-details__info-item">
+                    <strong>Número de votos:</strong>
+                    <span>{movie.vote_count.toLocaleString()}</span>
+                  </div>
+                )}
+              </div>
+            </section>
+
+            {/* Production Companies */}
+            {movie.production_companies && movie.production_companies.length > 0 && (
+              <section className="movie-details__section">
+                <h2 className="movie-details__section-title">Productoras</h2>
+                <div className="movie-details__companies">
+                  {movie.production_companies.map((company) => (
+                    <div key={company.id} className="movie-details__company">
+                      {company.logo_path ? (
+                        <img 
+                          src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
+                          alt={company.name}
+                          className="movie-details__company-logo"
+                        />
+                      ) : (
+                        <div className="movie-details__company-name">
+                          {company.name}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
-          <h3 className="review-title">Una obra maestra del cine moderno</h3>
-          <p className="review-content">
-            Esta película supera todas las expectativas. La dirección es impecable, la cinematografía es absolutamente impresionante y las actuaciones son de primer nivel. Cada escena está...
-          </p>
-        </div>
+        )}
+
+        {activeTab === 'resenas' && (
+          <div className="movie-details__tab-content">
+            {/* Write Review Section */}
+            <section className="movie-details__section">
+              <div className="movie-details__review-actions">
+                <button className="movie-details__write-review-btn">
+                  <MessageSquare size={20} />
+                  Escribir Reseña
+                </button>
+                <button className="movie-details__add-favorites-btn">
+                  <Star size={20} />
+                  Agregar a Favoritos
+                </button>
+              </div>
+            </section>
+
+            {/* Reviews Section */}
+            <section className="movie-details__section">
+              <h2 className="movie-details__section-title">
+                Reseñas de Usuarios
+                <span className="movie-details__reviews-count">4 reseñas</span>
+              </h2>
+              
+              <div className="movie-details__reviews">
+                {/* Sample Review 1 */}
+                <div className="movie-details__review">
+                  <div className="movie-details__review-header">
+                    <div className="movie-details__reviewer">
+                      <div className="movie-details__reviewer-avatar">
+                        <User size={24} />
+                      </div>
+                      <div className="movie-details__reviewer-info">
+                        <h4>Usuario Prueba</h4>
+                        <span>Hace 2 días</span>
+                      </div>
+                    </div>
+                    <div className="movie-details__review-rating">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star 
+                          key={star} 
+                          size={16} 
+                          fill="currentColor" 
+                          className="star-filled"
+                        />
+                      ))}
+                      <span>5.0</span>
+                    </div>
+                  </div>
+                  <h3 className="movie-details__review-title">Una obra maestra del cine moderno</h3>
+                  <p className="movie-details__review-content">
+                    Esta película supera todas las expectativas. La dirección es impecable, la cinematografía es absolutamente impresionante y las actuaciones son de primer nivel. Cada escena está...
+                  </p>
+                </div>
+
+                {/* Sample Review 2 */}
+                <div className="movie-details__review">
+                  <div className="movie-details__review-header">
+                    <div className="movie-details__reviewer">
+                      <div className="movie-details__reviewer-avatar">
+                        <User size={24} />
+                      </div>
+                      <div className="movie-details__reviewer-info">
+                        <h4>Cinéfilo123</h4>
+                        <span>Hace 1 semana</span>
+                      </div>
+                    </div>
+                    <div className="movie-details__review-rating">
+                      {[1, 2, 3, 4].map((star) => (
+                        <Star 
+                          key={star} 
+                          size={16} 
+                          fill="currentColor" 
+                          className="star-filled"
+                        />
+                      ))}
+                      <Star size={16} className="star-empty" />
+                      <span>4.0</span>
+                    </div>
+                  </div>
+                  <h3 className="movie-details__review-title">Excelente película con algunos altibajos</h3>
+                  <p className="movie-details__review-content">
+                    Una película muy sólida en general. Los personajes están bien desarrollados y la trama es interesante, aunque hay algunas escenas que se sienten un poco lentas...
+                  </p>
+                </div>
+
+                {/* Sample Review 3 */}
+                <div className="movie-details__review">
+                  <div className="movie-details__review-header">
+                    <div className="movie-details__reviewer">
+                      <div className="movie-details__reviewer-avatar">
+                        <User size={24} />
+                      </div>
+                      <div className="movie-details__reviewer-info">
+                        <h4>CineAdicto</h4>
+                        <span>Hace 2 semanas</span>
+                      </div>
+                    </div>
+                    <div className="movie-details__review-rating">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star 
+                          key={star} 
+                          size={16} 
+                          fill="currentColor" 
+                          className="star-filled"
+                        />
+                      ))}
+                      <span>5.0</span>
+                    </div>
+                  </div>
+                  <h3 className="movie-details__review-title">Absolutamente increíble</h3>
+                  <p className="movie-details__review-content">
+                    No puedo decir lo suficiente sobre esta película. Desde el primer minuto me tuvo enganchado. La calidad de producción es espectacular...
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'sugerencias' && (
+          <div className="movie-details__tab-content">
+            <section className="movie-details__section">
+              <h2 className="movie-details__section-title">Sugerencias</h2>
+              {suggestedLoading && <p>Cargando sugerencias...</p>}
+              {suggestedError && <p className="error-message">{suggestedError}</p>}
+              {!suggestedLoading && !suggestedError && suggestedMovies.length === 0 && (
+                <p>No hay sugerencias disponibles para esta película.</p>
+              )}
+              <div className="movie-details__suggested-list" style={{display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'flex-start'}}>
+                {suggestedMovies.map((item) => (
+                  <MediaCard key={item.id} item={item} type="movie" className="suggested-card" />
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
       </div>
     </div>
   );

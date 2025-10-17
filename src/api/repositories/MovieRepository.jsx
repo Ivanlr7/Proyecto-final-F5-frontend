@@ -189,6 +189,58 @@ class MovieRepository {
     if (!path) return null;
     return `https://image.tmdb.org/t/p/${size}${path}`;
   }
+
+  // Obtener películas similares
+  async getSimilarMovies(movieId, page = 1) {
+    try {
+      const response = await this.client.get(`/movie/${movieId}/similar`, {
+        params: {
+          api_key: this.apiKey,
+          language: 'es-ES',
+          page: page
+        }
+      });
+
+      return {
+        success: true,
+        data: response.data,
+        status: response.status
+      };
+    } catch (error) {
+      console.error('Error en MovieRepository.getSimilarMovies:', error);
+      return {
+        success: false,
+        error: error.response?.data || error.message,
+        status: error.response?.status || 500
+      };
+    }
+  }
+
+  // Obtener recomendaciones de películas
+  async getMovieRecommendations(movieId, page = 1) {
+    try {
+      const response = await this.client.get(`/movie/${movieId}/recommendations`, {
+        params: {
+          api_key: this.apiKey,
+          language: 'es-ES',
+          page: page
+        }
+      });
+
+      return {
+        success: true,
+        data: response.data,
+        status: response.status
+      };
+    } catch (error) {
+      console.error('Error en MovieRepository.getMovieRecommendations:', error);
+      return {
+        success: false,
+        error: error.response?.data || error.message,
+        status: error.response?.status || 500
+      };
+    }
+  }
 }
 
 export default MovieRepository;
