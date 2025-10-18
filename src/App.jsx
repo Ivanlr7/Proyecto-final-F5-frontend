@@ -15,7 +15,7 @@ import ShowDetailsPage from './pages/shows/ShowDetails/ShowDetailsPage'
 import VideogamesPage from './pages/videogames/videogamesPage/VideogamesPage'
 import VideogameDetailsPage from './pages/videogames/videogameDetails/VideogameDetailsPage'
 import BooksPage from './pages/books/booksPage/BooksPage'
-import BookDetailsPage from './pages/books/bookDetails/BookDetailsPage'
+import BookDetailsPage from './pages/books/BookDetails/BookDetailsPage'
 
 
 function App() {
