@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import ReviewModal from '../../../components/ReviewModal';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, Calendar, Clock, Film, User, MessageSquare } from 'lucide-react';
 import movieService from '../../../api/services/MovieService';
@@ -12,6 +13,7 @@ const MovieDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('detalles');
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const [suggestedMovies, setSuggestedMovies] = useState([]);
   const [suggestedLoading, setSuggestedLoading] = useState(false);
   const [suggestedError, setSuggestedError] = useState(null);
@@ -318,10 +320,19 @@ const MovieDetailsPage = () => {
             {/* Write Review Section */}
             <section className="movie-details__section">
               <div className="movie-details__review-actions">
-                <button className="movie-details__write-review-btn">
+                <button className="movie-details__write-review-btn" onClick={() => setShowReviewModal(true)}>
                   <MessageSquare size={20} />
                   Escribir Reseña
                 </button>
+                <ReviewModal
+                  open={showReviewModal}
+                  onClose={() => setShowReviewModal(false)}
+                  onSubmit={(data) => {
+                    setShowReviewModal(false);
+                    // Aquí puedes manejar el envío de la reseña, por ejemplo guardar en el backend
+                    console.log('Reseña enviada:', data);
+                  }}
+                />
                 <button className="movie-details__add-favorites-btn">
                   <Star size={20} />
                   Agregar a Favoritos
