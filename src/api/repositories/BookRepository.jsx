@@ -1,5 +1,4 @@
-// OpenLibrary data access layer
-// Docs: https://openlibrary.org/developers/api
+
 
 const OPENLIB_BASE_URL = 'https://openlibrary.org';
 const COVERS_BASE_URL = 'https://covers.openlibrary.org/b/id';
