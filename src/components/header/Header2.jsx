@@ -81,7 +81,7 @@ export default function Header() {
           <Link to="peliculas" className="header__nav-link header__nav-link--active">Películas</Link>
           <Link to="series" className="header__nav-link header__nav-link--active">Series</Link>
           <Link to="videojuegos" className="header__nav-link header__nav-link--active">Videojuegos</Link>
-          <a href="#" className="header__nav-link">Libros</a>
+          <Link to="libros" className="header__nav-link header__nav-link--active">Libros</Link>
         </nav>
 
         {/* Search and Profile */}

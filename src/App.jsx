@@ -14,6 +14,8 @@ import ShowsPage from './pages/shows/showsPage/ShowsPage'
 import ShowDetailsPage from './pages/shows/ShowDetails/ShowDetailsPage'
 import VideogamesPage from './pages/videogames/videogamesPage/VideogamesPage'
 import VideogameDetailsPage from './pages/videogames/videogameDetails/VideogameDetailsPage'
+import BooksPage from './pages/books/booksPage/BooksPage'
+import BookDetailsPage from './pages/books/bookDetails/BookDetailsPage'
 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
           <Route path="/series/:id" element={<ShowDetailsPage />} />
           <Route path="/videojuegos" element={<VideogamesPage />} />
           <Route path="/videojuegos/:id" element={<VideogameDetailsPage />} />
+          <Route path="/libros" element={<BooksPage />} />
+          <Route path="/libros/:id" element={<BookDetailsPage />} />
         </Routes>
       </main>
       <Footer />

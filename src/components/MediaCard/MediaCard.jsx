@@ -9,9 +9,9 @@ export default function MediaCard({
 }) {
   const navigate = useNavigate();
 
-// Formateo de la puntuación
+// Formateo de la puntuación (acepta 0)
   const formatRating = (rating) => {
-    if (!rating) return 'N/A';
+    if (rating === null || rating === undefined) return 'N/A';
     const numericRating = typeof rating === 'string' ? parseFloat(rating) : rating;
     return isNaN(numericRating) ? 'N/A' : numericRating.toFixed(1);
   };
@@ -26,6 +26,8 @@ export default function MediaCard({
         return item.cover_url || item.screenshot_url;
       case 'videogame':
         return item.cover_url || item.screenshot_url;
+      case 'book':
+        return item.cover_url || item.poster_url;
       default:
         return item.poster_url;
     }
@@ -42,6 +44,8 @@ export default function MediaCard({
         return item.name || item.title;
       case 'videogame':
         return item.name || item.title;
+      case 'book':
+        return item.title || item.name;
       default:
         return item.title;
     }
@@ -58,6 +62,8 @@ export default function MediaCard({
         return item.release_date ? new Date(item.release_date).getFullYear() : item.release_year;
       case 'videogame':
         return item.release_date ? new Date(item.release_date).getFullYear() : item.release_year;
+      case 'book':
+        return item.first_publish_year || item.release_year;
       default:
         return item.release_year;
     }
@@ -74,6 +80,8 @@ export default function MediaCard({
         return `/juegos/${item.id}`;
       case 'videogame':
         return `/videojuegos/${item.id}`;
+      case 'book':
+        return `/libros/${item.id}`;
       default:
         return `/peliculas/${item.id}`;
     }
@@ -90,6 +98,8 @@ export default function MediaCard({
         return '🎮';
       case 'videogame':
         return '🎮';
+      case 'book':
+        return '📚';
       default:
         return '🎬';
     }
@@ -130,7 +140,7 @@ export default function MediaCard({
         </div>
         
         {/* Rating Badge */}
-        {item.vote_average && (
+        {(type === 'book' ? (item.vote_average !== undefined && item.vote_average !== null) : !!item.vote_average) && (
           <div className="media-card__rating">
             ⭐ {formatRating(item.formatted_vote_average || item.vote_average)}
           </div>
