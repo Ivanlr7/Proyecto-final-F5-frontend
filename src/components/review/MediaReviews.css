@@ -1,0 +1,141 @@
+.media-reviews__section {
+  margin-bottom: 2rem;
+}
+
+.media-reviews__review-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.media-reviews__write-review-btn,
+.media-reviews__add-favorites-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.media-reviews__write-review-btn:hover,
+.media-reviews__add-favorites-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.media-reviews__section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.media-reviews__reviews-count {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.media-reviews__reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+
+.media-reviews__review {
+  background: #1a2332;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(30,41,59,0.12);
+  color: #eaf6ff;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+.media-reviews__review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+
+.media-reviews__reviewer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+.media-reviews__reviewer-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1cb5e0 0%, #000851 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+
+.media-reviews__reviewer-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #1cb5e0;
+}
+
+
+.media-reviews__reviewer-info h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #eaf6ff;
+}
+
+
+.media-reviews__reviewer-info span {
+  font-size: 1rem;
+  color: #7dd3fc;
+}
+
+
+.media-reviews__review-rating {
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+  font-size: 1.1rem;
+  color: #fbbf24;
+}
+
+
+.media-reviews__review-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0.25rem 0;
+  color: #eaf6ff;
+  text-align: center;
+}
+
+
+.media-reviews__review-content {
+  font-size: 1.1rem;
+  color: #eaf6ff;
+  margin: 0;
+  text-align: center;
+}

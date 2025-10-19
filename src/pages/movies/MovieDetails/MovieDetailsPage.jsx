@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, Calendar, Clock, Film, User, MessageSquare } from 'lucide-react';
 import movieService from '../../../api/services/MovieService';
 import MediaCard from '../../../components/MediaCard/MediaCard';
+import MediaReviews from '../../../components/review/MediaReviews';
 import './MovieDetailsPage.css';
 
 const MovieDetailsPage = () => {
@@ -345,96 +346,7 @@ const MovieDetailsPage = () => {
 
         {activeTab === 'resenas' && (
           <div className="movie-details__tab-content">
-            {/* Write Review Section */}
-            <section className="movie-details__section">
-              <div className="movie-details__review-actions">
-                <button className="movie-details__write-review-btn" onClick={() => setShowReviewModal(true)}>
-                  <MessageSquare size={20} />
-                  Escribir Reseña
-                </button>
-                <ReviewModal
-                  open={showReviewModal}
-                  onClose={() => setShowReviewModal(false)}
-                  onSubmit={async (data) => {
-                    // Verificar autenticación desde Redux
-                    if (!isAuthenticated || !token) {
-                      alert('Debes iniciar sesión para escribir una reseña');
-                      setShowReviewModal(false);
-                      return;
-                    }
-                    
-                    // Construir el objeto para el backend
-                    const reviewRequest = {
-                      contentType: 'MOVIE',
-                      contentId: id,
-                      apiSource: 'TMDB',
-                      reviewTitle: data.title,
-                      reviewText: data.body,
-                      rating: data.rating
-                    };
-                    const res = await reviewService.createReview(reviewRequest, token);
-                    if (res.success) {
-                      // Actualizar la lista local de reseñas
-                      setReviews(prev => [res.data, ...prev]);
-                      setShowReviewModal(false);
-                    } else {
-                      alert(res.error || 'Error al enviar la reseña');
-                    }
-                  }}
-                />
-                <button className="movie-details__add-favorites-btn">
-                  <Star size={20} />
-                  Agregar a Favoritos
-                </button>
-              </div>
-            </section>
-
-            {/* Reviews Section */}
-            <section className="movie-details__section">
-              <h2 className="movie-details__section-title">
-                Reseñas de Usuarios
-                <span className="movie-details__reviews-count">{reviews.length} reseñas</span>
-              </h2>
-              {reviewsLoading ? (
-                <div>Cargando reseñas...</div>
-              ) : reviewsError ? (
-                <div style={{color: 'red'}}>{reviewsError}</div>
-              ) : (
-                <div className="movie-details__reviews">
-                  {reviews.length === 0 ? (
-                    <div>No hay reseñas para esta película.</div>
-                  ) : (
-                    reviews.map((review) => (
-                      <div className="movie-details__review" key={review.idReview}>
-                        <div className="movie-details__review-header">
-                          <div className="movie-details__reviewer">
-                            <div className="movie-details__reviewer-avatar">
-                              <User size={24} />
-                            </div>
-                            <div className="movie-details__reviewer-info">
-                              <h4>{review.userName || 'Usuario'}</h4>
-                              <span>{review.createdAt ? new Date(review.createdAt).toLocaleDateString() : ''}</span>
-                            </div>
-                          </div>
-                          <div className="movie-details__review-rating">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <Star 
-                                key={star} 
-                                size={16} 
-                                fill={star <= review.rating ? '#fbbf24' : '#64748b'} 
-                                className="star-filled"
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        <h3 className="movie-details__review-title">{review.reviewTitle}</h3>
-                        <p className="movie-details__review-content">{review.reviewText}</p>
-                      </div>
-                    ))
-                  )}
-                </div>
-              )}
-            </section>
+            <MediaReviews contentType="MOVIE" contentId={id} apiSource="TMDB" />
           </div>
         )}
 
