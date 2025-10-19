@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import ReviewModal from '../../../components/ReviewModal';
+import ReviewService from '../../../api/services/ReviewService';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, Calendar, Clock, Film, User, MessageSquare } from 'lucide-react';
 import movieService from '../../../api/services/MovieService';
@@ -9,6 +11,8 @@ import './MovieDetailsPage.css';
 const MovieDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const reviewService = new ReviewService();
+  const { isAuthenticated, token } = useSelector(state => state.auth);
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,6 +21,9 @@ const MovieDetailsPage = () => {
   const [suggestedMovies, setSuggestedMovies] = useState([]);
   const [suggestedLoading, setSuggestedLoading] = useState(false);
   const [suggestedError, setSuggestedError] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [reviewsLoading, setReviewsLoading] = useState(false);
+  const [reviewsError, setReviewsError] = useState(null);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -73,6 +80,27 @@ const MovieDetailsPage = () => {
     };
     fetchSuggestions();
   }, [activeTab, id]);
+
+  // Cargar reseñas de la película
+  useEffect(() => {
+    const fetchReviews = async () => {
+      setReviewsLoading(true);
+      setReviewsError(null);
+      try {
+        const res = await reviewService.getReviewsByContent('MOVIE', id);
+        if (res.success && Array.isArray(res.data)) {
+          setReviews(res.data);
+        } else {
+          setReviewsError(res.error || 'Error al cargar reseñas');
+        }
+      } catch (err) {
+        setReviewsError('Error al cargar reseñas');
+      } finally {
+        setReviewsLoading(false);
+      }
+    };
+    if (id && activeTab === 'resenas') fetchReviews();
+  }, [id, activeTab]);
 
   const handleGoBack = () => {
     navigate('/peliculas');
@@ -327,10 +355,31 @@ const MovieDetailsPage = () => {
                 <ReviewModal
                   open={showReviewModal}
                   onClose={() => setShowReviewModal(false)}
-                  onSubmit={(data) => {
-                    setShowReviewModal(false);
-                    // Aquí puedes manejar el envío de la reseña, por ejemplo guardar en el backend
-                    console.log('Reseña enviada:', data);
+                  onSubmit={async (data) => {
+                    // Verificar autenticación desde Redux
+                    if (!isAuthenticated || !token) {
+                      alert('Debes iniciar sesión para escribir una reseña');
+                      setShowReviewModal(false);
+                      return;
+                    }
+                    
+                    // Construir el objeto para el backend
+                    const reviewRequest = {
+                      contentType: 'MOVIE',
+                      contentId: id,
+                      apiSource: 'TMDB',
+                      reviewTitle: data.title,
+                      reviewText: data.body,
+                      rating: data.rating
+                    };
+                    const res = await reviewService.createReview(reviewRequest, token);
+                    if (res.success) {
+                      // Actualizar la lista local de reseñas
+                      setReviews(prev => [res.data, ...prev]);
+                      setShowReviewModal(false);
+                    } else {
+                      alert(res.error || 'Error al enviar la reseña');
+                    }
                   }}
                 />
                 <button className="movie-details__add-favorites-btn">
@@ -344,101 +393,47 @@ const MovieDetailsPage = () => {
             <section className="movie-details__section">
               <h2 className="movie-details__section-title">
                 Reseñas de Usuarios
-                <span className="movie-details__reviews-count">4 reseñas</span>
+                <span className="movie-details__reviews-count">{reviews.length} reseñas</span>
               </h2>
-              
-              <div className="movie-details__reviews">
-                {/* Sample Review 1 */}
-                <div className="movie-details__review">
-                  <div className="movie-details__review-header">
-                    <div className="movie-details__reviewer">
-                      <div className="movie-details__reviewer-avatar">
-                        <User size={24} />
+              {reviewsLoading ? (
+                <div>Cargando reseñas...</div>
+              ) : reviewsError ? (
+                <div style={{color: 'red'}}>{reviewsError}</div>
+              ) : (
+                <div className="movie-details__reviews">
+                  {reviews.length === 0 ? (
+                    <div>No hay reseñas para esta película.</div>
+                  ) : (
+                    reviews.map((review) => (
+                      <div className="movie-details__review" key={review.idReview}>
+                        <div className="movie-details__review-header">
+                          <div className="movie-details__reviewer">
+                            <div className="movie-details__reviewer-avatar">
+                              <User size={24} />
+                            </div>
+                            <div className="movie-details__reviewer-info">
+                              <h4>{review.userName || 'Usuario'}</h4>
+                              <span>{review.createdAt ? new Date(review.createdAt).toLocaleDateString() : ''}</span>
+                            </div>
+                          </div>
+                          <div className="movie-details__review-rating">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <Star 
+                                key={star} 
+                                size={16} 
+                                fill={star <= review.rating ? '#fbbf24' : '#64748b'} 
+                                className="star-filled"
+                              />
+                            ))}
+                          </div>
+                        </div>
+                        <h3 className="movie-details__review-title">{review.reviewTitle}</h3>
+                        <p className="movie-details__review-content">{review.reviewText}</p>
                       </div>
-                      <div className="movie-details__reviewer-info">
-                        <h4>Usuario Prueba</h4>
-                        <span>Hace 2 días</span>
-                      </div>
-                    </div>
-                    <div className="movie-details__review-rating">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star 
-                          key={star} 
-                          size={16} 
-                          fill="currentColor" 
-                          className="star-filled"
-                        />
-                      ))}
-                      <span>5.0</span>
-                    </div>
-                  </div>
-                  <h3 className="movie-details__review-title">Una obra maestra del cine moderno</h3>
-                  <p className="movie-details__review-content">
-                    Esta película supera todas las expectativas. La dirección es impecable, la cinematografía es absolutamente impresionante y las actuaciones son de primer nivel. Cada escena está...
-                  </p>
+                    ))
+                  )}
                 </div>
-
-                {/* Sample Review 2 */}
-                <div className="movie-details__review">
-                  <div className="movie-details__review-header">
-                    <div className="movie-details__reviewer">
-                      <div className="movie-details__reviewer-avatar">
-                        <User size={24} />
-                      </div>
-                      <div className="movie-details__reviewer-info">
-                        <h4>Cinéfilo123</h4>
-                        <span>Hace 1 semana</span>
-                      </div>
-                    </div>
-                    <div className="movie-details__review-rating">
-                      {[1, 2, 3, 4].map((star) => (
-                        <Star 
-                          key={star} 
-                          size={16} 
-                          fill="currentColor" 
-                          className="star-filled"
-                        />
-                      ))}
-                      <Star size={16} className="star-empty" />
-                      <span>4.0</span>
-                    </div>
-                  </div>
-                  <h3 className="movie-details__review-title">Excelente película con algunos altibajos</h3>
-                  <p className="movie-details__review-content">
-                    Una película muy sólida en general. Los personajes están bien desarrollados y la trama es interesante, aunque hay algunas escenas que se sienten un poco lentas...
-                  </p>
-                </div>
-
-                {/* Sample Review 3 */}
-                <div className="movie-details__review">
-                  <div className="movie-details__review-header">
-                    <div className="movie-details__reviewer">
-                      <div className="movie-details__reviewer-avatar">
-                        <User size={24} />
-                      </div>
-                      <div className="movie-details__reviewer-info">
-                        <h4>CineAdicto</h4>
-                        <span>Hace 2 semanas</span>
-                      </div>
-                    </div>
-                    <div className="movie-details__review-rating">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star 
-                          key={star} 
-                          size={16} 
-                          fill="currentColor" 
-                          className="star-filled"
-                        />
-                      ))}
-                      <span>5.0</span>
-                    </div>
-                  </div>
-                  <h3 className="movie-details__review-title">Absolutamente increíble</h3>
-                  <p className="movie-details__review-content">
-                    No puedo decir lo suficiente sobre esta película. Desde el primer minuto me tuvo enganchado. La calidad de producción es espectacular...
-                  </p>
-                </div>
-              </div>
+              )}
             </section>
           </div>
         )}
