@@ -103,21 +103,30 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                   : review.reviewText.slice(0, maxLength) + '...';
          
                 const profileImgUrl = review.userProfileImageUrl || review.profileImage || null;
+                const userInitial = (review.userName || review.username || 'U').charAt(0).toUpperCase();
                 return (
                   <div className="media-reviews__review" key={review.idReview}>
                     <div className="media-reviews__review-header">
                       <div className="media-reviews__reviewer">
                         <div className="media-reviews__reviewer-avatar">
-                          {profileImgUrl ? (
+                          {profileImgUrl && (
                             <img
                               src={profileImgUrl}
                               alt={review.userName || 'Usuario'}
                               className="media-reviews__reviewer-img"
-                              onError={e => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
+                              onError={e => {
+                                e.target.style.display = 'none';
+                                if (e.target.nextElementSibling) e.target.nextElementSibling.style.display = 'flex';
+                              }}
+                              style={{ display: profileImgUrl ? 'block' : 'none' }}
                             />
-                          ) : (
-                            <User size={24} />
                           )}
+                          <div
+                            className="media-reviews__avatar-initials"
+                            style={{ display: profileImgUrl ? 'none' : 'flex' }}
+                          >
+                            {userInitial.charAt(0).toUpperCase()}
+                          </div>
                         </div>
                         <div className="media-reviews__reviewer-info">
                           <h4>{review.userName || 'Usuario'}</h4>

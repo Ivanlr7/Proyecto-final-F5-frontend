@@ -111,6 +111,21 @@
   flex-shrink: 0;
 }
 
+.media-reviews__avatar-initials {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 50%;
+  padding: 0;
+  line-height: 1;
+}
+
 
 .media-reviews__reviewer-img {
   width: 100%;
