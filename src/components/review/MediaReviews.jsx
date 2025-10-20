@@ -94,26 +94,28 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
               <div>No hay reseñas para este contenido.</div>
             ) : (
               reviews.map((review) => {
-                const maxLength = 150;
+                console.log('Review data:', review);
+                const maxLength = 200;
                 const isLong = review.reviewText && review.reviewText.length > maxLength;
                 const expanded = !!expandedReviews[review.idReview];
                 const displayText = expanded || !isLong
                   ? review.reviewText
                   : review.reviewText.slice(0, maxLength) + '...';
+         
+                const profileImgUrl = review.userProfileImageUrl || review.profileImage || null;
                 return (
                   <div className="media-reviews__review" key={review.idReview}>
                     <div className="media-reviews__review-header">
                       <div className="media-reviews__reviewer">
                         <div className="media-reviews__reviewer-avatar">
-                          {review.profileImage ? (
+                          {profileImgUrl ? (
                             <img
-                              src={review.profileImage}
+                              src={profileImgUrl}
                               alt={review.userName || 'Usuario'}
                               className="media-reviews__reviewer-img"
                               onError={e => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
                             />
-                          ) : null}
-                          {!review.profileImage && (
+                          ) : (
                             <User size={24} />
                           )}
                         </div>
