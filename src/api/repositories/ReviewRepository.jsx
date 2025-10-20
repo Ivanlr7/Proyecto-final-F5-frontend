@@ -19,7 +19,8 @@ class ReviewRepository {
       });
       return { success: true, data: response.data, status: response.status };
     } catch (error) {
-      return { success: false, error: error.response?.data || error.message, status: error.response?.status || 500 };
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Error al crear la reseña';
+      return { success: false, error: errorMessage, status: error.response?.status || 500 };
     }
   }
 
@@ -28,7 +29,8 @@ class ReviewRepository {
       const response = await this.client.get('');
       return { success: true, data: response.data, status: response.status };
     } catch (error) {
-      return { success: false, error: error.response?.data || error.message, status: error.response?.status || 500 };
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Error al obtener reseñas';
+      return { success: false, error: errorMessage, status: error.response?.status || 500 };
     }
   }
 
@@ -37,7 +39,8 @@ class ReviewRepository {
       const response = await this.client.get(`/${id}`);
       return { success: true, data: response.data, status: response.status };
     } catch (error) {
-      return { success: false, error: error.response?.data || error.message, status: error.response?.status || 500 };
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Error al obtener la reseña';
+      return { success: false, error: errorMessage, status: error.response?.status || 500 };
     }
   }
 
@@ -46,7 +49,8 @@ class ReviewRepository {
       const response = await this.client.get(`/user/${userId}`);
       return { success: true, data: response.data, status: response.status };
     } catch (error) {
-      return { success: false, error: error.response?.data || error.message, status: error.response?.status || 500 };
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Error al obtener reseñas del usuario';
+      return { success: false, error: errorMessage, status: error.response?.status || 500 };
     }
   }
 
@@ -57,7 +61,8 @@ class ReviewRepository {
       });
       return { success: true, data: response.data, status: response.status };
     } catch (error) {
-      return { success: false, error: error.response?.data || error.message, status: error.response?.status || 500 };
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Error al obtener reseñas del contenido';
+      return { success: false, error: errorMessage, status: error.response?.status || 500 };
     }
   }
 
@@ -68,7 +73,8 @@ class ReviewRepository {
       });
       return { success: true, data: response.data, status: response.status };
     } catch (error) {
-      return { success: false, error: error.response?.data || error.message, status: error.response?.status || 500 };
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Error al obtener estadísticas';
+      return { success: false, error: errorMessage, status: error.response?.status || 500 };
     }
   }
 
@@ -79,7 +85,8 @@ class ReviewRepository {
       });
       return { success: true, data: response.data, status: response.status };
     } catch (error) {
-      return { success: false, error: error.response?.data || error.message, status: error.response?.status || 500 };
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Error al actualizar la reseña';
+      return { success: false, error: errorMessage, status: error.response?.status || 500 };
     }
   }
 
@@ -90,7 +97,8 @@ class ReviewRepository {
       });
       return { success: true, status: response.status };
     } catch (error) {
-      return { success: false, error: error.response?.data || error.message, status: error.response?.status || 500 };
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Error al eliminar la reseña';
+      return { success: false, error: errorMessage, status: error.response?.status || 500 };
     }
   }
 }
