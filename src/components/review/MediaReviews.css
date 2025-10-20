@@ -1,3 +1,23 @@
+
+.media-reviews__read-more-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.18rem 0.7rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  align-self: flex-start;
+}
+
+.media-reviews__read-more-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
 .media-reviews__section {
   margin-bottom: 2rem;
 }

@@ -33,6 +33,13 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
     if (contentType && contentId) fetchReviews();
   }, [contentType, contentId]);
 
+  // Estado de expansión para cada review (por id)
+  const [expandedReviews, setExpandedReviews] = useState({});
+
+  const handleToggleExpand = (id) => {
+    setExpandedReviews(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
   return (
     <div>
       {/* Write Review Section */}
@@ -86,43 +93,60 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
             {reviews.length === 0 ? (
               <div>No hay reseñas para este contenido.</div>
             ) : (
-              reviews.map((review) => (
-                <div className="media-reviews__review" key={review.idReview}>
-                  <div className="media-reviews__review-header">
-                    <div className="media-reviews__reviewer">
-                      <div className="media-reviews__reviewer-avatar">
-                        {review.profileImage ? (
-                          <img
-                            src={review.profileImage}
-                            alt={review.userName || 'Usuario'}
-                            className="media-reviews__reviewer-img"
-                            onError={e => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
+              reviews.map((review) => {
+                const maxLength = 150;
+                const isLong = review.reviewText && review.reviewText.length > maxLength;
+                const expanded = !!expandedReviews[review.idReview];
+                const displayText = expanded || !isLong
+                  ? review.reviewText
+                  : review.reviewText.slice(0, maxLength) + '...';
+                return (
+                  <div className="media-reviews__review" key={review.idReview}>
+                    <div className="media-reviews__review-header">
+                      <div className="media-reviews__reviewer">
+                        <div className="media-reviews__reviewer-avatar">
+                          {review.profileImage ? (
+                            <img
+                              src={review.profileImage}
+                              alt={review.userName || 'Usuario'}
+                              className="media-reviews__reviewer-img"
+                              onError={e => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
+                            />
+                          ) : null}
+                          {!review.profileImage && (
+                            <User size={24} />
+                          )}
+                        </div>
+                        <div className="media-reviews__reviewer-info">
+                          <h4>{review.userName || 'Usuario'}</h4>
+                          <span>{review.createdAt ? new Date(review.createdAt).toLocaleDateString() : ''}</span>
+                        </div>
+                      </div>
+                      <div className="media-reviews__review-rating">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star 
+                            key={star} 
+                            size={16} 
+                            fill={star <= review.rating ? '#fbbf24' : '#64748b'} 
+                            className="star-filled"
                           />
-                        ) : null}
-                        {!review.profileImage && (
-                          <User size={24} />
-                        )}
-                      </div>
-                      <div className="media-reviews__reviewer-info">
-                        <h4>{review.userName || 'Usuario'}</h4>
-                        <span>{review.createdAt ? new Date(review.createdAt).toLocaleDateString() : ''}</span>
+                        ))}
                       </div>
                     </div>
-                    <div className="media-reviews__review-rating">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star 
-                          key={star} 
-                          size={16} 
-                          fill={star <= review.rating ? '#fbbf24' : '#64748b'} 
-                          className="star-filled"
-                        />
-                      ))}
-                    </div>
+                    <h3 className="media-reviews__review-title">{review.reviewTitle}</h3>
+                    <p className="media-reviews__review-content">{displayText}</p>
+                    {isLong && (
+                      <button
+                        className="media-reviews__read-more-btn"
+                        onClick={() => handleToggleExpand(review.idReview)}
+                        style={{ marginTop: 4 }}
+                      >
+                        {expanded ? 'Leer menos' : 'Leer más'}
+                      </button>
+                    )}
                   </div>
-                  <h3 className="media-reviews__review-title">{review.reviewTitle}</h3>
-                  <p className="media-reviews__review-content">{review.reviewText}</p>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         )}
