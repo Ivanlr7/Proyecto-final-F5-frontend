@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ArrowLeft, User, Mail, Camera, Edit2, Save, X } from "lucide-react";
 import userService from "../../api/services/UserService";
+import { updateUserThunk } from "../../store/slices/authSlice";
 import "./UserPage.css";
 
 export default function UserPage({ onNavigateToHome }) {
   const { user: authUser, token, isAuthenticated } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +16,6 @@ export default function UserPage({ onNavigateToHome }) {
     userName: "",
     email: ""
   });
-
   const [editedData, setEditedData] = useState({ ...profileData });
   const [imagePreview, setImagePreview] = useState(null);
 
@@ -96,15 +97,17 @@ export default function UserPage({ onNavigateToHome }) {
       setLoading(true);
       setError(null);
       
-      // Usar UserService para actualizar el perfil
-      const result = await userService.updateUser(profileData.idUser, editedData, token);
+      // Usar updateUserThunk para actualizar el usuario
+      await dispatch(updateUserThunk({
+        id: profileData.idUser,
+        userData: editedData,
+        token
+      })).unwrap();
       
-      if (result.success && result.data) {
-        setProfileData({ ...result.data });
-        setIsEditing(false);
-        setImagePreview(null);
-        console.log("✅ Perfil actualizado:", result.data);
-      }
+      setProfileData({ ...editedData });
+      setIsEditing(false);
+      setImagePreview(null);
+      console.log("✅ Perfil actualizado:", editedData);
     } catch (error) {
       console.error('Error actualizando perfil:', error);
       setError(error.message);

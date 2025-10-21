@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from '../../api/services/AuthService'
+import userService from '../../api/services/UserService'
 
 
 const initialState = {
@@ -68,6 +69,23 @@ export const checkAuthThunk = createAsyncThunk(
     } catch {
       authService.clearAuthData()
       return rejectWithValue('Error verificando autenticación')
+    }
+  }
+)
+
+// Thunk para actualizar el usuario
+export const updateUserThunk = createAsyncThunk(
+  'auth/updateUser',
+  async ({ id, userData, token }, { rejectWithValue }) => {
+    try {
+      const result = await userService.updateUser(id, userData, token);
+      if (result.success && result.data) {
+        return result.data;
+      } else {
+        return rejectWithValue(result.message || 'Error al actualizar usuario');
+      }
+    } catch (error) {
+      return rejectWithValue(error.message || 'Error al actualizar usuario');
     }
   }
 )
@@ -156,6 +174,11 @@ const authSlice = createSlice({
         state.isInitialized = true
         state.error = action.payload
       })
+      
+    builder
+      .addCase(updateUserThunk.fulfilled, (state, action) => {
+        state.user = action.payload;
+      });
   }
 })
 

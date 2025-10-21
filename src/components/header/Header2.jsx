@@ -101,14 +101,14 @@ export default function Header() {
             <>
               <div className="header__user-info">
                 <span className="header__username">
-                  Hola, {user?.sub || user?.username || 'Usuario'}
+                  Hola, {user?.userName || user?.username || user?.sub || 'Usuario'}
                 </span>
               </div>
               <Link to="/me" className="header__avatar">
                 {profileImageUrl ? (
                   <img 
                     src={profileImageUrl} 
-                    alt={`Avatar de ${user?.sub || user?.username || 'Usuario'}`}
+                    alt={`Avatar de ${user?.userName || user?.username || user?.sub || 'Usuario'}`}
                     className="header__avatar-image"
                     onError={(e) => {
                       console.error('Error cargando imagen de perfil en header');
@@ -121,7 +121,7 @@ export default function Header() {
                   className="header__avatar-initials"
                   style={{ display: profileImageUrl ? 'none' : 'flex' }}
                 >
-                  {(user?.sub || user?.username || 'U').charAt(0).toUpperCase()}
+                  {(user?.userName || user?.username || user?.sub || 'U').charAt(0).toUpperCase()}
                 </div>
               </Link>
               <button 
