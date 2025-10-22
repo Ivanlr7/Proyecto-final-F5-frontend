@@ -346,6 +346,7 @@ const MovieDetailsPage = () => {
 
         {activeTab === 'resenas' && (
           <div className="movie-details__tab-content">
+
             <MediaReviews contentType="MOVIE" contentId={id} apiSource="TMDB" />
           </div>
         )}

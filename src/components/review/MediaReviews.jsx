@@ -120,8 +120,16 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
     setLikeLoading(prev => ({ ...prev, [idReview]: false }));
   };
 
+  // Clase dinámica según tipo de contenido
+  const typeClass = {
+    MOVIE: 'media-reviews--movie',
+    SERIES: 'media-reviews--show',
+    videogame: 'media-reviews--videogame',
+    book: 'media-reviews--book'
+  }[contentType] || '';
+
   return (
-    <div>
+    <div className={`media-reviews ${typeClass}`}>
       {/* Write Review Section */}
       <section className="media-reviews__section">
         <div className="media-reviews__review-actions">
@@ -233,7 +241,10 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                         disabled={likeLoading[review.idReview]}
                         aria-label={liked[review.idReview] ? 'Quitar like' : 'Dar like'}
                       >
-                        <ThumbsUp size={18} fill={liked[review.idReview] ? '#2563eb' : 'none'} color={liked[review.idReview] ? '#2563eb' : '#64748b'} />
+                        <ThumbsUp size={18}
+                          fill={liked[review.idReview] ? 'currentColor' : 'none'}
+                          color={liked[review.idReview] ? 'currentColor' : '#64748b'}
+                        />
                       </button>
                       <span style={{ color: '#7dd3fc', fontSize: '1rem' }}>{likeCount[review.idReview] || 0}</span>
                     </div>

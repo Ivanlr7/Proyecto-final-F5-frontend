@@ -5,6 +5,7 @@ import { ArrowLeft, Star, Calendar, Clock, Tv, User, MessageSquare } from 'lucid
 import showService from '../../../api/services/ShowService';
 import './ShowDetailsPage.css';
 import MediaCard from '../../../components/MediaCard/MediaCard';
+import MediaReviews from '../../../components/review/MediaReviews';
 
 const ShowDetailsPage = () => {
   const { id } = useParams();
@@ -372,7 +373,7 @@ const ShowDetailsPage = () => {
 
         {activeTab === 'resenas' && (
           <div className="show-details__tab-content">
-            {/* Write Review Section */}
+{/*       
             <section className="show-details__section">
               <div className="show-details__review-actions">
                 <button className="show-details__write-review-btn">
@@ -386,106 +387,14 @@ const ShowDetailsPage = () => {
               </div>
             </section>
 
-            {/* Reviews Section */}
             <section className="show-details__section">
-              <h2 className="show-details__section-title">
-                Reseñas de Usuarios
-                <span className="show-details__reviews-count">4 reseñas</span>
-              </h2>
+       
               
               <div className="show-details__reviews">
-                {/* Sample Review 1 */}
-                <div className="show-details__review">
-                  <div className="show-details__review-header">
-                    <div className="show-details__reviewer">
-                      <div className="show-details__reviewer-avatar">
-                        <User size={24} />
-                      </div>
-                      <div className="show-details__reviewer-info">
-                        <h4>Usuario Prueba</h4>
-                        <span>Hace 2 días</span>
-                      </div>
-                    </div>
-                    <div className="show-details__review-rating">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star 
-                          key={star} 
-                          size={16} 
-                          fill="currentColor" 
-                          className="star-filled"
-                        />
-                      ))}
-                      <span>5.0</span>
-                    </div>
-                  </div>
-                  <h3 className="show-details__review-title">Una obra maestra del cine moderno</h3>
-                  <p className="show-details__review-content">
-                    Esta película supera todas las expectativas. La dirección es impecable, la cinematografía es absolutamente impresionante y las actuaciones son de primer nivel. Cada escena está...
-                  </p>
-                </div>
-
-                {/* Sample Review 2 */}
-                <div className="show-details__review">
-                  <div className="show-details__review-header">
-                    <div className="show-details__reviewer">
-                      <div className="show-details__reviewer-avatar">
-                        <User size={24} />
-                      </div>
-                      <div className="show-details__reviewer-info">
-                        <h4>Cinéfilo123</h4>
-                        <span>Hace 1 semana</span>
-                      </div>
-                    </div>
-                    <div className="show-details__review-rating">
-                      {[1, 2, 3, 4].map((star) => (
-                        <Star 
-                          key={star} 
-                          size={16} 
-                          fill="currentColor" 
-                          className="star-filled"
-                        />
-                      ))}
-                      <Star size={16} className="star-empty" />
-                      <span>4.0</span>
-                    </div>
-                  </div>
-                  <h3 className="show-details__review-title">Excelente serie con algunos altibajos</h3>
-                  <p className="show-details__review-content">
-                    Una serie muy sólida en general. Los personajes están bien desarrollados y la trama es interesante, aunque hay algunos episodios que se sienten un poco lentos...
-                  </p>
-                </div>
-
-                {/* Sample Review 3 */}
-                <div className="show-details__review">
-                  <div className="show-details__review-header">
-                    <div className="show-details__reviewer">
-                      <div className="show-details__reviewer-avatar">
-                        <User size={24} />
-                      </div>
-                      <div className="show-details__reviewer-info">
-                        <h4>SerieAdicto</h4>
-                        <span>Hace 2 semanas</span>
-                      </div>
-                    </div>
-                    <div className="show-details__review-rating">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star 
-                          key={star} 
-                          size={16} 
-                          fill="currentColor" 
-                          className="star-filled"
-                        />
-                      ))}
-                      <span>5.0</span>
-                    </div>
-                  </div>
-                  <h3 className="show-details__review-title">Absolutamente increíble</h3>
-                  <p className="show-details__review-content">
-                    No puedo decir lo suficiente sobre esta serie. Desde el primer episodio me tuvo enganchado. La calidad de producción es espectacular...
-                  </p>
-                </div>
+               
               </div>
-            </section>
+            </section> */}
+            <MediaReviews contentType="SERIES" contentId={id} apiSource="TMDB" />
           </div>
         )}
 
