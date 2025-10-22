@@ -47,6 +47,20 @@ class ReviewService {
     }
     return await this.reviewRepository.deleteReview(id, token);
   }
+
+    async likeReview(id, token) {
+    if (!token) {
+      return { success: false, error: 'Usuario no autenticado' };
+    }
+    return await this.reviewRepository.likeReview(id, token);
+  }
+
+  async unlikeReview(id, token) {
+    if (!token) {
+      return { success: false, error: 'Usuario no autenticado' };
+    }
+    return await this.reviewRepository.unlikeReview(id, token);
+  }
 }
 
 export default ReviewService;

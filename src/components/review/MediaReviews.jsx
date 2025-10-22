@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import ReviewModal from '../ReviewModal';
 import ReviewService from '../../api/services/ReviewService';
-import { Star, User, MessageSquare } from 'lucide-react';
+import { Star, User, MessageSquare, ThumbsUp } from 'lucide-react';
 import './MediaReviews.css';
 
 const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
@@ -20,6 +20,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
       try {
         const res = await reviewService.getReviewsByContent(contentType, contentId);
         if (res.success && Array.isArray(res.data)) {
+          console.log('Reviews recibidas:', res.data);
           setReviews(res.data);
         } else {
           setReviewsError(res.error || 'Error al cargar reseñas');
@@ -35,9 +36,88 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
 
   // Estado de expansión para cada review (por id)
   const [expandedReviews, setExpandedReviews] = useState({});
+  const [likeLoading, setLikeLoading] = useState({});
+  // Estado de likes y contador, persistente en localStorage
+  const userId = useSelector(state => state.auth?.user?.id || state.auth?.user?.email || state.auth?.user?.username || 'anon');
+  const storageKey = `reviewLikes_${userId}`;
+  const [liked, setLiked] = useState(() => {
+    if (!userId || userId === 'anon') return {};
+    try {
+      const data = localStorage.getItem(storageKey);
+      return data ? JSON.parse(data) : {};
+    } catch {
+      return {};
+    }
+  });
+  const [likeCount, setLikeCount] = useState({});
+
+  // Inicializar likeCount desde reviews, pero mantener liked desde localStorage
+  useEffect(() => {
+    if (reviews && reviews.length > 0) {
+      const likeCountObj = {};
+      reviews.forEach(r => {
+        likeCountObj[r.idReview] = r.likeCount || 0;
+      });
+      setLikeCount(likeCountObj);
+    }
+  }, [reviews]);
+
+  // Guarda liked en localStorage cada vez que cambie (por usuario)
+  useEffect(() => {
+    if (!userId || userId === 'anon') return;
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(liked));
+    } catch {}
+  }, [liked, storageKey, userId]);
+
+  // Al cambiar de usuario, cargar likes de ese usuario
+  useEffect(() => {
+    if (!userId || userId === 'anon') {
+      setLiked({});
+      return;
+    }
+    try {
+      const data = localStorage.getItem(storageKey);
+      setLiked(data ? JSON.parse(data) : {});
+    } catch {
+      setLiked({});
+    }
+  }, [userId, storageKey]);
 
   const handleToggleExpand = (id) => {
     setExpandedReviews(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const handleLike = async (idReview) => {
+    if (!isAuthenticated || !token) {
+      alert('Debes iniciar sesión para dar like');
+      return;
+    }
+    setLikeLoading(prev => ({ ...prev, [idReview]: true }));
+    if (!liked[idReview]) {
+
+      setLiked(prev => ({ ...prev, [idReview]: true }));
+      setLikeCount(prev => ({ ...prev, [idReview]: (prev[idReview] || 0) + 1 }));
+      const res = await reviewService.likeReview(idReview, token);
+      if (!res.success) {
+
+        setLiked(prev => ({ ...prev, [idReview]: false }));
+        setLikeCount(prev => ({ ...prev, [idReview]: Math.max(0, (prev[idReview] || 1) - 1) }));
+        alert(res.error || 'Error al dar like');
+      }
+    } else {
+  
+      setLiked(prev => ({ ...prev, [idReview]: false }));
+      setLikeCount(prev => ({ ...prev, [idReview]: Math.max(0, (prev[idReview] || 1) - 1) }));
+      const res = await reviewService.unlikeReview(idReview, token);
+      if (!res.success) {
+    
+        setLiked(prev => ({ ...prev, [idReview]: true }));
+        setLikeCount(prev => ({ ...prev, [idReview]: (prev[idReview] || 0) + 1 }));
+        alert(res.error || 'Error al quitar like');
+      }
+    }
+    setLikeLoading(prev => ({ ...prev, [idReview]: false }));
   };
 
   return (
@@ -94,16 +174,16 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
               <div>No hay reseñas para este contenido.</div>
             ) : (
               reviews.map((review) => {
-                console.log('Review data:', review);
                 const maxLength = 200;
                 const isLong = review.reviewText && review.reviewText.length > maxLength;
                 const expanded = !!expandedReviews[review.idReview];
                 const displayText = expanded || !isLong
                   ? review.reviewText
                   : review.reviewText.slice(0, maxLength) + '...';
-         
+
                 const profileImgUrl = review.userProfileImageUrl || review.profileImage || null;
                 const userInitial = (review.userName || review.username || 'U').charAt(0).toUpperCase();
+
                 return (
                   <div className="media-reviews__review" key={review.idReview}>
                     <div className="media-reviews__review-header">
@@ -146,6 +226,17 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                     </div>
                     <h3 className="media-reviews__review-title">{review.reviewTitle}</h3>
                     <p className="media-reviews__review-content">{displayText}</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: 8 }}>
+                      <button
+                        className={`media-reviews__like-btn${liked[review.idReview] ? ' liked' : ''}`}
+                        onClick={() => handleLike(review.idReview)}
+                        disabled={likeLoading[review.idReview]}
+                        aria-label={liked[review.idReview] ? 'Quitar like' : 'Dar like'}
+                      >
+                        <ThumbsUp size={18} fill={liked[review.idReview] ? '#2563eb' : 'none'} color={liked[review.idReview] ? '#2563eb' : '#64748b'} />
+                      </button>
+                      <span style={{ color: '#7dd3fc', fontSize: '1rem' }}>{likeCount[review.idReview] || 0}</span>
+                    </div>
                     {isLong && (
                       <button
                         className="media-reviews__read-more-btn"

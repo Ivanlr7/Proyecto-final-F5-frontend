@@ -12,6 +12,7 @@ class ReviewRepository {
     });
   }
 
+
   async createReview(reviewRequest, token) {
     try {
       const response = await this.client.post('', reviewRequest, {
@@ -101,6 +102,31 @@ class ReviewRepository {
       return { success: false, error: errorMessage, status: error.response?.status || 500 };
     }
   }
+
+    async likeReview(id, token) {
+    try {
+      const response = await this.client.post(`/${id}/like`, {}, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      return { success: true, status: response.status };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Error al dar like a la reseña';
+      return { success: false, error: errorMessage, status: error.response?.status || 500 };
+    }
+  }
+
+  async unlikeReview(id, token) {
+    try {
+      const response = await this.client.delete(`/${id}/like`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      return { success: true, status: response.status };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Error al quitar like a la reseña';
+      return { success: false, error: errorMessage, status: error.response?.status || 500 };
+    }
+  }
+
 }
 
 export default ReviewRepository;
