@@ -1,24 +1,28 @@
-@media (min-width: 768px) {
-  .header__nav {
-    position: static !important;
-    right: 0 !important;
-    width: auto !important;
-    max-width: none !important;
-    height: auto !important;
-    background: none !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 2rem !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-    display: flex !important;
-    z-index: auto !important;
-  }
-  .header__nav--open {
-    right: 0 !important;
-  }
+/* Navigation - Menú móvil por defecto */
+.header__nav {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 70vw;
+  max-width: 320px;
+  height: 100vh;
+  background: #1e293b;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 5rem 2rem 2rem 2rem;
+  box-shadow: -2px 0 12px rgba(0,0,0,0.3);
+  z-index: 100;
+  transition: right 0.3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  overflow-y: auto;
 }
-/* Botón hamburguesa solo en móvil */
+
+.header__nav--open {
+  right: 0;
+}
+
+/* Botón hamburguesa - solo visible en móvil */
 .header__burger {
   display: flex;
   align-items: center;
@@ -28,43 +32,44 @@
   color: #fff;
   cursor: pointer;
   padding: 0.5rem;
-  margin-left: 15rem;
+  z-index: 50;
 }
 
-@media (min-width: 768px) {
-  .header__burger {
-    display: none !important;
-  }
-}
-/* Acciones dentro del menú hamburguesa */
+/* Acciones dentro del menú hamburguesa (móvil) */
 .header__nav-actions {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  width: 100%;
 }
 
+/* En escritorio: ocultar botón hamburguesa y mostrar nav horizontal */
 @media (min-width: 768px) {
+  .header__burger {
+    display: none;
+  }
+
+  .header__nav {
+    position: static;
+    right: 0;
+    width: auto;
+    max-width: none;
+    height: auto;
+    background: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+    padding: 0;
+    box-shadow: none;
+    display: flex;
+    z-index: auto;
+    overflow-y: visible;
+  }
+
   .header__nav-actions {
     display: none;
   }
-}
-.header__nav {
-  position: fixed;
-  top: 0;
-  right: -100vw;
-  width: 70vw;
-  max-width: 320px;
-  height: 100vh;
-  background: #1e293b;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2rem;
-  padding: 5rem 2rem 2rem 2rem;
-  box-shadow: -2px 0 12px rgba(0,0,0,0.2);
-  z-index: 100;
-  transition: right 0.3s cubic-bezier(.4,0,.2,1);
-  display: flex;
 }
 .header {
   background-color: rgba(15, 23, 42, 0.9);
@@ -82,6 +87,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 /* Logo */
@@ -89,6 +95,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .header__logo {
@@ -110,19 +117,7 @@
   color: #ffffff;
   font-weight: 700;
   font-size: 1.25rem;
-}
-
-/* Navigation */
-.header__nav {
-  display: none;
-  align-items: center;
-  gap: 2rem;
-}
-
-@media (min-width: 768px) {
-  .header__nav {
-    display: flex;
-  }
+  text-decoration: none;
 }
 
 .header__nav-link {
@@ -139,11 +134,17 @@
   color: #ffffff;
 }
 
-/* Actions */
+/* Actions - solo visible en escritorio */
 .header__actions {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .header__actions {
+    display: flex;
+  }
 }
 
 .header__search {
@@ -192,8 +193,8 @@
   outline-offset: 2px;
 }
 
+/* Botones de login y register - escritorio */
 .header__login-btn {
-  display: none;
   padding: 0.5rem 1rem;
   background-color: transparent;
   color: #60a5fa;
@@ -204,12 +205,8 @@
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
-}
-
-@media (min-width: 768px) {
-  .header__login-btn {
-    display: block;
-  }
+  text-decoration: none;
+  display: inline-block;
 }
 
 .header__login-btn:hover {
@@ -224,7 +221,6 @@
 }
 
 .header__register-btn {
-  display: none;
   padding: 0.5rem 1rem;
   background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
   color: #ffffff;
@@ -235,12 +231,8 @@
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
-}
-
-@media (min-width: 768px) {
-  .header__register-btn {
-    display: block;
-  }
+  text-decoration: none;
+  display: inline-block;
 }
 
 .header__register-btn:hover {
@@ -252,9 +244,22 @@
   transform: translateY(0);
 }
 
+/* Botones móviles dentro del menú hamburguesa */
+.header__login-btn--mobile,
+.header__register-btn--mobile {
+  width: 100%;
+  text-align: center;
+  padding: 0.75rem 1rem;
+}
+
+.header__logout-btn--mobile {
+  width: 100%;
+  padding: 0.75rem 1rem;
+}
+
 .header__avatar {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
@@ -262,6 +267,14 @@
   justify-content: center;
   background-color: #1e293b;
   cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.header__avatar--mobile {
+  width: 3rem;
+  height: 3rem;
+  align-self: center;
 }
 
 .header__avatar img {
@@ -315,7 +328,6 @@
 }
 
 .header__logout-btn {
-  display: none;
   padding: 0.5rem 1rem;
   background-color: #ef4444;
   color: #ffffff;
@@ -326,12 +338,6 @@
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
-}
-
-@media (min-width: 768px) {
-  .header__logout-btn {
-    display: block;
-  }
 }
 
 .header__logout-btn:hover:not(:disabled) {
@@ -347,10 +353,4 @@
 
 .header__logout-btn:active {
   transform: translateY(0);
-}
-
-
-.header__login-btn,
-.header__register-btn {
-  text-decoration: none;
 }
