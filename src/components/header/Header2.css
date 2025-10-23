@@ -14,12 +14,17 @@
   box-shadow: -2px 0 12px rgba(0,0,0,0.3);
   z-index: 100;
   transition: right 0.3s cubic-bezier(.4,0,.2,1);
-  display: flex;
+  display: none;
   overflow-y: auto;
 }
 
 .header__nav--open {
   right: 0;
+  display: flex;
+}
+
+.header__nav-link {
+  color: #d1d5db;;
 }
 
 /* Botón hamburguesa - solo visible en móvil */
