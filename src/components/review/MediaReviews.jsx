@@ -234,7 +234,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                     </div>
                     <h3 className="media-reviews__review-title">{review.reviewTitle}</h3>
                     <p className="media-reviews__review-content">{displayText}</p>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: 8 }}>
+                    <div className="media-reviews__actions-row">
                       <button
                         className={`media-reviews__like-btn${liked[review.idReview] ? ' liked' : ''}`}
                         onClick={() => handleLike(review.idReview)}
@@ -247,16 +247,16 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                         />
                       </button>
                       <span style={{ color: '#7dd3fc', fontSize: '1rem' }}>{likeCount[review.idReview] || 0}</span>
+                      {isLong && (
+                        <button
+                          className="media-reviews__read-more-btn"
+                          onClick={() => handleToggleExpand(review.idReview)}
+                          style={{ marginLeft: '1rem' }}
+                        >
+                          {expanded ? 'Leer menos' : 'Leer más'}
+                        </button>
+                      )}
                     </div>
-                    {isLong && (
-                      <button
-                        className="media-reviews__read-more-btn"
-                        onClick={() => handleToggleExpand(review.idReview)}
-                        style={{ marginTop: 4 }}
-                      >
-                        {expanded ? 'Leer menos' : 'Leer más'}
-                      </button>
-                    )}
                   </div>
                 );
               })

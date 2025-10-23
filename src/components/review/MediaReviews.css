@@ -1,3 +1,5 @@
+
+
 .media-reviews--movie .media-reviews__read-more-btn {
   background: #2563eb;
   color: #fff;
@@ -60,6 +62,13 @@
 }
 .media-reviews--book .media-reviews__like-btn.liked {
   background: #33281a;
+}
+
+.media-reviews__actions-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 8px;
 }
 
 .media-reviews__read-more-btn {
