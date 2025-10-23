@@ -259,13 +259,8 @@
 }
 
 .loading-spinner {
-  width: 3rem;
-  height: 3rem;
-  border: 3px solid #1e293b;
-  border-top: 3px solid #f97316;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 1rem;
+
+  border: none;
 }
 
 @keyframes spin {

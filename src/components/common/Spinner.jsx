@@ -1,9 +1,9 @@
 import { LoaderCircle } from "lucide-react";
 import "./Spinner.css";
 
-export default function Spinner({ size = 40, color = "#3b82f6", className = "" }) {
+export default function Spinner({ size = 50, color = "#3b82f6", className = "" }) {
   return (
-    <div className={`spinner ${className}`}>
+    <div className={`spinner2 ${className}`}>
       <LoaderCircle 
         size={size} 
         color={color} 

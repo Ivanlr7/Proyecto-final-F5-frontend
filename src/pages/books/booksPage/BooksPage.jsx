@@ -4,6 +4,7 @@ import BookService from '../../../api/services/BookService';
 import MediaCard from '../../../components/MediaCard';
 import SearchBar from '../../../components/SearchBar/SearchBar';
 import { Filter, ChevronDown } from 'lucide-react';
+import Spinner from '../../../components/common/Spinner';
 import './BooksPage.css';
 
 const BooksPage = () => {
@@ -152,9 +153,11 @@ const BooksPage = () => {
 
 	if (loading && books.length === 0) {
 		return (
-			<div className="books-page">
+			<div className="books-page">	
+					   <Spinner size={40} />
+					<p style={{textAlign:'center'}}>Cargando libros...</p>
 				<div className="loading-spinner" />
-				<p style={{textAlign:'center'}}>Cargando libros...</p>
+			
 			</div>
 		);
 	}

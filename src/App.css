@@ -3,6 +3,11 @@
   margin: 0 auto;
   text-align: center;
 }
+body {
+
+background-color: #0f172a;;
+}
+
 /* 
 .App {
   min-height: 100vh;

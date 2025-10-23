@@ -4,6 +4,7 @@ import VideogameService from '../../../api/services/VideogameService';
 import MediaCard from '../../../components/MediaCard';
 import SearchBar from '../../../components/SearchBar/SearchBar';
 import { Filter, ChevronDown } from 'lucide-react';
+import Spinner from '../../../components/common/Spinner';
 import './VideogamesPage.css';
 
 const VideogamesPage = () => {
@@ -173,12 +174,16 @@ const VideogamesPage = () => {
 
   if (loading && videogames.length === 0) {
     return (
-      <div className="videogames-page">
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>Cargando videojuegos...</p>
-        </div>
+      <div className='videogames-page'>
+                <div className='loading-spinner'>   
+        <Spinner size={48} />
       </div>
+
+   
+        </div>
+
+
+    
     );
   }
 
@@ -344,8 +349,8 @@ const VideogamesPage = () => {
 
         {/* Games Grid */}
         {loading ? (
-          <div className="loading-spinner">
-            <div className="spinner"></div>
+          <div>
+         
             <p>Cargando videojuegos...</p>
           </div>
         ) : error ? (
