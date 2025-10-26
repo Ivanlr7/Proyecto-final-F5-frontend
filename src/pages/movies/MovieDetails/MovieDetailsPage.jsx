@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import ReviewModal from '../../../components/ReviewModal';
 import ReviewService from '../../../api/services/ReviewService';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, Calendar, Clock, Film, User, MessageSquare } from 'lucide-react';

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import ReviewModal from '../ReviewModal';
+import ReviewModal from './ReviewModal';
 import ReviewService from '../../api/services/ReviewService';
 import { Star, User, MessageSquare, ThumbsUp } from 'lucide-react';
 import './MediaReviews.css';
