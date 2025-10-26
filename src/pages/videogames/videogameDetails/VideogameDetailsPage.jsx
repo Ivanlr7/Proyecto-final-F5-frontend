@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import VideogameService from '../../../api/services/VideogameService';
 import MediaCard from '../../../components/MediaCard';
+import MediaReviews from '../../../components/review/MediaReviews';
 import { Star, Calendar, Clock, User, MessageSquare, Gamepad2 } from 'lucide-react';
 import './VideogameDetailsPage.css';
 
@@ -78,7 +79,7 @@ const VideogameDetailsPage = () => {
     );
   }
 
-  // backdrop_url y poster_url ya vienen formateados desde el Service
+ 
   const backdropUrl = videogame.backdrop_url || 
     (videogame.backdrop_path ? VideogameService.getImageUrl(videogame.backdrop_path, '1080p') : null);
 
@@ -259,120 +260,7 @@ const VideogameDetailsPage = () => {
 
         {activeTab === 'resenas' && (
           <div className="videogame-details__tab-content">
-            {/* Write Review Section */}
-            <section className="videogame-details__section">
-              <div className="videogame-details__review-actions">
-                <button className="videogame-details__write-review-btn">
-                  <MessageSquare size={20} />
-                  Escribir Reseña
-                </button>
-                <button className="videogame-details__add-favorites-btn">
-                  <Star size={20} />
-                  Agregar a Favoritos
-                </button>
-              </div>
-            </section>
-
-            {/* Reviews Section */}
-            <section className="videogame-details__section">
-              <h2 className="videogame-details__section-title">
-                Reseñas de Usuarios
-                <span className="videogame-details__reviews-count">4 reseñas</span>
-              </h2>
-              
-              <div className="videogame-details__reviews">
-                {/* Sample Review 1 */}
-                <div className="videogame-details__review">
-                  <div className="videogame-details__review-header">
-                    <div className="videogame-details__reviewer">
-                      <div className="videogame-details__reviewer-avatar">
-                        <User size={24} />
-                      </div>
-                      <div className="videogame-details__reviewer-info">
-                        <h4>Usuario Prueba</h4>
-                        <span>Hace 2 días</span>
-                      </div>
-                    </div>
-                    <div className="videogame-details__review-rating">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star 
-                          key={star} 
-                          size={16} 
-                          fill="currentColor" 
-                          className="star-filled"
-                        />
-                      ))}
-                      <span>5.0</span>
-                    </div>
-                  </div>
-                  <h3 className="videogame-details__review-title">Una obra maestra</h3>
-                  <p className="videogame-details__review-content">
-                    Este juego supera todas las expectativas. La jugabilidad es impecable, los gráficos son absolutamente impresionantes y la historia es de primer nivel. Cada momento está...
-                  </p>
-                </div>
-
-                {/* Sample Review 2 */}
-                <div className="videogame-details__review">
-                  <div className="videogame-details__review-header">
-                    <div className="videogame-details__reviewer">
-                      <div className="videogame-details__reviewer-avatar">
-                        <User size={24} />
-                      </div>
-                      <div className="videogame-details__reviewer-info">
-                        <h4>Gamer123</h4>
-                        <span>Hace 1 semana</span>
-                      </div>
-                    </div>
-                    <div className="videogame-details__review-rating">
-                      {[1, 2, 3, 4].map((star) => (
-                        <Star 
-                          key={star} 
-                          size={16} 
-                          fill="currentColor" 
-                          className="star-filled"
-                        />
-                      ))}
-                      <Star size={16} className="star-empty" />
-                      <span>4.0</span>
-                    </div>
-                  </div>
-                  <h3 className="videogame-details__review-title">Excelente juego con algunos altibajos</h3>
-                  <p className="videogame-details__review-content">
-                    Un juego muy sólido en general. Los personajes están bien desarrollados y la jugabilidad es interesante, aunque hay algunas mecánicas que se sienten un poco lentas...
-                  </p>
-                </div>
-
-                {/* Sample Review 3 */}
-                <div className="videogame-details__review">
-                  <div className="videogame-details__review-header">
-                    <div className="videogame-details__reviewer">
-                      <div className="videogame-details__reviewer-avatar">
-                        <User size={24} />
-                      </div>
-                      <div className="videogame-details__reviewer-info">
-                        <h4>GameAdicto</h4>
-                        <span>Hace 2 semanas</span>
-                      </div>
-                    </div>
-                    <div className="videogame-details__review-rating">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star 
-                          key={star} 
-                          size={16} 
-                          fill="currentColor" 
-                          className="star-filled"
-                        />
-                      ))}
-                      <span>5.0</span>
-                    </div>
-                  </div>
-                  <h3 className="videogame-details__review-title">Absolutamente increíble</h3>
-                  <p className="videogame-details__review-content">
-                    No puedo decir lo suficiente sobre este juego. Desde el primer minuto me tuvo enganchado. La calidad de producción es espectacular...
-                  </p>
-                </div>
-              </div>
-            </section>
+           <MediaReviews contentType="GAME" contentId={id} apiSource="IGDB" />
           </div>
         )}
 

@@ -124,8 +124,8 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
   const typeClass = {
     MOVIE: 'media-reviews--movie',
     SERIES: 'media-reviews--show',
-    videogame: 'media-reviews--videogame',
-    book: 'media-reviews--book'
+    GAME: 'media-reviews--videogame',
+    BOOK: 'media-reviews--book'
   }[contentType] || '';
 
   return (
