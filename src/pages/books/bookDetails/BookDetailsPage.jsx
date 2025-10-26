@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import BookService from '../../../api/services/BookService';
 import MediaCard from '../../../components/MediaCard';
 import './BookDetailsPage.css';
+import MediaReviews from '../../../components/review/MediaReviews';
 
 const BookDetailsPage = () => {
 	const { id } = useParams();
@@ -243,16 +244,7 @@ const BookDetailsPage = () => {
 
 					{activeTab === 'reviews' && (
 						<div className="book-details__reviews">
-							<h2 className="book-details__section-title">Reseñas</h2>
-							<div className="book-details__review">
-								<p>Las reseñas estarán disponibles próximamente.</p>
-								{book.vote_average > 0 && (
-									<div style={{marginTop:'1rem', textAlign:'center'}}>
-										<div style={{fontSize:'2rem'}}>⭐ {book.vote_average.toFixed(1)}/5</div>
-										<p>Valoración promedio</p>
-									</div>
-								)}
-							</div>
+						<MediaReviews contentType="BOOK" contentId={id} apiSource="OPENLIBRARY" />
 						</div>
 					)}
 
