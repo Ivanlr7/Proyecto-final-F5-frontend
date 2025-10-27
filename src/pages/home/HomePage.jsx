@@ -102,8 +102,8 @@ export default function HomePage() {
       const shows = showsResult.status === 'fulfilled' ? showsResult.value.slice(0, 10) : [];
 
       // Normalizar formato de películas y series
-      const normalizedMovies = movies.map(item => ({ ...item, contentType: 'movie' }));
-      const normalizedShows = shows.map(item => ({ ...item, contentType: 'show' }));
+  const normalizedMovies = movies.map(item => ({ ...item, contentType: 'movie' }));
+  const normalizedShows = shows.map(item => ({ ...item, contentType: 'series' }));
 
       // Combinar y mezclar aleatoriamente
       const allContent = [...normalizedMovies, ...normalizedShows];
@@ -118,7 +118,7 @@ export default function HomePage() {
 
   // Función para renderizar diferentes tipos de contenido
   const renderMixedContentCard = (item) => {
-    return <MediaCard item={item} type={item.contentType} className='media-card__image'/>;
+    return <MediaCard item={item} type={item.contentType} className='slider-card'/>;
   };
 
   useEffect(() => {

@@ -53,11 +53,11 @@ const Slider = ({ fetchItems, renderItem, title }) => {
           stretch: 0,
           depth: 100,
           modifier: 1,
-          slideShadows: true,
+          slideShadows: false,
         }}
         pagination={{ clickable: true }}
         autoplay={{ delay: 2500, disableOnInteraction: false }}
-        modules={[EffectCoverflow, Pagination, Autoplay]}
+        modules={[EffectCoverflow, Autoplay]}
         className="slider__swiper"
       >
         {items.map((item, idx) => (
