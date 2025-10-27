@@ -1,4 +1,5 @@
-﻿import { useNavigate } from 'react-router-dom';
+﻿import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './MediaCard.css';
 
 export default function MediaCard({ 
@@ -9,7 +10,7 @@ export default function MediaCard({
 }) {
   const navigate = useNavigate();
 
-// Formateo de la puntuación (acepta 0)
+
   const formatRating = (rating) => {
     if (rating === null || rating === undefined) return 'N/A';
     const numericRating = typeof rating === 'string' ? parseFloat(rating) : rating;
@@ -33,7 +34,7 @@ export default function MediaCard({
     }
   };
 
-  // Obtener el título según el tipo de media
+
   const getTitle = () => {
     switch (type) {
       case 'movie':
@@ -51,7 +52,7 @@ export default function MediaCard({
     }
   };
 
-  // Obtener el año/fecha según el tipo de media
+
   const getYear = () => {
     switch (type) {
       case 'movie':
@@ -69,7 +70,7 @@ export default function MediaCard({
     }
   };
 
-  // Obtener la ruta de navegación según el tipo
+
   const getNavigationPath = () => {
     switch (type) {
       case 'movie':
@@ -87,7 +88,7 @@ export default function MediaCard({
     }
   };
 
-  // Obtener el icono de fallback según el tipo
+
   const getFallbackIcon = () => {
     switch (type) {
       case 'movie':
