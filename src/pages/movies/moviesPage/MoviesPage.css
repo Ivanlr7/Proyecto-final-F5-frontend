@@ -334,7 +334,7 @@
 }
 
 /* Pagination */
-.movies-page__pagination {
+/* .movies-page__pagination {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -366,7 +366,7 @@
 .movies-page__page-info {
   color: #94a3b8;
   font-weight: 600;
-}
+} */
 
 /* Empty State */
 .movies-page__empty {

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import showService from '../../../api/services/ShowService';
 import SearchBar from '../../../components/SearchBar/SearchBar';
 import MediaCard from '../../../components/MediaCard/MediaCard';
+import Pagination from '../../../components/common/Pagination';
 import './ShowsPage.css';
 
 export default function ShowsPage() {
@@ -322,27 +323,11 @@ export default function ShowsPage() {
             </div>
 
             {/* Pagination */}
-            <div className="shows-page__pagination">
-              <button 
-                className="shows-page__page-btn"
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                ← Anterior
-              </button>
-              
-              <span className="shows-page__page-info">
-                Página {currentPage} de {totalPages}
-              </span>
-              
-              <button 
-                className="shows-page__page-btn"
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                Siguiente →
-              </button>
-            </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
           </>
         )}
 
