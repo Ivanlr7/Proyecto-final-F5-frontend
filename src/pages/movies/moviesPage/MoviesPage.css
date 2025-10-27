@@ -158,6 +158,13 @@
   min-width: 200px;
 }
 
+.movies-page__dropdown-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
 .movies-page__year-select:focus,
 .movies-page__rating-select:focus {
   outline: none;

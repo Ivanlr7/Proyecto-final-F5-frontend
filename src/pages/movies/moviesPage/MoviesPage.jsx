@@ -245,35 +245,36 @@ export default function MoviesPage() {
           </div>
 
           {/* Year Filter */}
-          <div className="movies-page__filter-section">
-            <label className="movies-page__filter-label">Año:</label>
-            <select 
-              className="movies-page__year-select"
-              value={selectedYear}
-              onChange={(e) => handleYearChange(e.target.value)}
-            >
-              <option value="">Todos los años</option>
-              {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
-                <option key={year} value={year}>{year}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Rating Filter */}
-          <div className="movies-page__filter-section">
-            <label className="movies-page__filter-label">Puntuación mínima:</label>
-            <select 
-              className="movies-page__rating-select"
-              value={minRating}
-              onChange={(e) => handleRatingChange(e.target.value)}
-            >
-              <option value="">Cualquier puntuación</option>
-              <option value="5">5+ ⭐</option>
-              <option value="6">6+ ⭐</option>
-              <option value="7">7+ ⭐</option>
-              <option value="8">8+ ⭐</option>
-              <option value="9">9+ ⭐</option>
-            </select>
+          {/* Dropdowns Row */}
+          <div className="movies-page__dropdown-row">
+            <div className="movies-page__filter-section" style={{marginBottom: 0}}>
+              <label className="movies-page__filter-label">Año:</label>
+              <select 
+                className="movies-page__year-select"
+                value={selectedYear}
+                onChange={(e) => handleYearChange(e.target.value)}
+              >
+                <option value="">Todos los años</option>
+                {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+            </div>
+            <div className="movies-page__filter-section" style={{marginBottom: 0}}>
+              <label className="movies-page__filter-label">Puntuación mínima:</label>
+              <select 
+                className="movies-page__rating-select"
+                value={minRating}
+                onChange={(e) => handleRatingChange(e.target.value)}
+              >
+                <option value="">Cualquier puntuación</option>
+                <option value="5">5+ ⭐</option>
+                <option value="6">6+ ⭐</option>
+                <option value="7">7+ ⭐</option>
+                <option value="8">8+ ⭐</option>
+                <option value="9">9+ ⭐</option>
+              </select>
+            </div>
           </div>
         </div>
 
