@@ -5,6 +5,7 @@ import CategoryCard from '../../components/categoryCard/CategoryCard';
 import ReviewHomeCard from '../../components/review/ReviewHomeCard';
 import Slider from '../../components/slider/Slider';
 import movieService from '../../api/services/MovieService';
+import showService from '../../api/services/ShowService';
 import MediaCard from '../../components/MediaCard/MediaCard';
 
 
@@ -30,7 +31,7 @@ function ReviewCard({ title, description, imageUrl, rating, category, categoryCo
 }
 
 export default function HomePage() {
-  const [popularMovies, setPopularMovies] = useState([]);
+  const [mixedContent, setMixedContent] = useState([]);
   const categories = [
     {
       title: "Películas",
@@ -89,22 +90,44 @@ export default function HomePage() {
     }
   ];
 
-  const fetchPopularMovies = async () => {
-    const res = await movieService.getPopularMovies();
-    return res?.data?.results || [];
+  // Función para obtener contenido mixto de películas y series
+  const fetchMixedPopularContent = async () => {
+    try {
+      const [moviesResult, showsResult] = await Promise.allSettled([
+        movieService.getPopularMovies().then(res => res?.data?.results || []),
+        showService.getPopularShows().then(res => res?.data?.results || [])
+      ]);
+
+      const movies = moviesResult.status === 'fulfilled' ? moviesResult.value.slice(0, 10) : [];
+      const shows = showsResult.status === 'fulfilled' ? showsResult.value.slice(0, 10) : [];
+
+      // Normalizar formato de películas y series
+      const normalizedMovies = movies.map(item => ({ ...item, contentType: 'movie' }));
+      const normalizedShows = shows.map(item => ({ ...item, contentType: 'show' }));
+
+      // Combinar y mezclar aleatoriamente
+      const allContent = [...normalizedMovies, ...normalizedShows];
+      const shuffled = allContent.sort(() => Math.random() - 0.5);
+      
+      return shuffled;
+    } catch (error) {
+      console.error('Error fetching mixed content:', error);
+      return [];
+    }
   };
 
-  const renderMovieCard = (movie) => (
-    <MediaCard item={movie} type="movie" className='media-card__image'/>
-  );
+  // Función para renderizar diferentes tipos de contenido
+  const renderMixedContentCard = (item) => {
+    return <MediaCard item={item} type={item.contentType} className='media-card__image'/>;
+  };
 
   useEffect(() => {
-    const loadPopularMovies = async () => {
-      const movies = await fetchPopularMovies();
-      setPopularMovies(movies);
+    const loadContent = async () => {
+      const content = await fetchMixedPopularContent();
+      setMixedContent(content);
     };
 
-    loadPopularMovies();
+    loadContent();
   }, []);
 
   return (
@@ -112,13 +135,13 @@ export default function HomePage() {
       
       <HeroSection />
 
-  {/* Slider de Películas Populares */}
+  {/* Slider de Películas y Series Populares */}
       <section className="slider-section">
         <div className="slider-section__container">
           <Slider
-            fetchItems={fetchPopularMovies}
-            renderItem={renderMovieCard}
-            title="Películas Populares"
+            fetchItems={fetchMixedPopularContent}
+            renderItem={renderMixedContentCard}
+            title="Contenido Popular"
           />
         </div>
       </section>
