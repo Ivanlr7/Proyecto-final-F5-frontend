@@ -57,6 +57,7 @@
 
   .header__nav {
     position: static;
+  text-align: left;
     right: 0;
     width: auto;
     max-width: none;
@@ -93,6 +94,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  
 }
 
 /* Logo */
@@ -149,6 +151,21 @@
 @media (min-width: 768px) {
   .header__actions {
     display: flex;
+  }
+  /* Mostrar avatar de escritorio solo en escritorio o cuando el menú móvil está cerrado */
+  .header__avatar--mobile {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .header__nav--open ~ .header__actions .header__avatar {
+    display: none !important;
+  }
+
+  .header__nav--open .header__avatar--mobile {
+    display: flex !important;
   }
 }
 
@@ -261,7 +278,7 @@
 }
 
 .header__logout-btn--mobile {
-  width: 100%;
+  width: 40%;
   padding: 0.4rem 0.7rem;
   font-size: 0.92rem;
   border-radius: 0.4rem;
@@ -284,7 +301,11 @@
 .header__avatar--mobile {
   width: 3rem;
   height: 3rem;
-  align-self: center;
+  align-self: flex-start !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .header__avatar img {

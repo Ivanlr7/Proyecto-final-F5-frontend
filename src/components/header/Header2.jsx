@@ -78,6 +78,27 @@ export default function Header() {
 
         {/* Navigation y acciones en menú responsive */}
             <nav className={`header__nav${menuOpen ? ' header__nav--open' : ''}`} onClick={() => setMenuOpen(false)}>
+              {isAuthenticated && (
+                <Link to="/me" className="header__avatar header__avatar--mobile" style={{ margin: '0 auto 1.5rem auto' }}>
+                  {profileImageUrl ? (
+                    <img 
+                      src={profileImageUrl} 
+                      alt={`Avatar de ${user?.userName || user?.username || user?.sub || 'Usuario'}`}
+                      className="header__avatar-image"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextElementSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <div 
+                    className="header__avatar-initials"
+                    style={{ display: profileImageUrl ? 'none' : 'flex' }}
+                  >
+                    {(user?.userName || user?.username || user?.sub || 'U').charAt(0).toUpperCase()}
+                  </div>
+                </Link>
+              )}
               <Link to="/" className="header__nav-link header__nav-link--active">Inicio</Link>
               <Link to="peliculas" className="header__nav-link header__nav-link--active">Películas</Link>
               <Link to="series" className="header__nav-link header__nav-link--active">Series</Link>
@@ -91,25 +112,6 @@ export default function Header() {
                   </>
                 ) : (
                   <>
-                    <Link to="/me" className="header__avatar header__avatar--mobile">
-                      {profileImageUrl ? (
-                        <img 
-                          src={profileImageUrl} 
-                          alt={`Avatar de ${user?.userName || user?.username || user?.sub || 'Usuario'}`}
-                          className="header__avatar-image"
-                          onError={(e) => {
-                            e.target.style.display = 'none';
-                            e.target.nextElementSibling.style.display = 'flex';
-                          }}
-                        />
-                      ) : null}
-                      <div 
-                        className="header__avatar-initials"
-                        style={{ display: profileImageUrl ? 'none' : 'flex' }}
-                      >
-                        {(user?.userName || user?.username || user?.sub || 'U').charAt(0).toUpperCase()}
-                      </div>
-                    </Link>
                     <button 
                       onClick={handleLogout}
                       className="header__logout-btn header__logout-btn--mobile"
