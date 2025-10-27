@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { logoutThunk, checkAuthThunk, clearError } from '../../store/slices/authSlice'
 import userService from '../../api/services/UserService'
-import "./Header2.css";
+import "./Header.css";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
