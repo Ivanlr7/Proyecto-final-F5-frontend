@@ -1,3 +1,30 @@
+/* Advanced Filter Dropdown Toggle */
+.movies-page__advanced-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.advanced-filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.advanced-filter-toggle:hover {
+  background: #2563eb;
+  color: #fff;
+}
 .movies-page {
   min-height: 100vh;
   background-color: #0f172a;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Filter, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import movieService from '../../../api/services/MovieService';
 import SearchBar from '../../../components/SearchBar/SearchBar';
@@ -21,6 +22,7 @@ export default function MoviesPage() {
   const [selectedYear, setSelectedYear] = useState('');
   const [minRating, setMinRating] = useState('');
   const [useFilters, setUseFilters] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   // Estados para búsqueda
   const [searchQuery, setSearchQuery] = useState('');
@@ -215,69 +217,85 @@ export default function MoviesPage() {
           </div>
         </div>
 
-        {/* Advanced Filters */}
-        <div className="movies-page__advanced-filters">
-          <h3 className="movies-page__filters-title">
-            Filtros Avanzados
-            {useFilters && (
-              <button 
-                className="movies-page__clear-filters"
-                onClick={clearFilters}
-              >
-                Limpiar Filtros
-              </button>
-            )}
-          </h3>
-          
-          {/* Genres Filter */}
-          <div className="movies-page__filter-section">
-            <label className="movies-page__filter-label">Géneros:</label>
-            <div className="movies-page__genres">
-              {genres.map((genre) => (
-                <button
-                  key={genre.id}
-                  className={`movies-page__genre-btn ${selectedGenres.includes(genre.id) ? 'active' : ''}`}
-                  onClick={() => handleGenreToggle(genre.id)}
-                >
-                  {genre.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Year Filter */}
-          {/* Dropdowns Row */}
-          <div className="movies-page__dropdown-row">
-            <div className="movies-page__filter-section" style={{marginBottom: 0}}>
-              <label className="movies-page__filter-label">Año:</label>
-              <select 
-                className="movies-page__year-select"
-                value={selectedYear}
-                onChange={(e) => handleYearChange(e.target.value)}
-              >
-                <option value="">Todos los años</option>
-                {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
-                  <option key={year} value={year}>{year}</option>
-                ))}
-              </select>
-            </div>
-            <div className="movies-page__filter-section" style={{marginBottom: 0}}>
-              <label className="movies-page__filter-label">Puntuación mínima:</label>
-              <select 
-                className="movies-page__rating-select"
-                value={minRating}
-                onChange={(e) => handleRatingChange(e.target.value)}
-              >
-                <option value="">Cualquier puntuación</option>
-                <option value="5">5+ ⭐</option>
-                <option value="6">6+ ⭐</option>
-                <option value="7">7+ ⭐</option>
-                <option value="8">8+ ⭐</option>
-                <option value="9">9+ ⭐</option>
-              </select>
-            </div>
-          </div>
+        {/* Advanced Filters Dropdown */}
+        <div className="movies-page__advanced-toggle">
+          <button 
+            className="advanced-filter-toggle"
+            onClick={() => setShowAdvancedFilters((prev) => !prev)}
+          >
+            <Filter size={20} />
+            <span>Filtros Avanzados</span>
+            <ChevronDown 
+              size={20} 
+              style={{ 
+                transform: showAdvancedFilters ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease'
+              }}
+            />
+          </button>
         </div>
+
+        {showAdvancedFilters && (
+          <div className="movies-page__advanced-filters">
+            <h3 className="movies-page__filters-title">
+              Filtros Avanzados
+              {useFilters && (
+                <button 
+                  className="movies-page__clear-filters"
+                  onClick={clearFilters}
+                >
+                  Limpiar Filtros
+                </button>
+              )}
+            </h3>
+            {/* Genres Filter */}
+            <div className="movies-page__filter-section">
+              <label className="movies-page__filter-label">Géneros:</label>
+              <div className="movies-page__genres">
+                {genres.map((genre) => (
+                  <button
+                    key={genre.id}
+                    className={`movies-page__genre-btn ${selectedGenres.includes(genre.id) ? 'active' : ''}`}
+                    onClick={() => handleGenreToggle(genre.id)}
+                  >
+                    {genre.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {/* Year & Rating Filter */}
+            <div className="movies-page__dropdown-row">
+              <div className="movies-page__filter-section" style={{marginBottom: 0}}>
+                <label className="movies-page__filter-label">Año:</label>
+                <select 
+                  className="movies-page__year-select"
+                  value={selectedYear}
+                  onChange={(e) => handleYearChange(e.target.value)}
+                >
+                  <option value="">Todos los años</option>
+                  {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="movies-page__filter-section" style={{marginBottom: 0}}>
+                <label className="movies-page__filter-label">Puntuación mínima:</label>
+                <select 
+                  className="movies-page__rating-select"
+                  value={minRating}
+                  onChange={(e) => handleRatingChange(e.target.value)}
+                >
+                  <option value="">Cualquier puntuación</option>
+                  <option value="5">5+ ⭐</option>
+                  <option value="6">6+ ⭐</option>
+                  <option value="7">7+ ⭐</option>
+                  <option value="8">8+ ⭐</option>
+                  <option value="9">9+ ⭐</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Loading State */}
         {loading && (
