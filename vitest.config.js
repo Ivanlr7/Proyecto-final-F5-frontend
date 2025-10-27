@@ -4,6 +4,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: './src/test/setup.js',
+    include: ['src/test/**/*.test.{js,jsx,ts,tsx}'],
     coverage: {
       provider: 'v8',
       reportsDirectory: './coverage',
