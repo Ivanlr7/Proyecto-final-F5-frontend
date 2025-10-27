@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './HomePage.css'
 import HeroSection from '../../components/hero/HeroSection';
 import CategoryCard from '../../components/categoryCard/CategoryCard';
 import ReviewHomeCard from '../../components/review/ReviewHomeCard';
+import Slider from '../../components/slider/Slider';
+import movieService from '../../api/services/MovieService';
+import MediaCard from '../../components/MediaCard/MediaCard';
 
 
 // Componente ReviewCard
@@ -27,6 +30,7 @@ function ReviewCard({ title, description, imageUrl, rating, category, categoryCo
 }
 
 export default function HomePage() {
+  const [popularMovies, setPopularMovies] = useState([]);
   const categories = [
     {
       title: "Películas",
@@ -85,10 +89,40 @@ export default function HomePage() {
     }
   ];
 
+  const fetchPopularMovies = async () => {
+    const res = await movieService.getPopularMovies();
+    return res?.data?.results || [];
+  };
+
+  const renderMovieCard = (movie) => (
+    <MediaCard item={movie} type="movie" className='media-card__image'/>
+  );
+
+  useEffect(() => {
+    const loadPopularMovies = async () => {
+      const movies = await fetchPopularMovies();
+      setPopularMovies(movies);
+    };
+
+    loadPopularMovies();
+  }, []);
+
   return (
     <div className="home">
       
       <HeroSection />
+
+  {/* Slider de Películas Populares */}
+      <section className="slider-section">
+        <div className="slider-section__container">
+          <Slider
+            fetchItems={fetchPopularMovies}
+            renderItem={renderMovieCard}
+            title="Películas Populares"
+          />
+        </div>
+      </section>
+
     <section className="categories-section">
         <div className="categories-section__container">
           <h2 className="categories-section__title">Categorías</h2>
@@ -124,7 +158,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
 
     </div>
   );

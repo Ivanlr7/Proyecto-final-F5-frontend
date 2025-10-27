@@ -1,4 +1,4 @@
-/* Slider styles for Swiper */
+
 .slider__container {
   width: 100%;
   padding-top: 50px;
@@ -7,10 +7,11 @@
 
 .slider__title {
   color: #fff;
+
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  text-align: left;
+  text-align: center;
 }
 
 .slider__swiper {
@@ -20,8 +21,9 @@
 .slider__slide {
   background-position: center;
   background-size: cover;
-  width: 300px;
-  height: 300px;
+
+  width: auto;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;

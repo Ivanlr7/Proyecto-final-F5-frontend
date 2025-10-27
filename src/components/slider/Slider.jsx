@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
@@ -47,7 +47,7 @@ const Slider = ({ fetchItems, renderItem, title }) => {
         effect={'coverflow'}
         grabCursor={true}
         centeredSlides={true}
-        slidesPerView={'auto'}
+        slidesPerView={'3'}
         coverflowEffect={{
           rotate: 50,
           stretch: 0,
@@ -56,7 +56,8 @@ const Slider = ({ fetchItems, renderItem, title }) => {
           slideShadows: true,
         }}
         pagination={{ clickable: true }}
-        modules={[EffectCoverflow, Pagination]}
+        autoplay={{ delay: 2500, disableOnInteraction: false }}
+        modules={[EffectCoverflow, Pagination, Autoplay]}
         className="slider__swiper"
       >
         {items.map((item, idx) => (
