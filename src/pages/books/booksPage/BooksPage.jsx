@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import BookService from '../../../api/services/BookService';
 import MediaCard from '../../../components/MediaCard';
 import SearchBar from '../../../components/SearchBar/SearchBar';
-import { Filter, ChevronDown } from 'lucide-react';
+import AdvancedFilterToggle from '../../../components/common/AdvancedFilterToggle';
 import Spinner from '../../../components/common/Spinner';
 import './BooksPage.css';
 
@@ -220,22 +220,9 @@ const BooksPage = () => {
 					</div>
 				</div>
 
-				<div className="books-page__advanced-toggle">
-					<button 
-						className="advanced-filter-toggle"
-						onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-					>
-						<Filter size={20} />
-						<span>Filtros Avanzados</span>
-						<ChevronDown 
-							size={20} 
-							style={{ 
-								transform: showAdvancedFilters ? 'rotate(180deg)' : 'rotate(0deg)',
-								transition: 'transform 0.3s ease'
-							}}
-						/>
-					</button>
-				</div>
+				   <div className="books-page__advanced-toggle">
+					   <AdvancedFilterToggle open={showAdvancedFilters} onClick={() => setShowAdvancedFilters(!showAdvancedFilters)} />
+				   </div>
 
 				{showAdvancedFilters && (
 					<div className="books-page__advanced-filters">

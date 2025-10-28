@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import VideogameService from '../../../api/services/VideogameService';
 import MediaCard from '../../../components/MediaCard';
 import SearchBar from '../../../components/SearchBar/SearchBar';
-import { Filter, ChevronDown } from 'lucide-react';
+import AdvancedFilterToggle from '../../../components/common/AdvancedFilterToggle';
 import Spinner from '../../../components/common/Spinner';
 import './VideogamesPage.css';
 
@@ -244,20 +244,7 @@ const VideogamesPage = () => {
 
         {/* Advanced Filters Toggle */}
         <div className="videogames-page__advanced-toggle">
-          <button 
-            className="advanced-filter-toggle"
-            onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-          >
-            <Filter size={20} />
-            <span>Filtros Avanzados</span>
-            <ChevronDown 
-              size={20} 
-              style={{ 
-                transform: showAdvancedFilters ? 'rotate(180deg)' : 'rotate(0deg)',
-                transition: 'transform 0.3s ease'
-              }}
-            />
-          </button>
+          <AdvancedFilterToggle open={showAdvancedFilters} onClick={() => setShowAdvancedFilters(!showAdvancedFilters)} />
         </div>
 
         {/* Advanced Filters Panel */}
