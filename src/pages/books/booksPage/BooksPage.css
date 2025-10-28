@@ -75,7 +75,7 @@
   margin-bottom: 2rem;
 }
 
-.advanced-filter-toggle {
+/* .advanced-filter-toggle {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -92,7 +92,7 @@
 .advanced-filter-toggle:hover {
   background-color: #f97316;
   color: #ffffff;
-}
+} */
 
 /* Advanced Filters */
 .books-page__advanced-filters {
