@@ -113,10 +113,9 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister, onLo
         // Usar Redux thunk en lugar del AuthService directamente
         const result = await dispatch(loginThunk(loginData)).unwrap();
         
-        // Login exitoso
         setMessage({ 
           type: 'success', 
-          text: result.message || '¡Login exitoso!' 
+          text: result.message || '¡Sesión iniciada con éxito!' 
         });
         
         // Limpiar formulario
