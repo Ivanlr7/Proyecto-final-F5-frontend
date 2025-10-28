@@ -4,6 +4,7 @@ import showService from '../../../api/services/ShowService';
 import SearchBar from '../../../components/SearchBar/SearchBar';
 import MediaCard from '../../../components/MediaCard/MediaCard';
 import Pagination from '../../../components/common/Pagination';
+import AdvancedFilterToggle from '../../../components/common/AdvancedFilterToggle';
 import './ShowsPage.css';
 
 export default function ShowsPage() {
@@ -21,6 +22,7 @@ export default function ShowsPage() {
   const [selectedYear, setSelectedYear] = useState('');
   const [minRating, setMinRating] = useState('');
   const [useFilters, setUseFilters] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   // Estados para búsqueda
   const [searchQuery, setSearchQuery] = useState('');
@@ -224,68 +226,71 @@ export default function ShowsPage() {
           </div>
         </div>
 
-        {/* Advanced Filters */}
-        <div className="shows-page__advanced-filters">
-          <h3 className="shows-page__filters-title">
-            Filtros Avanzados
-            {useFilters && (
-              <button 
-                className="shows-page__clear-filters"
-                onClick={clearFilters}
-              >
-                Limpiar Filtros
-              </button>
-            )}
-          </h3>
-          
-          {/* Genres Filter */}
-          <div className="shows-page__filter-section">
-            <label className="shows-page__filter-label">Géneros:</label>
-            <div className="shows-page__genres">
-              {genres.map((genre) => (
-                <button
-                  key={genre.id}
-                  className={`shows-page__genre-btn ${selectedGenres.includes(genre.id) ? 'active' : ''}`}
-                  onClick={() => handleGenreToggle(genre.id)}
+        {/* Advanced Filters Dropdown */}
+        <div className="shows-page__advanced-toggle">
+          <AdvancedFilterToggle open={showAdvancedFilters} onClick={() => setShowAdvancedFilters((prev) => !prev)} />
+        </div>
+
+        {showAdvancedFilters && (
+          <div className="shows-page__advanced-filters">
+            <h3 className="shows-page__filters-title">
+              Filtros Avanzados
+              {useFilters && (
+                <button 
+                  className="shows-page__clear-filters"
+                  onClick={clearFilters}
                 >
-                  {genre.name}
+                  Limpiar Filtros
                 </button>
-              ))}
+              )}
+            </h3>
+            {/* Genres Filter */}
+            <div className="shows-page__filter-section">
+              <label className="shows-page__filter-label">Géneros:</label>
+              <div className="shows-page__genres">
+                {genres.map((genre) => (
+                  <button
+                    key={genre.id}
+                    className={`shows-page__genre-btn ${selectedGenres.includes(genre.id) ? 'active' : ''}`}
+                    onClick={() => handleGenreToggle(genre.id)}
+                  >
+                    {genre.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {/* Year Filter */}
+            <div className="shows-page__filter-section">
+              <label className="shows-page__filter-label">Año de estreno:</label>
+              <select 
+                className="shows-page__year-select"
+                value={selectedYear}
+                onChange={(e) => handleYearChange(e.target.value)}
+              >
+                <option value="">Todos los años</option>
+                {Array.from({length: 30}, (_, i) => new Date().getFullYear() - i).map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+            </div>
+            {/* Rating Filter */}
+            <div className="shows-page__filter-section">
+              <label className="shows-page__filter-label">Puntuación mínima:</label>
+              <select 
+                className="shows-page__rating-select"
+                value={minRating}
+                onChange={(e) => handleRatingChange(e.target.value)}
+              >
+                <option value="">Cualquier puntuación</option>
+                <option value="9">9.0+</option>
+                <option value="8">8.0+</option>
+                <option value="7">7.0+</option>
+                <option value="6">6.0+</option>
+                <option value="5">5.0+</option>
+              </select>
             </div>
           </div>
-
-          {/* Year Filter */}
-          <div className="shows-page__filter-section">
-            <label className="shows-page__filter-label">Año de estreno:</label>
-            <select 
-              className="shows-page__year-select"
-              value={selectedYear}
-              onChange={(e) => handleYearChange(e.target.value)}
-            >
-              <option value="">Todos los años</option>
-              {Array.from({length: 30}, (_, i) => new Date().getFullYear() - i).map(year => (
-                <option key={year} value={year}>{year}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Rating Filter */}
-          <div className="shows-page__filter-section">
-            <label className="shows-page__filter-label">Puntuación mínima:</label>
-            <select 
-              className="shows-page__rating-select"
-              value={minRating}
-              onChange={(e) => handleRatingChange(e.target.value)}
-            >
-              <option value="">Cualquier puntuación</option>
-              <option value="9">9.0+</option>
-              <option value="8">8.0+</option>
-              <option value="7">7.0+</option>
-              <option value="6">6.0+</option>
-              <option value="5">5.0+</option>
-            </select>
-          </div>
-        </div>
+        )}
 
         {/* Loading State */}
         {loading && (
