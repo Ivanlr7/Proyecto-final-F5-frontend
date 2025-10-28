@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Eye, EyeOff, Upload, User, Mail, Lock, Check, X, ArrowLeft } from "lucide-react";
 import registerService from "../../api/services/RegisterService";
 import "./RegisterPage.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
@@ -20,6 +20,7 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -123,6 +124,8 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
           setTimeout(() => {
             if (onNavigateToLogin) {
               onNavigateToLogin();
+            } else {
+              navigate('/login');
             }
           }, 2000);
           
