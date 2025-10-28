@@ -5,6 +5,7 @@ import MediaCard from '../../../components/MediaCard';
 import SearchBar from '../../../components/SearchBar/SearchBar';
 import AdvancedFilterToggle from '../../../components/common/AdvancedFilterToggle';
 import Spinner from '../../../components/common/Spinner';
+import Pagination from '../../../components/common/Pagination';
 import './VideogamesPage.css';
 
 const VideogamesPage = () => {
@@ -363,23 +364,12 @@ const VideogamesPage = () => {
             )}
 
             {/* Pagination */}
-            <div className="videogames-page__pagination">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="videogames-page__pagination-btn"
-              >
-                ← Anterior
-              </button>
-              <span className="videogames-page__page-info">Página {currentPage}</span>
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={videogames.length < 20}
-                className="videogames-page__pagination-btn"
-              >
-                Siguiente →
-              </button>
-            </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={Math.max(1, Math.ceil(videogames.length === 20 ? currentPage + 1 : currentPage))}
+              onPageChange={handlePageChange}
+              className="videogames-page__pagination"
+            />
           </>
         )}
       </div>
