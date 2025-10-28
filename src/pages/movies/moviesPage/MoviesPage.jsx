@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Filter, ChevronDown } from 'lucide-react';
+import AdvancedFilterToggle from '../../../components/common/AdvancedFilterToggle';
 import { useNavigate } from 'react-router-dom';
 import movieService from '../../../api/services/MovieService';
 import SearchBar from '../../../components/SearchBar/SearchBar';
@@ -219,20 +219,7 @@ export default function MoviesPage() {
 
         {/* Advanced Filters Dropdown */}
         <div className="movies-page__advanced-toggle">
-          <button 
-            className="advanced-filter-toggle"
-            onClick={() => setShowAdvancedFilters((prev) => !prev)}
-          >
-            <Filter size={20} />
-            <span>Filtros Avanzados</span>
-            <ChevronDown 
-              size={20} 
-              style={{ 
-                transform: showAdvancedFilters ? 'rotate(180deg)' : 'rotate(0deg)',
-                transition: 'transform 0.3s ease'
-              }}
-            />
-          </button>
+          <AdvancedFilterToggle open={showAdvancedFilters} onClick={() => setShowAdvancedFilters((prev) => !prev)} />
         </div>
 
         {showAdvancedFilters && (
