@@ -176,16 +176,10 @@ const VideogamesPage = () => {
 
   if (loading && videogames.length === 0) {
     return (
-      <div className='videogames-page'>
-                <div className='loading-spinner'>   
+      <div className='videogames-page__loading'>
         <Spinner size={48} />
+        <p>Cargando videojuegos...</p>
       </div>
-
-   
-        </div>
-
-
-    
     );
   }
 

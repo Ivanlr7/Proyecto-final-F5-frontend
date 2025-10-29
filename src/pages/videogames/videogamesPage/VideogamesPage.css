@@ -254,8 +254,11 @@
 
 /* Loading */
 .videogames-page__loading {
-  text-align: center;
-  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .loading-spinner {
@@ -265,6 +268,11 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.videogames-page__loading p {
+  text-align: center;
+  margin-top: 1rem;
 }
 
 /* Error */
