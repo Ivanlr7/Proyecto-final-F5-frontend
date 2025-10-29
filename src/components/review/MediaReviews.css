@@ -42,7 +42,8 @@
 
 .media-reviews--show .media-reviews__section-title,
 .media-reviews--show .media-reviews__like-btn.liked {
-  color: #06b6d4;
+  /* color: #06b6d4; */
+    color: #3b82f6;
 }
 .media-reviews--show .media-reviews__like-btn.liked {
   background: #2a1833;
@@ -50,7 +51,7 @@
 
 .media-reviews--videogame .media-reviews__section-title,
 .media-reviews--videogame .media-reviews__like-btn.liked {
-  color: #22c55e;
+   color: #3b82f6;
 }
 .media-reviews--videogame .media-reviews__like-btn.liked {
   background: #1a3323;
@@ -58,7 +59,7 @@
 
 .media-reviews--book .media-reviews__section-title,
 .media-reviews--book .media-reviews__like-btn.liked {
-  color: #f59e42;
+   color: #3b82f6;
 }
 .media-reviews--book .media-reviews__like-btn.liked {
   background: #33281a;
