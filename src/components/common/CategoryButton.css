@@ -1,4 +1,5 @@
-.movies-page__category-btn {
+/* Botón de categoría reutilizable */
+.category-btn {
   padding: 0.75rem 1.5rem;
   border: 2px solid #1e293b;
   background-color: transparent;
@@ -9,12 +10,12 @@
   transition: all 0.3s ease;
 }
 
-.movies-page__category-btn:hover {
+.category-btn:hover {
   border-color: #3b82f6;
   color: #3b82f6;
 }
 
-.movies-page__category-btn.active {
+.category-btn.active {
   background-color: #3b82f6;
   border-color: #3b82f6;
   color: #ffffff;
