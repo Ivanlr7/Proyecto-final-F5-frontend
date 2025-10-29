@@ -6,6 +6,7 @@ import SearchBar from '../../../components/SearchBar/SearchBar';
 import AdvancedFilterToggle from '../../../components/common/AdvancedFilterToggle';
 import Spinner from '../../../components/common/Spinner';
 import Pagination from '../../../components/common/Pagination';
+import CategoryButton from '../../../components/common/CategoryButton';
 import './VideogamesPage.css';
 
 const VideogamesPage = () => {
@@ -222,24 +223,24 @@ const VideogamesPage = () => {
         {/* Basic Filters */}
         <div className="videogames-page__filters">
           <div className="videogames-page__categories">
-            <button
-              className={`videogames-page__category-btn ${activeFilter === 'popular' ? 'active' : ''}`}
-              onClick={() => handleFilterChange('popular')}
+            <CategoryButton
+              active={activeFilter === 'popular'}
+              onClick={() => setActiveFilter('popular')}
             >
               Populares
-            </button>
-            <button
-              className={`videogames-page__category-btn ${activeFilter === 'recent' ? 'active' : ''}`}
-              onClick={() => handleFilterChange('recent')}
+            </CategoryButton>
+            <CategoryButton
+              active={activeFilter === 'recent'}
+              onClick={() => setActiveFilter('recent')}
             >
               Recientes
-            </button>
-            <button
-              className={`videogames-page__category-btn ${activeFilter === 'upcoming' ? 'active' : ''}`}
-              onClick={() => handleFilterChange('upcoming')}
+            </CategoryButton>
+            <CategoryButton
+              active={activeFilter === 'upcoming'}
+              onClick={() => setActiveFilter('upcoming')}
             >
               Próximos
-            </button>
+            </CategoryButton>
           </div>
         </div>
 

@@ -5,6 +5,7 @@ import SearchBar from '../../../components/SearchBar/SearchBar';
 import MediaCard from '../../../components/MediaCard/MediaCard';
 import Pagination from '../../../components/common/Pagination';
 import AdvancedFilterToggle from '../../../components/common/AdvancedFilterToggle';
+import CategoryButton from '../../../components/common/CategoryButton';
 import './ShowsPage.css';
 
 export default function ShowsPage() {
@@ -199,30 +200,30 @@ export default function ShowsPage() {
         {/* Categories */}
         <div className="shows-page__filters">
           <div className="shows-page__categories">
-            <button 
-              className={`shows-page__category-btn ${!useFilters && category === 'popular' ? 'active' : ''}`}
+            <CategoryButton
+              active={category === 'popular'}
               onClick={() => handleCategoryChange('popular')}
             >
               Populares
-            </button>
-            <button 
-              className={`shows-page__category-btn ${!useFilters && category === 'top_rated' ? 'active' : ''}`}
+            </CategoryButton>
+            <CategoryButton
+              active={category === 'top_rated'}
               onClick={() => handleCategoryChange('top_rated')}
             >
               Mejor Valoradas
-            </button>
-            <button 
-              className={`shows-page__category-btn ${!useFilters && category === 'airing_today' ? 'active' : ''}`}
-              onClick={() => handleCategoryChange('airing_today')}
-            >
-              Al Aire Hoy
-            </button>
-            <button 
-              className={`shows-page__category-btn ${!useFilters && category === 'on_the_air' ? 'active' : ''}`}
+            </CategoryButton>
+            <CategoryButton
+              active={category === 'on_the_air'}
               onClick={() => handleCategoryChange('on_the_air')}
             >
               En Emisión
-            </button>
+            </CategoryButton>
+            <CategoryButton
+              active={category === 'airing_today'}
+              onClick={() => handleCategoryChange('airing_today')}
+            >
+              Hoy en TV
+            </CategoryButton>
           </div>
         </div>
 
