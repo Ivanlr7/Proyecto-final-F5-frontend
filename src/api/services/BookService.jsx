@@ -17,10 +17,10 @@ class BookService {
 		const language = raw.language || raw.languages?.map(l => l.key?.split('/').pop()) || [];
 		const first_publish_year = raw.first_publish_year || raw.first_publish_date || raw.created?.value?.slice(0,4);
 		const release_year = typeof first_publish_year === 'string' ? parseInt(first_publish_year) : first_publish_year;
-		// Solo usar ratings si vienen en el objeto principal, si no mockear entre 6 y 10
+		// Mock para el rating si no vienen en la petición
 		let vote_average = raw.ratings_average ? Number(raw.ratings_average) : (raw.rating || 0);
 		if (!vote_average) {
-			vote_average = Math.round((Math.random() * 4 + 6) * 10) / 10; // entre 6.0 y 10.0
+			vote_average = Math.round((Math.random() * 4 + 6) * 10) / 10;
 		}
 		const overview = raw.description?.value || raw.description || raw.subtitle || '';
 		const edition_count = raw.edition_count;
