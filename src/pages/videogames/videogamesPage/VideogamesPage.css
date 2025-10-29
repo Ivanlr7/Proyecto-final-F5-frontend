@@ -304,11 +304,9 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
   margin-bottom: 3rem;
+  justify-items: center;
 }
 
-/* Media Card in videogames Page - specific overrides can be added here if needed */
-
-/* Legacy Movie Card Styles (can be removed after migration) */
 .movie-card {
   border-radius: 1rem;
   overflow: hidden;
