@@ -6,6 +6,7 @@ import MediaCard from '../../../components/MediaCard/MediaCard';
 import Pagination from '../../../components/common/Pagination';
 import AdvancedFilterToggle from '../../../components/common/AdvancedFilterToggle';
 import CategoryButton from '../../../components/common/CategoryButton';
+import Spinner from '../../../components/common/Spinner';
 import './ShowsPage.css';
 
 export default function ShowsPage() {
@@ -166,6 +167,15 @@ export default function ShowsPage() {
     setCurrentPage(currentPage);
   };
 
+  if (loading && shows.length === 0) {
+    return (
+      <div className="shows-page__loading">
+        <Spinner size={48} />
+        <p>Cargando series...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="shows-page">
       <div className="shows-page__container">
@@ -294,9 +304,9 @@ export default function ShowsPage() {
         )}
 
         {/* Loading State */}
-        {loading && (
+        {loading && shows.length === 0 && (
           <div className="shows-page__loading">
-            <div className="shows-page__spinner"></div>
+            <Spinner size={48} />
             <p>Cargando series...</p>
           </div>
         )}

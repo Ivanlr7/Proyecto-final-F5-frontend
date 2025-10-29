@@ -165,11 +165,9 @@ const BooksPage = () => {
 
 	if (loading && books.length === 0) {
 		return (
-			<div className="books-page">	
-					   <Spinner size={40} />
-					<p style={{textAlign:'center'}}>Cargando libros...</p>
-				<div className="loading-spinner" />
-			
+			<div className="books-page__loading">
+				<Spinner size={48} />
+				<p>Cargando libros...</p>
 			</div>
 		);
 	}

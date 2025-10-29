@@ -6,6 +6,7 @@ import { ArrowLeft, Star, Calendar, Clock, Film, User, MessageSquare } from 'luc
 import movieService from '../../../api/services/MovieService';
 import MediaCard from '../../../components/MediaCard/MediaCard';
 import MediaReviews from '../../../components/review/MediaReviews';
+import Spinner from '../../../components/common/Spinner';
 import './MovieDetailsPage.css';
 
 const MovieDetailsPage = () => {
@@ -108,11 +109,9 @@ const MovieDetailsPage = () => {
 
   if (loading) {
     return (
-      <div className="movie-details-page">
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>Cargando detalles de la película...</p>
-        </div>
+      <div className="movies-page__loading">
+        <Spinner size={48} />
+        <p>Cargando detalles de la película...</p>
       </div>
     );
   }

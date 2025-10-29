@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, Calendar, Clock, Tv, User, MessageSquare } from 'lucide-react';
@@ -6,6 +5,7 @@ import showService from '../../../api/services/ShowService';
 import './ShowDetailsPage.css';
 import MediaCard from '../../../components/MediaCard/MediaCard';
 import MediaReviews from '../../../components/review/MediaReviews';
+import Spinner from '../../../components/common/Spinner';
 
 const ShowDetailsPage = () => {
   const { id } = useParams();
@@ -80,17 +80,9 @@ const ShowDetailsPage = () => {
 
   if (loading) {
     return (
-      <div className="show-details-page">
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>Cargando detalles de la serie...</p>
-        </div>
-        <button 
-          className={`show-details__tab ${activeTab === 'sugerencias' ? 'active' : ''}`}
-          onClick={() => setActiveTab('sugerencias')}
-        >
-          SUGERENCIAS
-        </button>
+      <div className="shows-page__loading">
+        <Spinner size={48} />
+        <p>Cargando detalles de la serie...</p>
       </div>
     );
   }

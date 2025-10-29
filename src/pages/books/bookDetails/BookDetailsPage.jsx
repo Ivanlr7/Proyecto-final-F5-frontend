@@ -4,6 +4,7 @@ import BookService from '../../../api/services/BookService';
 import MediaCard from '../../../components/MediaCard';
 import './BookDetailsPage.css';
 import MediaReviews from '../../../components/review/MediaReviews';
+import Spinner from '../../../components/common/Spinner';
 
 const BookDetailsPage = () => {
 	const { id } = useParams();
@@ -49,9 +50,9 @@ const BookDetailsPage = () => {
 
 	if (loading) {
 		return (
-			<div className="book-details">
-				<div className="loading-spinner" />
-				<p style={{textAlign:'center'}}>Cargando detalles del libro...</p>
+			<div className="books-page__loading">
+				<Spinner size={48} />
+				<p>Cargando detalles del libro...</p>
 			</div>
 		);
 	}

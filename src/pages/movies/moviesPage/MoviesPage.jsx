@@ -6,6 +6,7 @@ import SearchBar from '../../../components/SearchBar/SearchBar';
 import MediaCard from '../../../components/MediaCard/MediaCard';
 import Pagination from '../../../components/common/Pagination';
 import CategoryButton from '../../../components/common/CategoryButton';
+import Spinner from '../../../components/common/Spinner';
 import './MoviesPage.css';
 
 export default function MoviesPage() {
@@ -169,6 +170,15 @@ export default function MoviesPage() {
     }
   };
 
+  if (loading && movies.length === 0) {
+    return (
+      <div className="movies-page__loading">
+        <Spinner size={48} />
+        <p>Cargando películas...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="movies-page">
       <div className="movies-page__container">
@@ -286,9 +296,9 @@ export default function MoviesPage() {
         )}
 
         {/* Loading State */}
-        {loading && (
+        {loading && movies.length === 0 && (
           <div className="movies-page__loading">
-            <div className="loading-spinner"></div>
+            <Spinner size={48} />
             <p>Cargando películas...</p>
           </div>
         )}
