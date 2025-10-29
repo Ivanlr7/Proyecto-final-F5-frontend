@@ -5,6 +5,7 @@ import movieService from '../../../api/services/MovieService';
 import SearchBar from '../../../components/SearchBar/SearchBar';
 import MediaCard from '../../../components/MediaCard/MediaCard';
 import Pagination from '../../../components/common/Pagination';
+import CategoryButton from '../../../components/common/CategoryButton';
 import './MoviesPage.css';
 
 export default function MoviesPage() {
@@ -190,30 +191,30 @@ export default function MoviesPage() {
         {/* Category Filter */}
         <div className="movies-page__filters">
           <div className="movies-page__categories">
-            <button 
-              className={`movies-page__category-btn ${!useFilters && category === 'popular' ? 'active' : ''}`}
+            <CategoryButton
+              active={!useFilters && category === 'popular'}
               onClick={() => handleCategoryChange('popular')}
             >
               Populares
-            </button>
-            <button 
-              className={`movies-page__category-btn ${!useFilters && category === 'top_rated' ? 'active' : ''}`}
+            </CategoryButton>
+            <CategoryButton
+              active={!useFilters && category === 'top_rated'}
               onClick={() => handleCategoryChange('top_rated')}
             >
               Mejor Valoradas
-            </button>
-            <button 
-              className={`movies-page__category-btn ${!useFilters && category === 'now_playing' ? 'active' : ''}`}
+            </CategoryButton>
+            <CategoryButton
+              active={!useFilters && category === 'now_playing'}
               onClick={() => handleCategoryChange('now_playing')}
             >
               En Cines
-            </button>
-            <button 
-              className={`movies-page__category-btn ${!useFilters && category === 'upcoming' ? 'active' : ''}`}
+            </CategoryButton>
+            <CategoryButton
+              active={!useFilters && category === 'upcoming'}
               onClick={() => handleCategoryChange('upcoming')}
             >
               Próximos Estrenos
-            </button>
+            </CategoryButton>
           </div>
         </div>
 

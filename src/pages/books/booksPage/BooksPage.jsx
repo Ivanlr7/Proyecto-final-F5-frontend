@@ -6,6 +6,7 @@ import SearchBar from '../../../components/SearchBar/SearchBar';
 import AdvancedFilterToggle from '../../../components/common/AdvancedFilterToggle';
 import Spinner from '../../../components/common/Spinner';
 import Pagination from '../../../components/common/Pagination';
+import CategoryButton from '../../../components/common/CategoryButton';
 import './BooksPage.css';
 
 const BooksPage = () => {
@@ -204,30 +205,30 @@ const BooksPage = () => {
 
 				<div className="books-page__filters">
 					<div className="books-page__categories">
-						<button
-							className={`books-page__category-btn ${activeFilter === 'popular' ? 'active' : ''}`}
+						<CategoryButton
+							active={activeFilter === 'popular'}
 							onClick={() => handleFilterChange('popular')}
 						>
 							Populares
-						</button>
-						<button
-							className={`books-page__category-btn ${activeFilter === 'recent' ? 'active' : ''}`}
+						</CategoryButton>
+						<CategoryButton
+							active={activeFilter === 'recent'}
 							onClick={() => handleFilterChange('recent')}
 						>
 							Recientes
-						</button>
-						<button
-							className={`books-page__category-btn ${activeFilter === 'classic' ? 'active' : ''}`}
+						</CategoryButton>
+						<CategoryButton
+							active={activeFilter === 'classic'}
 							onClick={() => handleFilterChange('classic')}
 						>
 							Clásicos
-						</button>
-						<button
-							className={`books-page__category-btn ${activeFilter === 'bestseller' ? 'active' : ''}`}
+						</CategoryButton>
+						<CategoryButton
+							active={activeFilter === 'bestseller'}
 							onClick={() => handleFilterChange('bestseller')}
 						>
 							Bestsellers
-						</button>
+						</CategoryButton>
 					</div>
 				</div>
 
