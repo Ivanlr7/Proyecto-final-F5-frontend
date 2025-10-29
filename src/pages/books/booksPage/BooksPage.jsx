@@ -5,6 +5,7 @@ import MediaCard from '../../../components/MediaCard';
 import SearchBar from '../../../components/SearchBar/SearchBar';
 import AdvancedFilterToggle from '../../../components/common/AdvancedFilterToggle';
 import Spinner from '../../../components/common/Spinner';
+import Pagination from '../../../components/common/Pagination';
 import './BooksPage.css';
 
 const BooksPage = () => {
@@ -19,6 +20,7 @@ const BooksPage = () => {
 	const [selectedSubject, setSelectedSubject] = useState('');
 	const [selectedYear, setSelectedYear] = useState('');
 	const [selectedRating, setSelectedRating] = useState('');
+	const [totalPages, setTotalPages] = useState(1);
 
 	const subjects = [
 		{ id: '', name: 'Todos los géneros' },
@@ -115,6 +117,15 @@ const BooksPage = () => {
 	useEffect(() => {
 		fetchBooks();
 	}, [fetchBooks]);
+
+	useEffect(() => {
+		// Calcular totalPages de forma simple (no precisa, pero funcional visualmente)
+		if (books.length === 20) {
+			setTotalPages(currentPage + 1);
+		} else {
+			setTotalPages(currentPage);
+		}
+	}, [books, currentPage]);
 
 	const handleSearchSubmit = (query) => {
 		setSearchQuery(query);
@@ -306,21 +317,11 @@ const BooksPage = () => {
 				)}
 
 				<div className="books-page__pagination">
-					<button
-						onClick={() => handlePageChange(currentPage - 1)}
-						disabled={currentPage === 1}
-						className="books-page__page-btn"
-					>
-						← Anterior
-					</button>
-					<span className="books-page__page-info">Página {currentPage}</span>
-					<button
-						onClick={() => handlePageChange(currentPage + 1)}
-						disabled={books.length < 20}
-						className="books-page__page-btn"
-					>
-						Siguiente →
-					</button>
+					<Pagination
+						currentPage={currentPage}
+						totalPages={totalPages}
+						onPageChange={handlePageChange}
+					/>
 				</div>
 			</div>
 		</div>
