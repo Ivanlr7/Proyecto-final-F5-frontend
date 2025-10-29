@@ -4,6 +4,7 @@ import VideogameService from '../../../api/services/VideogameService';
 import MediaCard from '../../../components/MediaCard';
 import MediaReviews from '../../../components/review/MediaReviews';
 import { Star, Calendar, Clock, User, MessageSquare, Gamepad2 } from 'lucide-react';
+import TabButton from '../../../components/common/TabButton';
 import Spinner from '../../../components/common/Spinner';
 import './VideogameDetailsPage.css';
 
@@ -152,25 +153,16 @@ const VideogameDetailsPage = () => {
       </div>
 
       {/* Tabs Navigation */}
-      <div className="videogame-details__tabs">
-        <button 
-          className={`videogame-details__tab ${activeTab === 'detalles' ? 'active' : ''}`}
-          onClick={() => setActiveTab('detalles')}
-        >
+      <div className="videogame-details__tabs" style={{ marginTop: '2rem' }}>
+        <TabButton active={activeTab === 'detalles'} onClick={() => setActiveTab('detalles')}>
           DETALLES
-        </button>
-        <button 
-          className={`videogame-details__tab ${activeTab === 'resenas' ? 'active' : ''}`}
-          onClick={() => setActiveTab('resenas')}
-        >
+        </TabButton>
+        <TabButton active={activeTab === 'resenas'} onClick={() => setActiveTab('resenas')}>
           RESEÑAS
-        </button>
-        <button 
-          className={`videogame-details__tab ${activeTab === 'sugerencias' ? 'active' : ''}`}
-          onClick={() => setActiveTab('sugerencias')}
-        >
+        </TabButton>
+        <TabButton active={activeTab === 'sugerencias'} onClick={() => setActiveTab('sugerencias')}>
           SUGERENCIAS
-        </button>
+        </TabButton>
       </div>
 
       {/* Content */}

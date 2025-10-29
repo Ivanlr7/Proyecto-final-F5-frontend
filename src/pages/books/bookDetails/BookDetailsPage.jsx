@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import BookService from '../../../api/services/BookService';
 import MediaCard from '../../../components/MediaCard';
+import TabButton from '../../../components/common/TabButton';
 import './BookDetailsPage.css';
 import MediaReviews from '../../../components/review/MediaReviews';
 import Spinner from '../../../components/common/Spinner';
@@ -135,26 +136,17 @@ const BookDetailsPage = () => {
 			</div>
 
 			<div className="book-details__container book-details__content">
-				<div className="book-details__tabs">
-					<button
-						className={`book-details__tab ${activeTab === 'details' ? 'active' : ''}`}
-						onClick={() => setActiveTab('details')}
-					>
-						DETALLES
-					</button>
-					<button
-						className={`book-details__tab ${activeTab === 'reviews' ? 'active' : ''}`}
-						onClick={() => setActiveTab('reviews')}
-					>
-						RESEÑAS
-					</button>
-					<button
-						className={`book-details__tab ${activeTab === 'suggestions' ? 'active' : ''}`}
-						onClick={() => setActiveTab('suggestions')}
-					>
-						SUGERENCIAS
-					</button>
-				</div>
+						<div className="book-details__tabs" style={{ marginTop: '2rem' }}>
+							<TabButton active={activeTab === 'details'} onClick={() => setActiveTab('details')}>
+								DETALLES
+							</TabButton>
+							<TabButton active={activeTab === 'reviews'} onClick={() => setActiveTab('reviews')}>
+								RESEÑAS
+							</TabButton>
+							<TabButton active={activeTab === 'suggestions'} onClick={() => setActiveTab('suggestions')}>
+								SUGERENCIAS
+							</TabButton>
+						</div>
 
 				<div className="book-details__content">
 								{activeTab === 'details' && (

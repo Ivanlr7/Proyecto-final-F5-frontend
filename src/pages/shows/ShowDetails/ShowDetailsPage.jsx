@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, Calendar, Clock, Tv, User, MessageSquare } from 'lucide-react';
+import TabButton from '../../../components/common/TabButton';
 import showService from '../../../api/services/ShowService';
 import './ShowDetailsPage.css';
 import MediaCard from '../../../components/MediaCard/MediaCard';
@@ -214,25 +215,16 @@ const ShowDetailsPage = () => {
       </div>
 
       {/* Tabs Navigation */}
-      <div className="show-details__tabs">
-        <button 
-          className={`show-details__tab ${activeTab === 'detalles' ? 'active' : ''}`}
-          onClick={() => setActiveTab('detalles')}
-        >
+      <div className="show-details__tabs" style={{ marginTop: '2rem' }}>
+        <TabButton active={activeTab === 'detalles'} onClick={() => setActiveTab('detalles')}>
           DETALLES
-        </button>
-        <button 
-          className={`show-details__tab ${activeTab === 'resenas' ? 'active' : ''}`}
-          onClick={() => setActiveTab('resenas')}
-        >
+        </TabButton>
+        <TabButton active={activeTab === 'resenas'} onClick={() => setActiveTab('resenas')}>
           RESEÑAS
-        </button>
-        <button 
-          className={`show-details__tab ${activeTab === 'sugerencias' ? 'active' : ''}`}
-          onClick={() => setActiveTab('sugerencias')}
-        >
+        </TabButton>
+        <TabButton active={activeTab === 'sugerencias'} onClick={() => setActiveTab('sugerencias')}>
           SUGERENCIAS
-        </button>
+        </TabButton>
       </div>
 
       {/* Content */}
