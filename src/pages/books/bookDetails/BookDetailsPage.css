@@ -1,3 +1,10 @@
+/* Suggested List */
+.book-details__suggested-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
 /* Book Details Page Styles */
 
 .book-details {

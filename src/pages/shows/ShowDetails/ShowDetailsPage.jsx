@@ -107,7 +107,7 @@ const ShowDetailsPage = () => {
               {!suggestedLoading && !suggestedError && suggestedShows.length === 0 && (
                 <p>No hay sugerencias disponibles para esta serie.</p>
               )}
-              <div className="show-details__suggested-list" style={{display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'flex-start'}}>
+              <div className="show-details__suggested-list">
                 {suggestedShows.map((item) => (
                   <MediaCard key={item.id} item={item} type="series" className="suggested-card" />
                 ))}
@@ -391,7 +391,7 @@ const ShowDetailsPage = () => {
               {!suggestedLoading && !suggestedError && suggestedShows.length === 0 && (
                 <p>No hay sugerencias disponibles para esta serie.</p>
               )}
-              <div className="show-details__suggested-list" style={{display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'flex-start'}}>
+              <div className="show-details__suggested-list">
                 {suggestedShows.map((item) => (
                   <MediaCard key={item.id} item={item} type="series" className="suggested-card" />
                 ))}

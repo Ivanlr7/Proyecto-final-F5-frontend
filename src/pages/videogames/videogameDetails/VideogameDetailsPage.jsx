@@ -264,7 +264,7 @@ const VideogameDetailsPage = () => {
               {!suggestedLoading && !suggestedError && suggestedVideogames.length === 0 && (
                 <p>No hay sugerencias disponibles para este videojuego.</p>
               )}
-              <div className="videogame-details__suggested-list" style={{display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'flex-start'}}>
+              <div className="videogame-details__suggested-list">
                 {suggestedVideogames.map((item) => (
                   <MediaCard key={item.id} item={item} type="videogame" className="suggested-card" />
                 ))}

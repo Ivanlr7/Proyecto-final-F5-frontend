@@ -245,7 +245,7 @@ const BookDetailsPage = () => {
 						<div className="book-details__suggestions">
 							<h2 className="book-details__section-title">Libros Similares</h2>
 							{similarBooks.length > 0 ? (
-								<div className="books-page__grid">
+								  <div className="book-details__suggested-list">
 									{similarBooks.map((similarBook) => (
 										<MediaCard key={similarBook.id} item={similarBook} type="book" />
 									))}
