@@ -1,0 +1,32 @@
+
+.tab-nav__tab {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  position: relative;
+}
+
+.tab-nav__tab:hover {
+  color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.tab-nav__tab--active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+@media (max-width: 480px) {
+  .tab-nav__tab {
+    font-size: 0.875rem;
+    padding: 1rem 1.5rem;
+  }
+}

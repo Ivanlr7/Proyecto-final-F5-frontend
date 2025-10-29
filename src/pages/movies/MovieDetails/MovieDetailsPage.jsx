@@ -7,6 +7,7 @@ import movieService from '../../../api/services/MovieService';
 import MediaCard from '../../../components/MediaCard/MediaCard';
 import MediaReviews from '../../../components/review/MediaReviews';
 import Spinner from '../../../components/common/Spinner';
+import TabButton from '../../../components/common/TabButton';
 import './MovieDetailsPage.css';
 
 const MovieDetailsPage = () => {
@@ -215,26 +216,18 @@ const MovieDetailsPage = () => {
       </div>
 
       {/* Tabs Navigation */}
-      <div className="movie-details__tabs">
-        <button 
-          className={`movie-details__tab ${activeTab === 'detalles' ? 'active' : ''}`}
-          onClick={() => setActiveTab('detalles')}
-        >
+      <div className="movie-details__tabs" style={{ marginTop: '2rem' }}>
+        <TabButton active={activeTab === 'detalles'} onClick={() => setActiveTab('detalles')}>
           DETALLES
-        </button>
-        <button 
-          className={`movie-details__tab ${activeTab === 'resenas' ? 'active' : ''}`}
-          onClick={() => setActiveTab('resenas')}
-        >
+        </TabButton>
+        <TabButton active={activeTab === 'resenas'} onClick={() => setActiveTab('resenas')}>
           RESEÑAS
-        </button>
-        <button 
-          className={`movie-details__tab ${activeTab === 'sugerencias' ? 'active' : ''}`}
-          onClick={() => setActiveTab('sugerencias')}
-        >
+        </TabButton>
+        <TabButton active={activeTab === 'sugerencias'} onClick={() => setActiveTab('sugerencias')}>
           SUGERENCIAS
-        </button>
+        </TabButton>
       </div>
+
 
       {/* Content */}
       <div className="movie-details__content">
