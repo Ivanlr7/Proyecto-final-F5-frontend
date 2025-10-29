@@ -1,3 +1,5 @@
+
+import React from 'react';
 import "./HeroSection.css";
 
 export default function HeroSection() {
@@ -21,7 +23,7 @@ export default function HeroSection() {
         </h1>
         
         <p className="hero-section__description">
-          Explora reseñas de películas, series, videojuegos y libros. ¡Tu próxima aventura te espera!
+          Explora un universo de películas, series, videojuegos y libros. ¡Tu próxima aventura te espera!
         </p>
         
         <button className="hero-section__cta">
