@@ -351,7 +351,7 @@ const MovieDetailsPage = () => {
               {!suggestedLoading && !suggestedError && suggestedMovies.length === 0 && (
                 <p>No hay sugerencias disponibles para esta película.</p>
               )}
-              <div className="movie-details__suggested-list" style={{display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'flex-start'}}>
+              <div className="movie-details__suggested-list">
                 {suggestedMovies.map((item) => (
                   <MediaCard key={item.id} item={item} type="movie" className="suggested-card" />
                 ))}

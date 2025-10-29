@@ -1,3 +1,10 @@
+
+.movie-details__suggested-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
 .movie-details-page {
   min-height: 100vh;
   background-color: #0f172a;
