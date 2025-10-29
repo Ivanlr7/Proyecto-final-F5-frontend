@@ -4,6 +4,7 @@ import VideogameService from '../../../api/services/VideogameService';
 import MediaCard from '../../../components/MediaCard';
 import MediaReviews from '../../../components/review/MediaReviews';
 import { Star, Calendar, Clock, User, MessageSquare, Gamepad2 } from 'lucide-react';
+import Spinner from '../../../components/common/Spinner';
 import './VideogameDetailsPage.css';
 
 const VideogameDetailsPage = () => {
@@ -56,11 +57,9 @@ const VideogameDetailsPage = () => {
 
   if (loading) {
     return (
-      <div className="videogame-details-page">
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>Cargando detalles del videojuego...</p>
-        </div>
+      <div className="videogames-page__loading">
+        <Spinner size={48} />
+        <p>Cargando detalles del videojuego...</p>
       </div>
     );
   }
