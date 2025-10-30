@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { logoutThunk, checkAuthThunk, clearError } from '../../store/slices/authSlice';
 import userService from '../../api/services/UserService';
+import Avatar from "../common/Avatar";
 import "./Header.css";
 
 export default function Header() {
@@ -97,23 +98,12 @@ export default function Header() {
         <nav className={`header__nav${menuOpen ? ' header__nav--open' : ''}`} onClick={() => setMenuOpen(false)}>
           {isAuthenticated && (
             <Link to="/me" className="header__avatar header__avatar--mobile" style={{ margin: '0 auto 1.5rem auto' }}>
-              {profileImageUrl ? (
-                <img 
-                  src={profileImageUrl} 
-                  alt={`Avatar de ${user?.userName || user?.username || user?.sub || 'Usuario'}`}
-                  className="header__avatar-image"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextElementSibling.style.display = 'flex';
-                  }}
-                />
-              ) : null}
-              <div 
-                className="header__avatar-initials"
-                style={{ display: profileImageUrl ? 'none' : 'flex' }}
-              >
-                {(user?.userName || user?.username || user?.sub || 'U').charAt(0).toUpperCase()}
-              </div>
+              <Avatar
+                image={profileImageUrl}
+                name={user?.userName || user?.username || user?.sub || 'U'}
+                size={48}
+                className="header__avatar-image"
+              />
             </Link>
           )}
           <Link to="/" className="header__nav-link header__nav-link--active">Inicio</Link>
@@ -171,23 +161,12 @@ export default function Header() {
                     </span>
                   </div>
                   <Link to="/me" className="header__avatar">
-                    {profileImageUrl ? (
-                      <img 
-                        src={profileImageUrl} 
-                        alt={`Avatar de ${user?.userName || user?.username || user?.sub || 'Usuario'}`}
-                        className="header__avatar-image"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.nextElementSibling.style.display = 'flex';
-                        }}
-                      />
-                    ) : null}
-                    <div 
-                      className="header__avatar-initials"
-                      style={{ display: profileImageUrl ? 'none' : 'flex' }}
-                    >
-                      {(user?.userName || user?.username || user?.sub || 'U').charAt(0).toUpperCase()}
-                    </div>
+                    <Avatar
+                      image={profileImageUrl}
+                      name={user?.userName || user?.username || user?.sub || 'U'}
+                      size={40}
+                      className="header__avatar-image"
+                    />
                   </Link>
                 </div>
                 {dropdownOpen && (
