@@ -12,7 +12,7 @@ export default function Avatar({
   style = {},
   ...props
 }) {
-  // Determinar si la imagen es un File (previsualización local)
+
   let imgSrc = null;
   if (image instanceof File) {
     imgSrc = URL.createObjectURL(image);
@@ -57,7 +57,7 @@ export default function Avatar({
             style={{ display: "none" }}
             onChange={onImageChange}
           />
-          <span className="avatar-component__edit-text">Cambiar foto</span>
+          <span className="avatar-component__edit-text">Cambiar imagen</span>
         </label>
       )}
     </div>
