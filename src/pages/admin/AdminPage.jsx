@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUserThunk } from "../../store/slices/authSlice";
 import userService from "../../api/services/UserService";
 import { ArrowLeft, Edit2, Trash2, Save, X, User, Mail, Search } from "lucide-react";
 import "./AdminPage.css";
@@ -9,7 +10,8 @@ export default function AdminPage({ onNavigateToHome }) {
   const [users, setUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [errorUsers, setErrorUsers] = useState(null);
-  const { token } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  const { token, user: authUser } = useSelector(state => state.auth);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -37,6 +39,7 @@ export default function AdminPage({ onNavigateToHome }) {
     email: "",
     profileImage: ""
   });
+  const [imagePreview, setImagePreview] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
@@ -54,6 +57,7 @@ export default function AdminPage({ onNavigateToHome }) {
       email: user.email,
       profileImage: user.profileImage
     });
+    setImagePreview(null);
   };
 
   const handleSave = async (userId) => {
@@ -66,9 +70,14 @@ export default function AdminPage({ onNavigateToHome }) {
       const result = await userService.updateUser(userId, userData, token);
       if (result.success && result.data) {
         setUsers(users.map(user => user.idUser === userId ? result.data : user));
+        // Si el usuario editado es el autenticado, actualizar también en Redux
+        if (authUser && userId === authUser.idUser) {
+          await dispatch(updateUserThunk({ id: userId, userData, token }));
+        }
       }
       setEditingUser(null);
       setEditedData({ userName: "", email: "", profileImage: "" });
+      setImagePreview(null);
     } catch (err) {
       alert(err.message || "Error al actualizar usuario");
     }
@@ -77,6 +86,19 @@ export default function AdminPage({ onNavigateToHome }) {
   const handleCancelEdit = () => {
     setEditingUser(null);
     setEditedData({ userName: "", email: "", profileImage: "" });
+    setImagePreview(null);
+  };
+  // Manejar cambio de imagen (file input)
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new window.FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+        setEditedData({ ...editedData, profileImage: file });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleDeleteClick = (user) => {
@@ -182,11 +204,32 @@ export default function AdminPage({ onNavigateToHome }) {
                     {editingUser === user.idUser ? (
                       <div className="admin-page__edit-user-container">
                         <div className="admin-page__edit-image-wrapper">
-                          <img
-                            src={editedData.profileImage}
-                            alt="Profile"
-                            className="admin-page__user-avatar"
-                          />
+                          {(imagePreview || (editedData.profileImage && typeof editedData.profileImage !== 'string')) ? (
+                            <img
+                              src={imagePreview || (editedData.profileImage && typeof editedData.profileImage !== 'string' ? URL.createObjectURL(editedData.profileImage) : undefined)}
+                              alt="Profile"
+                              className="admin-page__user-avatar"
+                            />
+                          ) : userService.getImageUrl(editedData.profileImage) ? (
+                            <img
+                              src={userService.getImageUrl(editedData.profileImage)}
+                              alt="Profile"
+                              className="admin-page__user-avatar"
+                            />
+                          ) : (
+                            <div className="admin-page__user-avatar-initials">
+                              {(editedData.userName || editedData.email || 'U').charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                          <label style={{ marginLeft: '0.5rem', cursor: 'pointer' }}>
+                            <span style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: '0.85rem' }}>Cambiar foto</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleImageChange}
+                              style={{ display: 'none' }}
+                            />
+                          </label>
                         </div>
                         <div className="admin-page__edit-field-group">
                           <label className="admin-page__edit-label">
@@ -197,18 +240,6 @@ export default function AdminPage({ onNavigateToHome }) {
                             type="text"
                             name="userName"
                             value={editedData.userName}
-                            onChange={handleInputChange}
-                            className="admin-page__edit-input"
-                          />
-                        </div>
-                        <div className="admin-page__edit-field-group">
-                          <label className="admin-page__edit-label">
-                            URL de Imagen
-                          </label>
-                          <input
-                            type="text"
-                            name="profileImage"
-                            value={editedData.profileImage}
                             onChange={handleInputChange}
                             className="admin-page__edit-input"
                           />
