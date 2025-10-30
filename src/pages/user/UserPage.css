@@ -289,6 +289,7 @@
   font-size: 0.938rem;
   outline: none;
   transition: all 0.3s ease;
+  text-align: left;
 }
 
 .user-profile__input::placeholder {
@@ -308,6 +309,7 @@
   border-radius: 0.75rem;
   color: #cbd5e1;
   font-size: 0.938rem;
+  text-align: left;
 }
 
 /* Actions */
