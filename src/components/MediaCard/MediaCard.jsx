@@ -17,21 +17,41 @@ export default function MediaCard({
     return isNaN(numericRating) ? 'N/A' : numericRating.toFixed(1);
   };
 
+  // Imagenes por defecto para cada tipo
+  const defaultImages = {
+    movie: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3ZpZSUyMGNpbmVtYSUyMGZpbG0lMjBkYXJrfGVufDF8fHx8MTc1OTc0NjE1NXww&ixlib=rb-4.1.0&q=80&w=1080",
+    series: "https://images.unsplash.com/photo-1607110654203-d5665bd64105?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0diUyMHNlcmllcyUyMHRlbGV2aXNpb24lMjBzaG93fGVufDF8fHx8MTc1OTc0NjE1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    videogame: "https://images.unsplash.com/photo-1655976796204-308e6f3deaa8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnYW1pbmclMjB2aWRlb2dhbWVzJTIwY29udHJvbGxlcnxlbnwxfHx8fDE3NTk3NDYxNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    book: "https://images.unsplash.com/photo-1582203914689-d5cc1850fcb2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib29rcyUyMHJlYWRpbmclMjBsaWJyYXJ5fGVufDF8fHx8MTc1OTY1MTMxM3ww&ixlib=rb-4.1.0&q=80&w=1080"
+  };
+
   const getImageUrl = () => {
+    let url = null;
     switch (type) {
       case 'movie':
-        return item.poster_url;
+        url = item.poster_url;
+        break;
       case 'series':
-        return item.poster_url || item.backdrop_url;
+        url = item.poster_url || item.backdrop_url;
+        break;
       case 'game':
-        return item.cover_url || item.screenshot_url;
+        url = item.cover_url || item.screenshot_url;
+        break;
       case 'videogame':
-        return item.cover_url || item.screenshot_url;
+        url = item.cover_url || item.screenshot_url;
+        break;
       case 'book':
-        return item.cover_url || item.poster_url;
+        url = item.cover_url || item.poster_url;
+        break;
       default:
-        return item.poster_url;
+        url = item.poster_url;
     }
+    // Si no hay url, usar la imagen por defecto
+    if (!url) {
+      if (type === 'game') return defaultImages.videogame;
+      return defaultImages[type] || defaultImages.movie;
+    }
+    return url;
   };
 
 
@@ -121,24 +141,15 @@ export default function MediaCard({
       onClick={handleClick}
     >
       <div className="media-card__image-container">
-        {getImageUrl() ? (
-          <img 
-            src={getImageUrl()} 
-            alt={getTitle()}
-            className="media-card__image"
-            onError={(e) => {
-              e.target.style.display = 'none';
-              e.target.nextElementSibling.style.display = 'flex';
-            }}
-          />
-        ) : null}
-        
-        <div 
-          className="media-card__image-fallback"
-          style={{ display: getImageUrl() ? 'none' : 'flex' }}
-        >
-          <span>{getFallbackIcon()}</span>
-        </div>
+        <img 
+          src={getImageUrl()} 
+          alt={getTitle()}
+          className="media-card__image"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = defaultImages[type] || defaultImages.movie;
+          }}
+        />
         
         {/* Rating Badge */}
         {(type === 'book' ? (item.vote_average !== undefined && item.vote_average !== null) : !!item.vote_average) && (
