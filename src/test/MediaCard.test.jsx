@@ -28,7 +28,7 @@ describe('MediaCard', () => {
     expect(screen.getByRole('img')).toHaveAttribute('src', item.poster_url);
   });
 
-  it('muestra el icono de fallback si no hay imagen', () => {
+  it('muestra la imagen de fallback si no hay imagen', () => {
     const item = {
       title: 'Sin imagen',
       release_year: 2020,
@@ -41,11 +41,10 @@ describe('MediaCard', () => {
       </MemoryRouter>
     );
     expect(screen.getByText('Sin imagen')).toBeInTheDocument();
-    // Check that at least one visible fallback icon exists
-    const fallbackIcons = screen.getAllByText('🎬');
-    const visibleIcon = fallbackIcons.find(
-      (el) => el.parentElement.style.display !== 'none'
+    // Verifica que la imagen con alt 'Sin imagen' tenga el src de fallback
+    const fallbackImg = screen.getByAltText('Sin imagen');
+    expect(fallbackImg).toHaveAttribute('src',
+      'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3ZpZSUyMGNpbmVtYSUyMGZpbG0lMjBkYXJrfGVufDF8fHx8MTc1OTc0NjE1NXww&ixlib=rb-4.1.0&q=80&w=1080'
     );
-    expect(visibleIcon).toBeInTheDocument();
   });
 });
