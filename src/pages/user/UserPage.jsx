@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../store/slices/authSlice";
-import { ArrowLeft, User, Mail, Camera, Edit2, Save, X } from "lucide-react";
+import { ArrowLeft, User, Mail, Edit2, Save, X } from "lucide-react";
+import Avatar from "../../components/common/Avatar";
 import userService from "../../api/services/UserService";
 import { updateUserThunk } from "../../store/slices/authSlice";
 import "./UserPage.css";
@@ -196,23 +197,16 @@ export default function UserPage({ onNavigateToHome }) {
           {/* Profile Content */}
           {isAuthenticated && !loading && (
             <div className="user-profile__content">
-              {/* Profile Image */}
+              {/* Profile Image (visualización siempre con Avatar, edición con overlay clásico) */}
               <div className="user-profile__image-section">
-                <div className="user-profile__image-container">
-                  {(imagePreview || editedData.profileImage) ? (
-                    <img
-                      src={imagePreview || editedData.profileImage}
-                      alt="Profile"
-                      className="user-profile__image"
-                    />
-                  ) : (
-                    <div className="user-profile__image-placeholder">
-                      <User className="user-profile__placeholder-icon" />
-                    </div>
-                  )}
+               
+                  <Avatar
+                    image={isEditing ? (imagePreview || editedData.profileImage) : profileData.profileImage}
+                    name={isEditing ? editedData.userName : profileData.userName}
+                    size={160}
+                  />
                   {isEditing && (
                     <label className="user-profile__image-overlay">
-                      <Camera className="user-profile__camera-icon" />
                       <span className="user-profile__change-text">Cambiar foto</span>
                       <input
                         type="file"
@@ -222,7 +216,7 @@ export default function UserPage({ onNavigateToHome }) {
                       />
                     </label>
                   )}
-                </div>
+         
               </div>
 
               {/* Profile Form */}
