@@ -1,13 +1,14 @@
 import { Search, User, Menu } from "lucide-react";
-import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect, useState } from 'react'
-import { logoutThunk, checkAuthThunk, clearError } from '../../store/slices/authSlice'
-import userService from '../../api/services/UserService'
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { logoutThunk, checkAuthThunk, clearError } from '../../store/slices/authSlice';
+import userService from '../../api/services/UserService';
 import "./Header.css";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch()
   const navigate = useNavigate()
   
@@ -65,6 +66,21 @@ export default function Header() {
       console.error('Error al cerrar sesión:', error)
     }
   }
+  // Handlers para dropdown
+  const handleDropdownOpen = () => setDropdownOpen(true);
+  const handleDropdownClose = () => setDropdownOpen(false);
+  // Cierra el dropdown al hacer click fuera
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const handleClick = (e) => {
+      if (!document.querySelector('.header__avatar-dropdown')?.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [dropdownOpen]);
+
   return (
     <header className="header">
       <div className="header__container">
@@ -77,52 +93,52 @@ export default function Header() {
         </div>
 
         {/* Navigation y acciones en menú responsive */}
-            <nav className={`header__nav${menuOpen ? ' header__nav--open' : ''}`} onClick={() => setMenuOpen(false)}>
-              {isAuthenticated && (
-                <Link to="/me" className="header__avatar header__avatar--mobile" style={{ margin: '0 auto 1.5rem auto' }}>
-                  {profileImageUrl ? (
-                    <img 
-                      src={profileImageUrl} 
-                      alt={`Avatar de ${user?.userName || user?.username || user?.sub || 'Usuario'}`}
-                      className="header__avatar-image"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextElementSibling.style.display = 'flex';
-                      }}
-                    />
-                  ) : null}
-                  <div 
-                    className="header__avatar-initials"
-                    style={{ display: profileImageUrl ? 'none' : 'flex' }}
-                  >
-                    {(user?.userName || user?.username || user?.sub || 'U').charAt(0).toUpperCase()}
-                  </div>
-                </Link>
-              )}
-              <Link to="/" className="header__nav-link header__nav-link--active">Inicio</Link>
-              <Link to="peliculas" className="header__nav-link header__nav-link--active">Películas</Link>
-              <Link to="series" className="header__nav-link header__nav-link--active">Series</Link>
-              <Link to="videojuegos" className="header__nav-link header__nav-link--active">Videojuegos</Link>
-              <Link to="libros" className="header__nav-link header__nav-link--active">Libros</Link>
-              <div className="header__nav-actions">
-                {!isAuthenticated ? (
-                  <>
-                    <Link to="/login" className="header__login-btn header__login-btn--mobile">Iniciar Sesión</Link>
-                    <Link to="/register" className="header__register-btn header__register-btn--mobile">Registrarse</Link>
-                  </>
-                ) : (
-                  <>
-                    <button 
-                      onClick={handleLogout}
-                      className="header__logout-btn header__logout-btn--mobile"
-                      disabled={loading}
-                    >
-                      {loading ? 'Cerrando...' : 'Cerrar Sesión'}
-                    </button>
-                  </>
-                )}
+        <nav className={`header__nav${menuOpen ? ' header__nav--open' : ''}`} onClick={() => setMenuOpen(false)}>
+          {isAuthenticated && (
+            <Link to="/me" className="header__avatar header__avatar--mobile" style={{ margin: '0 auto 1.5rem auto' }}>
+              {profileImageUrl ? (
+                <img 
+                  src={profileImageUrl} 
+                  alt={`Avatar de ${user?.userName || user?.username || user?.sub || 'Usuario'}`}
+                  className="header__avatar-image"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextElementSibling.style.display = 'flex';
+                  }}
+                />
+              ) : null}
+              <div 
+                className="header__avatar-initials"
+                style={{ display: profileImageUrl ? 'none' : 'flex' }}
+              >
+                {(user?.userName || user?.username || user?.sub || 'U').charAt(0).toUpperCase()}
               </div>
-            </nav>
+            </Link>
+          )}
+          <Link to="/" className="header__nav-link header__nav-link--active">Inicio</Link>
+          <Link to="peliculas" className="header__nav-link header__nav-link--active">Películas</Link>
+          <Link to="series" className="header__nav-link header__nav-link--active">Series</Link>
+          <Link to="videojuegos" className="header__nav-link header__nav-link--active">Videojuegos</Link>
+          <Link to="libros" className="header__nav-link header__nav-link--active">Libros</Link>
+          <div className="header__nav-actions">
+            {!isAuthenticated ? (
+              <>
+                <Link to="/login" className="header__login-btn header__login-btn--mobile">Iniciar Sesión</Link>
+                <Link to="/register" className="header__register-btn header__register-btn--mobile">Registrarse</Link>
+              </>
+            ) : (
+              <>
+                <button 
+                  onClick={handleLogout}
+                  className="header__logout-btn header__logout-btn--mobile"
+                  disabled={loading}
+                >
+                  {loading ? 'Cerrando...' : 'Cerrar Sesión'}
+                </button>
+              </>
+            )}
+          </div>
+        </nav>
 
         {/* Botón hamburguesa (solo visible en móvil) */}
         <button
@@ -142,37 +158,60 @@ export default function Header() {
             </>
           ) : (
             <>
-              <div className="header__user-info">
-                <span className="header__username">
-                  Hola, {user?.userName || user?.username || user?.sub || 'Usuario'}
-                </span>
-              </div>
-              <Link to="/me" className="header__avatar">
-                {profileImageUrl ? (
-                  <img 
-                    src={profileImageUrl} 
-                    alt={`Avatar de ${user?.userName || user?.username || user?.sub || 'Usuario'}`}
-                    className="header__avatar-image"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextElementSibling.style.display = 'flex';
-                    }}
-                  />
-                ) : null}
-                <div 
-                  className="header__avatar-initials"
-                  style={{ display: profileImageUrl ? 'none' : 'flex' }}
-                >
-                  {(user?.userName || user?.username || user?.sub || 'U').charAt(0).toUpperCase()}
-                </div>
-              </Link>
-              <button 
-                onClick={handleLogout}
-                className="header__logout-btn"
-                disabled={loading}
+              <div
+                className="header__avatar-dropdown"
+                onMouseEnter={handleDropdownOpen}
+                onMouseLeave={handleDropdownClose}
               >
-                {loading ? 'Cerrando...' : 'Cerrar Sesión'}
-              </button>
+                <div className="header__avatar-dropdown-trigger">
+                  <div className="header__user-info">
+                    <span className="header__username">
+                      Hola, {user?.userName || user?.username || user?.sub || 'Usuario'}
+                    </span>
+                  </div>
+                  <Link to="/me" className="header__avatar">
+                    {profileImageUrl ? (
+                      <img 
+                        src={profileImageUrl} 
+                        alt={`Avatar de ${user?.userName || user?.username || user?.sub || 'Usuario'}`}
+                        className="header__avatar-image"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextElementSibling.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div 
+                      className="header__avatar-initials"
+                      style={{ display: profileImageUrl ? 'none' : 'flex' }}
+                    >
+                      {(user?.userName || user?.username || user?.sub || 'U').charAt(0).toUpperCase()}
+                    </div>
+                  </Link>
+                </div>
+                {dropdownOpen && (
+                  <div className="header__dropdown-menu">
+                    <Link
+                      to="/me"
+                      className="header__dropdown-link"
+                      onClick={handleDropdownClose}
+                    >
+                      Área personal
+                    </Link>
+                    <button
+                      className="header__dropdown-link header__dropdown-logout"
+                      type="button"
+                      onClick={e => {
+                        handleDropdownClose();
+                        handleLogout(e);
+                      }}
+                      disabled={loading}
+                    >
+                      {loading ? 'Cerrando...' : 'Cerrar sesión'}
+                    </button>
+                  </div>
+                )}
+              </div>
             </>
           )}
         </div>
