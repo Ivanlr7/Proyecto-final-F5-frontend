@@ -15,6 +15,7 @@ import VideogameDetailsPage from '../pages/videogames/videogameDetails/Videogame
 import BooksPage from '../pages/books/booksPage/BooksPage';
 import BookDetailsPage from '../pages/books/BookDetails/BookDetailsPage';
 import AdminPage from '../pages/admin/AdminPage';
+import ProtectedAdminRoute from './ProtectedAdminRoute';
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<Home />} />
@@ -31,7 +32,11 @@ const AppRoutes = () => (
     <Route path="/videojuegos/:id" element={<VideogameDetailsPage />} />
     <Route path="/libros" element={<BooksPage />} />
     <Route path="/libros/:id" element={<BookDetailsPage />} />
-    <Route path="/admin" element={<AdminPage />} />
+    <Route path="/admin" element={
+      <ProtectedAdminRoute>
+        <AdminPage />
+      </ProtectedAdminRoute>
+    } />
     
   </Routes>
 );
