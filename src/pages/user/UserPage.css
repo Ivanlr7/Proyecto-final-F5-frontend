@@ -1,3 +1,31 @@
+/* Eliminar cuenta */
+.user-profile__delete-section {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-profile__btn--delete {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+  font-weight: 700;
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.user-profile__btn--delete:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.user-profile__btn--delete:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
 
 .user-profile {

@@ -1,5 +1,7 @@
+
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { logoutThunk } from "../../store/slices/authSlice";
 import { ArrowLeft, User, Mail, Camera, Edit2, Save, X } from "lucide-react";
 import userService from "../../api/services/UserService";
 import { updateUserThunk } from "../../store/slices/authSlice";
@@ -18,7 +20,25 @@ export default function UserPage({ onNavigateToHome }) {
   });
   const [editedData, setEditedData] = useState({ ...profileData });
   const [imagePreview, setImagePreview] = useState(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
+  const handleDeleteAccount = async () => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.")) {
+      return;
+    }
+    try {
+      setDeleteLoading(true);
+      setError(null);
+      await userService.deleteUser(profileData.idUser, token);
+      // Cerrar sesión y redirigir
+      await dispatch(logoutThunk());
+      if (onNavigateToHome) onNavigateToHome();
+    } catch (error) {
+      setError(error.message || "Error al eliminar la cuenta");
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
   // Cargar datos del usuario al montar el componente
   useEffect(() => {
     const loadUserProfile = async () => {
@@ -190,7 +210,6 @@ export default function UserPage({ onNavigateToHome }) {
                       <User className="user-profile__placeholder-icon" />
                     </div>
                   )}
-                  
                   {isEditing && (
                     <label className="user-profile__image-overlay">
                       <Camera className="user-profile__camera-icon" />
@@ -276,6 +295,17 @@ export default function UserPage({ onNavigateToHome }) {
                       Editar Perfil
                     </button>
                   )}
+                </div>
+                {/* Botón eliminar cuenta debajo de acciones */}
+                <div className="user-profile__delete-section" style={{ marginTop: '1.5rem' }}>
+                  <button
+                    className="user-profile__btn user-profile__btn--delete"
+                    onClick={handleDeleteAccount}
+                    disabled={deleteLoading}
+                    style={{ width: '100%' }}
+                  >
+                    {deleteLoading ? "Eliminando..." : "Eliminar cuenta"}
+                  </button>
                 </div>
               </div>
             </div>
