@@ -105,7 +105,14 @@ class UserService {
         throw new Error('Token de autenticación requerido');
       }
 
-      const result = await this.userRepository.updateUser(id, userData, token);
+      // Si profileImage es un File, lo pasamos; si no, lo omitimos para no actualizar
+      let dataToSend = { ...userData };
+      if (!(userData.profileImage instanceof File)) {
+        // No enviar profileImage si no es un File (no hay nueva imagen)
+        delete dataToSend.profileImage;
+      }
+
+      const result = await this.userRepository.updateUser(id, dataToSend, token);
       
       if (result.success && result.data) {
         // Procesar la URL de la imagen automáticamente

@@ -75,7 +75,8 @@ export default function UserPage({ onNavigateToHome }) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
-        setEditedData({ ...editedData, profileImage: reader.result });
+        // Guardar el File en editedData.profileImage para que el backend lo detecte
+        setEditedData({ ...editedData, profileImage: file });
       };
       reader.readAsDataURL(file);
     }

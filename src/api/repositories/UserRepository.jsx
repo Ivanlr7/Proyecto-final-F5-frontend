@@ -4,10 +4,8 @@ class UserRepository {
   constructor() {
     this.apiClient = axios.create({
       baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1',
-      timeout: 10000,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      timeout: 10000
+     
     });
 
     // Interceptor para errores
@@ -67,10 +65,25 @@ class UserRepository {
 
   // Actualizar usuario
   async updateUser(id, userData, token) {
-    const response = await this.apiClient.put(`/users/${id}`, userData, {
+    // Siempre usar FormData
+    const formData = new FormData();
+    const userPayload = {
+      userName: userData.userName,
+      email: userData.email
+    };
+    
+    // Crear un Blob con el JSON y especificar su Content-Type
+    const jsonBlob = new Blob([JSON.stringify(userPayload)], { type: 'application/json' });
+    formData.append('data', jsonBlob);
+    
+    if (userData && userData.profileImage && userData.profileImage instanceof File) {
+      formData.append('profileImage', userData.profileImage);
+    }
+
+    const response = await this.apiClient.put(`/users/${id}`, formData, {
       headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${token}`
+        
       }
     });
 
