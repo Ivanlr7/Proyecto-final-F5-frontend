@@ -199,14 +199,14 @@ export default function UserPage({ onNavigateToHome }) {
             <div className="user-profile__content">
               {/* Profile Image (visualización siempre con Avatar, edición con overlay clásico) */}
               <div className="user-profile__image-section">
-               
+                <div className="user-profile__avatar-round-wrapper">
                   <Avatar
                     image={isEditing ? (imagePreview || editedData.profileImage) : profileData.profileImage}
                     name={isEditing ? editedData.userName : profileData.userName}
                     size={160}
                   />
                   {isEditing && (
-                    <label className="user-profile__image-overlay">
+                    <label className="user-profile__image-overlay user-profile__image-overlay--round">
                       <span className="user-profile__change-text">Cambiar foto</span>
                       <input
                         type="file"
@@ -216,7 +216,7 @@ export default function UserPage({ onNavigateToHome }) {
                       />
                     </label>
                   )}
-         
+                </div>
               </div>
 
               {/* Profile Form */}
