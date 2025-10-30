@@ -14,7 +14,7 @@ import VideogamesPage from '../pages/videogames/videogamesPage/VideogamesPage';
 import VideogameDetailsPage from '../pages/videogames/videogameDetails/VideogameDetailsPage';
 import BooksPage from '../pages/books/booksPage/BooksPage';
 import BookDetailsPage from '../pages/books/BookDetails/BookDetailsPage';
-
+import AdminPage from '../pages/admin/AdminPage';
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<Home />} />
@@ -31,6 +31,8 @@ const AppRoutes = () => (
     <Route path="/videojuegos/:id" element={<VideogameDetailsPage />} />
     <Route path="/libros" element={<BooksPage />} />
     <Route path="/libros/:id" element={<BookDetailsPage />} />
+    <Route path="/admin" element={<AdminPage />} />
+    
   </Routes>
 );
 

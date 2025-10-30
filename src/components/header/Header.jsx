@@ -18,7 +18,8 @@ export default function Header() {
     loading, 
     error,
     isInitialized,
-    token 
+    token,
+    role
   } = useSelector(state => state.auth)
 
   const [profileImageUrl, setProfileImageUrl] = useState(null)
@@ -198,6 +199,15 @@ export default function Header() {
                     >
                       Área personal
                     </Link>
+                    {Array.isArray(role) && role.includes('admin') && (
+                      <Link
+                        to="/admin"
+                        className="header__dropdown-link"
+                        onClick={handleDropdownClose}
+                      >
+                        Zona admin
+                      </Link>
+                    )}
                     <button
                       className="header__dropdown-link header__dropdown-logout"
                       type="button"
