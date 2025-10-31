@@ -1,3 +1,4 @@
+import Avatar from "../../components/common/Avatar";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -190,6 +191,7 @@ export default function AdminPage({ onNavigateToHome }) {
             <thead className="admin-page__table-header">
               <tr>
                 <th className="admin-page__table-th">ID</th>
+                <th className="admin-page__table-th">Avatar</th>
                 <th className="admin-page__table-th">Usuario</th>
                 <th className="admin-page__table-th">Email</th>
                 <th className="admin-page__table-th">Acciones</th>
@@ -201,85 +203,68 @@ export default function AdminPage({ onNavigateToHome }) {
                   <td className="admin-page__table-td admin-page__table-td--id">
                     {user.idUser}
                   </td>
+                  {/* Avatar cell */}
                   <td className="admin-page__table-td">
                     {editingUser === user.idUser ? (
-                      <div className="admin-page__edit-user-container">
-                        <div className="admin-page__edit-image-wrapper">
-                          {(imagePreview || (editedData.profileImage && typeof editedData.profileImage !== 'string')) ? (
-                            <img
-                              src={imagePreview || (editedData.profileImage && typeof editedData.profileImage !== 'string' ? URL.createObjectURL(editedData.profileImage) : undefined)}
-                              alt="Profile"
-                              className="admin-page__user-avatar"
-                            />
-                          ) : userService.getImageUrl(editedData.profileImage) ? (
-                            <img
-                              src={userService.getImageUrl(editedData.profileImage)}
-                              alt="Profile"
-                              className="admin-page__user-avatar"
-                            />
-                          ) : (
-                            <div className="admin-page__user-avatar-initials">
-                              {(editedData.userName || editedData.email || 'U').charAt(0).toUpperCase()}
-                            </div>
-                          )}
-                          <label style={{ marginLeft: '0.5rem', cursor: 'pointer' }}>
-                            <span style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: '0.85rem' }}>Cambiar foto</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={handleImageChange}
-                              style={{ display: 'none' }}
-                            />
-                          </label>
-                        </div>
-                        <div className="admin-page__edit-field-group">
-                          <label className="admin-page__edit-label">
-                            <User className="admin-page__edit-label-icon" />
-                            Nombre
-                          </label>
-                          <input
-                            type="text"
-                            name="userName"
-                            value={editedData.userName}
-                            onChange={handleInputChange}
-                            className="admin-page__edit-input"
+                      <Avatar
+                        image={imagePreview || editedData.profileImage}
+                        name={editedData.userName || editedData.email || 'U'}
+                        size={70}
+                        editable={true}
+                        onImageChange={handleImageChange}
+                        style={{ margin: 0 }}
+                      />
+                    ) : (
+                      <div className="admin-page__user-avatar-wrapper" style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
+                        {userService.getImageUrl(user.profileImage) ? (
+                          <img
+                            src={userService.getImageUrl(user.profileImage)}
+                            alt={user.userName}
+                            className="admin-page__user-avatar"
+                            onError={e => {
+                              e.target.style.display = 'none';
+                              e.target.nextElementSibling.style.display = 'flex';
+                            }}
                           />
+                        ) : null}
+                        <div
+                          className="admin-page__user-avatar-initials"
+                          style={{
+                            display: userService.getImageUrl(user.profileImage) ? 'none' : 'flex',
+                            width: '48px',
+                            height: '48px',
+                            background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+                            color: '#fff',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontWeight: 'bold',
+                            fontSize: '0.875rem',
+                            borderRadius: '50%'
+                          }}
+                        >
+                          {(user.userName || user.email || 'U').charAt(0).toUpperCase()}
                         </div>
+                      </div>
+                    )}
+                  </td>
+                  {/* Username cell */}
+                  <td className="admin-page__table-td">
+                    {editingUser === user.idUser ? (
+                      <div className="admin-page__edit-field-group">
+                        <label className="admin-page__edit-label">
+                          <User className="admin-page__edit-label-icon" />
+                          Nombre
+                        </label>
+                        <input
+                          type="text"
+                          name="userName"
+                          value={editedData.userName}
+                          onChange={handleInputChange}
+                          className="admin-page__edit-input"
+                        />
                       </div>
                     ) : (
-                      <div className="admin-page__user-info">
-                        <div className="admin-page__user-avatar-wrapper" style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
-                          {userService.getImageUrl(user.profileImage) ? (
-                            <img
-                              src={userService.getImageUrl(user.profileImage)}
-                              alt={user.userName}
-                              className="admin-page__user-avatar"
-                              onError={e => {
-                                e.target.style.display = 'none';
-                                e.target.nextElementSibling.style.display = 'flex';
-                              }}
-                            />
-                          ) : null}
-                          <div
-                            className="admin-page__user-avatar-initials"
-                            style={{
-                              display: userService.getImageUrl(user.profileImage) ? 'none' : 'flex',
-                              width: '48px',
-                              height: '48px',
-                              background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
-                              color: '#fff',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontWeight: 'bold',
-                              fontSize: '0.875rem',
-                              borderRadius: '50%'
-                            }}
-                          >
-                            {(user.userName || user.email || 'U').charAt(0).toUpperCase()}
-                          </div>
-                        </div>
-                        <span className="admin-page__user-name">{user.userName}</span>
-                      </div>
+                      <span className="admin-page__user-name">{user.userName}</span>
                     )}
                   </td>
                   <td className="admin-page__table-td">
