@@ -1,0 +1,26 @@
+ .edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.2);
+}
+.edit-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+}
+.edit-btn__icon {
+  width: 16px;
+  height: 16px;
+}
+.edit-btn__text {
+  white-space: nowrap;
+}

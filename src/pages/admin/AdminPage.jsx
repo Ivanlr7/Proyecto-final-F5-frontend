@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserThunk } from "../../store/slices/authSlice";
 import userService from "../../api/services/UserService";
-import { ArrowLeft, Edit2, Trash2, Save, X, User, Mail, Search } from "lucide-react";
+import { ArrowLeft, Save, X, User, Mail, Search } from "lucide-react";
+import EditButton from "./EditButton";
+import DeleteButton from "./DeleteButton";
 import "./AdminPage.css";
 
 export default function AdminPage({ onNavigateToHome }) {
@@ -308,22 +310,8 @@ export default function AdminPage({ onNavigateToHome }) {
                       </div>
                     ) : (
                       <div className="admin-page__actions">
-                        <button
-                          onClick={() => handleEdit(user)}
-                          className="admin-page__action-btn admin-page__action-btn--edit"
-                          title="Editar usuario"
-                        >
-                          <Edit2 className="admin-page__action-icon" />
-                          <span className="admin-page__action-text">Editar</span>
-                        </button>
-                        <button
-                          onClick={() => handleDeleteClick(user)}
-                          className="admin-page__action-btn admin-page__action-btn--delete"
-                          title="Eliminar usuario"
-                        >
-                          <Trash2 className="admin-page__action-icon" />
-                          <span className="admin-page__action-text">Eliminar</span>
-                        </button>
+                        <EditButton onClick={() => handleEdit(user)} />
+                        <DeleteButton onClick={() => handleDeleteClick(user)} />
                       </div>
                     )}
                   </td>
