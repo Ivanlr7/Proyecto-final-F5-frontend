@@ -16,10 +16,17 @@ const StarRating = ({ rating, setRating }) => (
   </div>
 );
 
-const ReviewModal = ({ open, onClose, onSubmit }) => {
-  const [rating, setRating] = useState(0);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+
+const ReviewModal = ({ open, onClose, onSubmit, initialData }) => {
+  const [rating, setRating] = useState(initialData?.rating || 0);
+  const [title, setTitle] = useState(initialData?.title || '');
+  const [body, setBody] = useState(initialData?.body || '');
+
+  React.useEffect(() => {
+    setRating(initialData?.rating || 0);
+    setTitle(initialData?.title || '');
+    setBody(initialData?.body || '');
+  }, [initialData, open]);
 
   if (!open) return null;
 
@@ -31,7 +38,7 @@ const ReviewModal = ({ open, onClose, onSubmit }) => {
           className="review-modal__close"
           aria-label="Cerrar"
         >×</button>
-        <h2 className="review-modal__title">Escribir Reseña</h2>
+  <h2 className="review-modal__title">{initialData ? 'Editar Reseña' : 'Escribir Reseña'}</h2>
         <label className="review-modal__label">Valoración:</label>
         <StarRating rating={rating} setRating={setRating} />
         <label className="review-modal__label review-modal__label--mt">Título:</label>
@@ -52,7 +59,7 @@ const ReviewModal = ({ open, onClose, onSubmit }) => {
         <button
           onClick={() => onSubmit({ rating, title, body })}
           className="review-modal__button"
-        >Enviar reseña</button>
+        >{initialData ? 'Guardar cambios' : 'Enviar reseña'}</button>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
   const reviewService = new ReviewService();
   const { isAuthenticated, token } = useSelector(state => state.auth);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [editingReview, setEditingReview] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [reviewsError, setReviewsError] = useState(null);
@@ -138,33 +139,53 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
       {/* Write Review Section */}
       <section className="media-reviews__section">
         <div className="media-reviews__review-actions">
-          <button className="media-reviews__write-review-btn" onClick={() => setShowReviewModal(true)}>
+          <button className="media-reviews__write-review-btn" onClick={() => { setShowReviewModal(true); setEditingReview(null); }}>
             <MessageSquare size={20} />
             Escribir Reseña
           </button>
           <ReviewModal
             open={showReviewModal}
-            onClose={() => setShowReviewModal(false)}
+            onClose={() => { setShowReviewModal(false); setEditingReview(null); }}
+            initialData={editingReview}
             onSubmit={async (data) => {
               if (!isAuthenticated || !token) {
-                alert('Debes iniciar sesión para escribir una reseña');
+                alert('Debes iniciar sesión para escribir o editar una reseña');
                 setShowReviewModal(false);
+                setEditingReview(null);
                 return;
               }
-              const reviewRequest = {
-                contentType,
-                contentId,
-                apiSource,
-                reviewTitle: data.title,
-                reviewText: data.body,
-                rating: data.rating
-              };
-              const res = await reviewService.createReview(reviewRequest, token);
-              if (res.success) {
-                setReviews(prev => [res.data, ...prev]);
-                setShowReviewModal(false);
+              if (editingReview) {
+                // Editar review existente
+                const reviewRequest = {
+                  reviewTitle: data.title,
+                  reviewText: data.body,
+                  rating: data.rating
+                };
+                const res = await reviewService.updateReview(editingReview.idReview, reviewRequest, token);
+                if (res.success) {
+                  setReviews(prev => prev.map(r => r.idReview === editingReview.idReview ? { ...r, ...res.data } : r));
+                  setShowReviewModal(false);
+                  setEditingReview(null);
+                } else {
+                  alert(res.error || 'Error al editar la reseña');
+                }
               } else {
-                alert(res.error || 'Error al enviar la reseña');
+                // Crear nueva review
+                const reviewRequest = {
+                  contentType,
+                  contentId,
+                  apiSource,
+                  reviewTitle: data.title,
+                  reviewText: data.body,
+                  rating: data.rating
+                };
+                const res = await reviewService.createReview(reviewRequest, token);
+                if (res.success) {
+                  setReviews(prev => [res.data, ...prev]);
+                  setShowReviewModal(false);
+                } else {
+                  alert(res.error || 'Error al enviar la reseña');
+                }
               }
             }}
           />
@@ -254,8 +275,24 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                     </div>
                       {(isOwnReview || isAdmin) && (
                         <div className="media-reviews__review-actions-bottom">
-                          <EditButton onClick={() => {/* handler editar review */}} />
-                          <DeleteButton onClick={() => {/* handler eliminar review */}} />
+                          <EditButton onClick={() => {
+                            setEditingReview({
+                              idReview: review.idReview,
+                              title: review.reviewTitle,
+                              body: review.reviewText,
+                              rating: review.rating
+                            });
+                            setShowReviewModal(true);
+                          }} />
+                          <DeleteButton onClick={async () => {
+                            if (!window.confirm('¿Seguro que quieres eliminar esta reseña?')) return;
+                            const res = await reviewService.deleteReview(review.idReview, token);
+                            if (res.success) {
+                              setReviews(prev => prev.filter(r => r.idReview !== review.idReview));
+                            } else {
+                              alert(res.error || 'Error al eliminar la reseña');
+                            }
+                          }} />
                         </div>
                       )}
                   </div>
