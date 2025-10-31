@@ -6,7 +6,7 @@ import MovieService from '../../api/services/MovieService';
 import ShowService from '../../api/services/ShowService';
 import BookService from '../../api/services/BookService';
 import VideogameService from '../../api/services/VideogameService';
-import './listDetailPage.css';
+import './ListDetailPage.css';
 import Avatar from '../../components/common/Avatar';
 
 const ListDetailPage = () => {

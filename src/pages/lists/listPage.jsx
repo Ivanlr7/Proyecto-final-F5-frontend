@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import ListService from '../../api/services/ListService';
 import { useSelector } from 'react-redux';
 import MediaCard from '../../components/MediaCard/MediaCard';
-import { Link } from 'react-router-dom';
-import './listPage.css';
+import { Link, useNavigate } from 'react-router-dom';
+import './ListPage.css';
 import Avatar from '../../components/common/Avatar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MovieService from '../../api/services/MovieService';
@@ -22,13 +22,7 @@ const ListPage = () => {
   const [listsWithDetails, setListsWithDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [showCreate, setShowCreate] = useState(false);
-  const [newList, setNewList] = useState({ name: '', description: '' });
-  const [selectedType, setSelectedType] = useState('movie');
-  const [searchResults, setSearchResults] = useState([]);
-  const [searching, setSearching] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [addedItems, setAddedItems] = useState([]);
+  const navigate = useNavigate();
   // Servicios para búsqueda
   const services = {
     movie: MovieService,
@@ -212,78 +206,9 @@ const ListPage = () => {
   return (
     <div className="list-page">
       <h1 className="list-page__title">Listas</h1>
-      <button className="list-page__create-btn" onClick={() => setShowCreate(v => !v)}>
-        {showCreate ? 'Cancelar' : 'Crear nueva lista'}
+      <button className="list-page__create-btn" onClick={() => navigate('/listas/crear')}>
+        Crear nueva lista
       </button>
-      {showCreate && (
-        <form className="list-page__form" onSubmit={handleCreateList}>
-          <div className="list-page__form-fields">
-            <input
-              className="list-page__input"
-              placeholder="Nombre de la lista"
-              value={newList.name}
-              onChange={e => setNewList(l => ({ ...l, name: e.target.value }))}
-              required
-            />
-            <textarea
-              className="list-page__textarea"
-              placeholder="Descripción"
-              value={newList.description}
-              onChange={e => setNewList(l => ({ ...l, description: e.target.value }))}
-            />
-          </div>
-          <div className="list-page__search-tabs">
-            {Object.keys(typeLabels).map(type => (
-              <button
-                key={type}
-                type="button"
-                className={`list-page__tab${selectedType === type ? ' list-page__tab--active' : ''}`}
-                onClick={() => { setSelectedType(type); setSearchResults([]); setSearchQuery(''); }}
-              >
-                {typeLabels[type]}
-              </button>
-            ))}
-          </div>
-          <SearchBar
-            onSearch={handleSearch}
-            onClear={handleClearSearch}
-            isSearching={searching}
-            searchQuery={searchQuery}
-            placeholder={`Buscar ${typeLabels[selectedType]?.toLowerCase()}...`}
-            asForm={false}
-          />
-          <div className="list-page__search-results">
-            {searchResults.length > 0 && (
-              <div className="list-page__results-list">
-                {searchResults.map(item => (
-                  <div key={item.id} className="list-page__result-item">
-                    <MediaCard item={item} type={item.type} className="media-card--mini" />
-                    <button className="list-page__add-btn" type="button" onClick={() => handleAddItem(item)} disabled={addedItems.some(i => i.id === item.id && i.type === item.type)}>
-                      Añadir
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="list-page__added-items">
-            <h4>Elementos añadidos ({addedItems.length})</h4>
-            <div className="list-page__added-list">
-              {addedItems.map(item => (
-                <div key={item.id + item.type} className="list-page__added-item">
-                  <MediaCard item={item} type={item.type} className="media-card--mini" />
-                  <button className="list-page__remove-btn" type="button" onClick={() => handleRemoveItem(item)}>
-                    Quitar
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-          <button className="list-page__submit-btn" type="submit" disabled={!newList.name || addedItems.length === 0}>
-            Guardar lista
-          </button>
-        </form>
-      )}
       {loading ? <p>Cargando...</p> : error ? <p style={{ color: 'red' }}>{error}</p> : (
         <div className="list-page__lists">
           {listsWithDetails.map(list => (
