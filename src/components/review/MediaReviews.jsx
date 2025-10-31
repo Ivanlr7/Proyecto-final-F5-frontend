@@ -1,3 +1,5 @@
+import EditButton from '../../components/common/EditButton';
+import DeleteButton from '../../components/common/DeleteButton';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import ReviewModal from './ReviewModal';
@@ -39,7 +41,8 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
   const [expandedReviews, setExpandedReviews] = useState({});
   const [likeLoading, setLikeLoading] = useState({});
   // Estado de likes y contador, persistente en localStorage
-  const userId = useSelector(state => state.auth?.user?.id || state.auth?.user?.email || state.auth?.user?.username || 'anon');
+  const authUser = useSelector(state => state.auth?.user);
+  const userId = authUser?.userId ? String(authUser.userId) : (authUser?.email || authUser?.username || 'anon');
   const storageKey = `reviewLikes_${userId}`;
   const [liked, setLiked] = useState(() => {
     if (!userId || userId === 'anon') return {};
@@ -194,17 +197,18 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                 const profileImgUrl = review.userProfileImageUrl || review.profileImage || null;
                 const userInitial = (review.userName || review.username || 'U').charAt(0).toUpperCase();
 
+                // Debug: mostrar usuario logueado y usuario de la review
+                console.log('authUser:', authUser, 'reviewUser:', review.idUser || review.userId, 'review:', review);
+                const isOwnReview = (review.idUser && String(review.idUser) === String(userId)) || (review.userId && String(review.userId) === String(userId));
                 return (
                   <div className="media-reviews__review" key={review.idReview}>
                     <div className="media-reviews__review-header">
                       <div className="media-reviews__reviewer">
-           
-                          <Avatar
-                            image={profileImgUrl}
-                            name={review.userName || review.username || 'U'}
-                            size={64}
-                          />
-                 
+                        <Avatar
+                          image={profileImgUrl}
+                          name={review.userName || review.username || 'U'}
+                          size={64}
+                        />
                         <div className="media-reviews__reviewer-info">
                           <h4>{review.userName || 'Usuario'}</h4>
                           <span>{review.createdAt ? new Date(review.createdAt).toLocaleDateString() : ''}</span>
@@ -246,6 +250,12 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                         </button>
                       )}
                     </div>
+                      {isOwnReview && (
+                        <div className="media-reviews__review-actions-bottom">
+                          <EditButton onClick={() => {/* handler editar review */}} />
+                          <DeleteButton onClick={() => {/* handler eliminar review */}} />
+                        </div>
+                      )}
                   </div>
                 );
               })

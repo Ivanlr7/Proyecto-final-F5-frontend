@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUserThunk } from "../../store/slices/authSlice";
 import userService from "../../api/services/UserService";
 import { ArrowLeft, Save, X, User, Mail, Search } from "lucide-react";
-import EditButton from "./EditButton";
-import DeleteButton from "./DeleteButton";
+import EditButton from "../../components/common/EditButton";
+import DeleteButton from "../../components/common/DeleteButton";
 import "./AdminPage.css";
 
 export default function AdminPage({ onNavigateToHome }) {
