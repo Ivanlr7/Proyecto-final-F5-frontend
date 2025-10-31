@@ -42,6 +42,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
   const [likeLoading, setLikeLoading] = useState({});
   // Estado de likes y contador, persistente en localStorage
   const authUser = useSelector(state => state.auth?.user);
+  const userRole = useSelector(state => state.auth?.role);
   const userId = authUser?.userId ? String(authUser.userId) : (authUser?.email || authUser?.username || 'anon');
   const storageKey = `reviewLikes_${userId}`;
   const [liked, setLiked] = useState(() => {
@@ -200,6 +201,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                 // Debug: mostrar usuario logueado y usuario de la review
                 console.log('authUser:', authUser, 'reviewUser:', review.idUser || review.userId, 'review:', review);
                 const isOwnReview = (review.idUser && String(review.idUser) === String(userId)) || (review.userId && String(review.userId) === String(userId));
+                const isAdmin = Array.isArray(userRole) ? userRole.includes('admin') : userRole === 'admin';
                 return (
                   <div className="media-reviews__review" key={review.idReview}>
                     <div className="media-reviews__review-header">
@@ -250,7 +252,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                         </button>
                       )}
                     </div>
-                      {isOwnReview && (
+                      {(isOwnReview || isAdmin) && (
                         <div className="media-reviews__review-actions-bottom">
                           <EditButton onClick={() => {/* handler editar review */}} />
                           <DeleteButton onClick={() => {/* handler eliminar review */}} />
