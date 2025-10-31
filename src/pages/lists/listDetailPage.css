@@ -29,6 +29,13 @@
 
 .list-detail-page__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  justify-content: center;
+  align-items: start;
+  place-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 900px;
 }

@@ -122,7 +122,37 @@ const ListPage = () => {
       items,
     }, token);
     if (res.success) {
+      // Obtener detalles de los primeros 4 items de la nueva lista
+      let detailedItems = [];
+      if (res.data.items && res.data.items.length > 0) {
+        const fetchers = res.data.items.slice(0, 4).map(async (item) => {
+          const type = (item.contentType || '').toLowerCase();
+          const contentId = item.contentId;
+          try {
+            if (type === 'movie') {
+              const r = await MovieService.getMovieDetails(contentId);
+              return { ...r.data, type: 'movie' };
+            } else if (type === 'series') {
+              const r = await ShowService.getShowDetails(contentId);
+              return { ...r.data, type: 'series' };
+            } else if (type === 'book') {
+              const r = await BookService.getBookById ? await BookService.getBookById(contentId) : null;
+              return r ? { ...r, type: 'book' } : { id: contentId, type: 'book' };
+            } else if (type === 'game' || type === 'videogame') {
+              const r = await VideogameService.getGameById(contentId);
+              return { ...r, type: 'videogame' };
+            } else {
+              return { id: contentId, type };
+            }
+          } catch {
+            return { id: contentId, type };
+          }
+        });
+        detailedItems = await Promise.all(fetchers);
+      }
+      const newListWithDetails = { ...res.data, detailedItems };
       setLists(prev => [res.data, ...prev]);
+      setListsWithDetails(prev => [newListWithDetails, ...prev]);
       setShowCreate(false);
       setNewList({ name: '', description: '' });
       setAddedItems([]);
