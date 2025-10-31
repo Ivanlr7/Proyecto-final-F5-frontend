@@ -111,6 +111,7 @@ export default function Header() {
           <Link to="series" className="header__nav-link header__nav-link--active">Series</Link>
           <Link to="videojuegos" className="header__nav-link header__nav-link--active">Videojuegos</Link>
           <Link to="libros" className="header__nav-link header__nav-link--active">Libros</Link>
+          <Link to="listas" className="header__nav-link header__nav-link--active">Listas</Link>
           <div className="header__nav-actions">
             {!isAuthenticated ? (
               <>

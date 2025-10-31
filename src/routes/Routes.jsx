@@ -13,7 +13,9 @@ import ShowDetailsPage from '../pages/shows/ShowDetails/ShowDetailsPage';
 import VideogamesPage from '../pages/videogames/videogamesPage/VideogamesPage';
 import VideogameDetailsPage from '../pages/videogames/videogameDetails/VideogameDetailsPage';
 import BooksPage from '../pages/books/booksPage/BooksPage';
-import BookDetailsPage from '../pages/books/BookDetails/BookDetailsPage';
+import BookDetailsPage from '../pages/books/bookDetails/BookDetailsPage';
+import ListPage from '../pages/lists/listPage';
+import ListDetailPage from '../pages/lists/listDetailPage';
 import AdminPage from '../pages/admin/AdminPage';
 import ProtectedAdminRoute from './ProtectedAdminRoute';
 const AppRoutes = () => (
@@ -32,6 +34,8 @@ const AppRoutes = () => (
     <Route path="/videojuegos/:id" element={<VideogameDetailsPage />} />
     <Route path="/libros" element={<BooksPage />} />
     <Route path="/libros/:id" element={<BookDetailsPage />} />
+  <Route path="/listas" element={<ListPage />} />
+  <Route path="/listas/:id" element={<ListDetailPage />} />
     <Route path="/admin" element={
       <ProtectedAdminRoute>
         <AdminPage />

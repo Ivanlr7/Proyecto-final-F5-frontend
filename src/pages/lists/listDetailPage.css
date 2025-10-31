@@ -1,0 +1,34 @@
+.list-detail-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.list-detail-page__title {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+}
+
+.list-detail-page__meta {
+  margin-bottom: 24px;
+  color: #7dd3fc;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.list-detail-page__author {
+  color: #60a5fa;
+  font-size: 1.1rem;
+}
+
+.list-detail-page__desc {
+  color: #7dd3fc;
+  font-size: 1rem;
+}
+
+.list-detail-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 24px;
+}

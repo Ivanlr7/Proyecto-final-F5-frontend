@@ -1,0 +1,138 @@
+.list-card__cover-img-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.list-card__cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+/* .list-card__cover-hover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: rgba(20, 30, 50, 0.82);
+  color: #fff;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: opacity 0.2s;
+  pointer-events: none;
+} */
+.list-card__cover-img-wrapper:hover .list-card__cover-hover {
+  opacity: 1;
+  pointer-events: auto;
+}
+.list-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.list-page__title {
+  font-size: 2.2rem;
+  margin-bottom: 32px;
+}
+
+.list-page__lists {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.list-card {
+  background: #181f2a;
+  border-radius: 16px;
+  padding: 24px;
+  min-width: 340px;
+  max-width: 370px;
+  box-shadow: 0 2px 12px #0002;
+  margin-bottom: 12px;
+}
+
+.list-card__covers {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  margin-bottom: 16px;
+}
+
+.list-card__cover {
+  width: 60px;
+  height: 90px;
+  margin-left: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #0004;
+  background: #222;
+  position: relative;
+}
+.list-card__cover + .list-card__cover {
+  margin-left: -18px;
+}
+
+.list-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  font-size: 32px;
+}
+
+.list-card__name {
+  margin: 12px 0 4px 0;
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+.list-card__author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.list-card__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 6px;
+}
+
+.list-card__author-label {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.list-card__author-label b {
+  color: #60a5fa;
+}
+
+.list-card__desc {
+  color: #7dd3fc;
+  font-size: 15px;
+  margin: 0;
+}
+
+.media-card--mini {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+}

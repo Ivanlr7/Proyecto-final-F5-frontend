@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './SearchBar.css';
 
-const SearchBar = ({ onSearch, onClear, isSearching, searchQuery, placeholder = 'Buscar películas por título...' }) => {
+const SearchBar = ({ onSearch, onClear, isSearching, searchQuery, placeholder = 'Buscar películas por título...', asForm = true }) => {
   const [inputValue, setInputValue] = useState(searchQuery || '');
 
   const handleSubmit = (e) => {
@@ -23,30 +23,57 @@ const SearchBar = ({ onSearch, onClear, isSearching, searchQuery, placeholder = 
 
   return (
     <div className="search-bar">
-      <form onSubmit={handleSubmit} className="search-form">
-        <div className="search-input-container">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder={placeholder}
-            className="search-input"
-            minLength={2}
-          />
-          <button type="submit" className="search-button">
-            🔍 Buscar
-          </button>
-          {isSearching && (
-            <button 
-              type="button" 
-              onClick={handleClear}
-              className="clear-search-button"
-            >
-              ✕ Limpiar
+      {asForm ? (
+        <form onSubmit={handleSubmit} className="search-form">
+          <div className="search-input-container">
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              placeholder={placeholder}
+              className="search-input"
+              minLength={2}
+            />
+            <button type="submit" className="search-button">
+              🔍 Buscar
             </button>
-          )}
+            {isSearching && (
+              <button 
+                type="button" 
+                onClick={handleClear}
+                className="clear-search-button"
+              >
+                ✕ Limpiar
+              </button>
+            )}
+          </div>
+        </form>
+      ) : (
+        <div className="search-form">
+          <div className="search-input-container">
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              placeholder={placeholder}
+              className="search-input"
+              minLength={2}
+            />
+            <button onClick={handleSubmit} className="search-button" type="button">
+              🔍 Buscar
+            </button>
+            {isSearching && (
+              <button 
+                type="button" 
+                onClick={handleClear}
+                className="clear-search-button"
+              >
+                ✕ Limpiar
+              </button>
+            )}
+          </div>
         </div>
-      </form>
+      )}
       {isSearching && searchQuery && (
         <p className="search-info">
           Mostrando resultados para: "<strong>{searchQuery}</strong>"
