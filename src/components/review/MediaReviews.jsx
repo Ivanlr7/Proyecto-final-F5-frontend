@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import ReviewModal from './ReviewModal';
 import ReviewService from '../../api/services/ReviewService';
 import { Star, User, MessageSquare, ThumbsUp } from 'lucide-react';
+import Avatar from '../../components/common/Avatar';
 import './MediaReviews.css';
 
 const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
@@ -189,6 +190,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                   ? review.reviewText
                   : review.reviewText.slice(0, maxLength) + '...';
 
+
                 const profileImgUrl = review.userProfileImageUrl || review.profileImage || null;
                 const userInitial = (review.userName || review.username || 'U').charAt(0).toUpperCase();
 
@@ -196,26 +198,13 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                   <div className="media-reviews__review" key={review.idReview}>
                     <div className="media-reviews__review-header">
                       <div className="media-reviews__reviewer">
-                        <div className="media-reviews__reviewer-avatar">
-                          {profileImgUrl && (
-                            <img
-                              src={profileImgUrl}
-                              alt={review.userName || 'Usuario'}
-                              className="media-reviews__reviewer-img"
-                              onError={e => {
-                                e.target.style.display = 'none';
-                                if (e.target.nextElementSibling) e.target.nextElementSibling.style.display = 'flex';
-                              }}
-                              style={{ display: profileImgUrl ? 'block' : 'none' }}
-                            />
-                          )}
-                          <div
-                            className="media-reviews__avatar-initials"
-                            style={{ display: profileImgUrl ? 'none' : 'flex' }}
-                          >
-                            {userInitial.charAt(0).toUpperCase()}
-                          </div>
-                        </div>
+           
+                          <Avatar
+                            image={profileImgUrl}
+                            name={review.userName || review.username || 'U'}
+                            size={64}
+                          />
+                 
                         <div className="media-reviews__reviewer-info">
                           <h4>{review.userName || 'Usuario'}</h4>
                           <span>{review.createdAt ? new Date(review.createdAt).toLocaleDateString() : ''}</span>
