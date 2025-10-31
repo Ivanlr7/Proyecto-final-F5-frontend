@@ -167,6 +167,9 @@
 /* Search Bar */
 .admin-page__search-container {
   margin-bottom: 2rem;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .admin-page__search-wrapper {
@@ -213,6 +216,8 @@
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 16px;
   overflow: hidden;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .admin-page__table {
@@ -227,12 +232,13 @@
 }
 
 .admin-page__table-th {
-  padding: 1rem 1.5rem;
+  padding: 1.5rem 1.5rem;
   text-align: left;
   color: #cbd5e1;
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
+  vertical-align: middle;
 }
 
 /* Table Body */
@@ -256,6 +262,7 @@
   padding: 1.5rem 1.5rem;
   color: #e2e8f0;
   vertical-align: middle;
+  text-align: left;
 }
 
 .admin-page__table-td--id {

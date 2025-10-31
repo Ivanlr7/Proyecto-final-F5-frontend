@@ -140,9 +140,9 @@ export default function AdminPage({ onNavigateToHome }) {
       </div>
 
       {/* Back Button */}
-      <button className="admin-page__back-btn" onClick={onNavigateToHome}>
+      {/* <button className="admin-page__back-btn" onClick={onNavigateToHome}>
         <ArrowLeft className="admin-page__back-icon" />
-      </button>
+      </button> */}
 
       {/* Main Content */}
       <div className="admin-page__content">
