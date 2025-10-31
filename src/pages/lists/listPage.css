@@ -51,7 +51,7 @@
 }
 
 .list-card {
-  background: #181f2a;
+  background:  #1a2332;
   border-radius: 16px;
   padding: 24px;
   min-width: 340px;
@@ -95,6 +95,7 @@
 .list-card__name {
   margin: 12px 0 4px 0;
   font-size: 1.25rem;
+  text-align: left;
   color: #fff;
 }
 
