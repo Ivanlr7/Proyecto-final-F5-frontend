@@ -57,18 +57,21 @@
 }
 
 .list-creation-page__results-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+  justify-items: center;
 }
 
 .list-creation-page__result-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
   background: #1e293b;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 12px 12px 18px 12px;
+  min-width: 220px;
+  max-width: 260px;
 }
 
 .list-creation-page__add-btn {
@@ -76,9 +79,11 @@
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 6px 14px;
+  padding: 5px 10px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  margin-top: 8px;
+  width: 100%;
 }
 
 .list-creation-page__added-items {
@@ -86,18 +91,21 @@
 }
 
 .list-creation-page__added-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+  justify-items: center;
 }
 
 .list-creation-page__added-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
   background: #1e293b;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 12px 12px 18px 12px;
+  min-width: 220px;
+  max-width: 260px;
 }
 
 .list-creation-page__remove-btn {
@@ -105,9 +113,11 @@
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 6px 14px;
+  padding: 5px 10px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  margin-top: 8px;
+  width: 100%;
 }
 
 .list-creation-page__submit-btn {

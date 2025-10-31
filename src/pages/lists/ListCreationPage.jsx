@@ -158,14 +158,23 @@ const ListCreationPage = () => {
         <div className="list-creation-page__search-results">
           {searchResults.length > 0 && (
             <div className="list-creation-page__results-list">
-              {searchResults.map(item => (
-                <div key={item.id} className="list-creation-page__result-item">
-                  <MediaCard item={item} type={item.type} className="media-card--mini" />
-                  <button className="list-creation-page__add-btn" type="button" onClick={() => handleAddItem(item)} disabled={addedItems.some(i => i.id === item.id && i.type === item.type)}>
-                    Añadir
-                  </button>
-                </div>
-              ))}
+              {searchResults.map(item => {
+                const isAdded = addedItems.some(i => i.id === item.id && i.type === item.type);
+                return (
+                  <div key={item.id} className="list-creation-page__result-item">
+                    <MediaCard item={item} type={item.type} className="media-card--mini" />
+                    {isAdded ? (
+                      <button className="list-creation-page__add-btn" type="button" onClick={() => handleRemoveItem(item)}>
+                        Quitar
+                      </button>
+                    ) : (
+                      <button className="list-creation-page__add-btn" type="button" onClick={() => handleAddItem(item)}>
+                        Añadir
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
