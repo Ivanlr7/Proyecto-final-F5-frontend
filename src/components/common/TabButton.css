@@ -14,14 +14,14 @@
 }
 
 .tab-nav__tab:hover {
-  color: #3b82f6;
+  color: var(--primary-color);
   background-color: rgba(59, 130, 246, 0.05);
 }
 
 .tab-nav__tab--active {
-  color: #3b82f6;
-  border-bottom-color: #3b82f6;
-  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  background-color: var(--primary-color-light);
 }
 
 @media (max-width: 480px) {
@@ -30,3 +30,4 @@
     padding: 1rem 1.5rem;
   }
 }
+

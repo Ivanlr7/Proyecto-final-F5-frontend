@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #3b82f6;
+  background: var(--primary-color);
   color: #fff;
   border: none;
   border-radius: 0.5rem;
@@ -22,7 +22,7 @@
 }
 
 .advanced-filter-toggle:hover {
-  background: #2563eb;
+  background: var(--primary-color-hover);
   color: #fff;
 }
 .movies-page {
@@ -47,7 +47,7 @@
 .movies-page__title {
   font-size: 3rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -85,13 +85,13 @@
 }
 
 .movies-page__category-btn:hover {
-  border-color: #3b82f6;
-  color: #3b82f6;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .movies-page__category-btn.active {
-  background-color: #3b82f6;
-  border-color: #3b82f6;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   color: #ffffff;
 }
 
@@ -195,7 +195,7 @@
 .movies-page__year-select:focus,
 .movies-page__rating-select:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--primary-color);
 }
 
 .movies-page__year-select option,
@@ -214,7 +214,7 @@
   width: 3rem;
   height: 3rem;
   border: 3px solid #1e293b;
-  border-top: 3px solid #3b82f6;
+  border-top: 3px solid var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 1rem;
@@ -235,7 +235,7 @@
 .movies-page__retry-btn {
   margin-top: 1rem;
   padding: 0.75rem 1.5rem;
-  background-color: #3b82f6;
+  background-color: var(--primary-color);
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
@@ -245,7 +245,7 @@
 }
 
 .movies-page__retry-btn:hover {
-  background-color: #2563eb;
+  background-color: var(--primary-color-hover);
 }
 
 /* Movies Grid */
@@ -343,7 +343,7 @@
 }
 
 .movie-card__year {
-  color: #3b82f6;
+  color: var(--primary-color);
   font-weight: 600;
   font-size: 1rem;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
@@ -369,7 +369,7 @@
 
 .movies-page__page-btn {
   padding: 0.75rem 1.5rem;
-  background-color: #3b82f6;
+  background-color: var(--primary-color);
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
@@ -379,7 +379,7 @@
 }
 
 .movies-page__page-btn:hover:not(:disabled) {
-  background-color: #2563eb;
+  background-color: var(--primary-color-hover);
 }
 
 .movies-page__page-btn:disabled {
@@ -410,7 +410,7 @@
 
 .movies-page__debug summary {
   cursor: pointer;
-  color: #3b82f6;
+  color: var(--primary-color);
   font-weight: 600;
 }
 

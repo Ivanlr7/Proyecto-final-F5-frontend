@@ -70,7 +70,7 @@
 }
 
 .review-modal__button {
-  background: #3b82f6;
+  background: var(--primary-color);
   color: #fff;
   padding: 12px 32px;
   border: none;
@@ -81,7 +81,7 @@
 }
 
 .review-modal__button:hover {
-  background: #2563eb;
+  background: var(--primary-color-hover);
 }
 .review-modal__stars {
   display: flex;
@@ -99,3 +99,4 @@
 .review-modal__star--active {
   color: #fbbf24;
 }
+

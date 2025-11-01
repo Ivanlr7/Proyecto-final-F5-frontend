@@ -30,7 +30,7 @@
 .create-list-page__background-blob--blue {
   width: 600px;
   height: 600px;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
   top: -200px;
   right: -200px;
   animation-delay: 0s;
@@ -73,7 +73,7 @@
 .create-list-page__title {
   color: #ffffff;
   margin: 0 0 8px 0;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -134,7 +134,7 @@
   outline: none;
   border-color: rgba(59, 130, 246, 0.5);
   background: rgba(15, 23, 42, 0.8);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 3px var(--primary-color-light);
 }
 
 .create-list-page__textarea {
@@ -238,11 +238,11 @@
 .create-list-page__type-btn:hover {
   background: rgba(30, 41, 59, 0.8);
   color: rgba(255, 255, 255, 0.8);
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: var(--primary-color-border);
 }
 
 .create-list-page__type-btn--active {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
   color: #fff;
   border-color: transparent;
 }
@@ -267,11 +267,11 @@
   outline: none;
   border-color: rgba(59, 130, 246, 0.5);
   background: rgba(15, 23, 42, 0.8);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 3px var(--primary-color-light);
 }
 
 .create-list-page__search-btn {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
   color: #fff;
   border: none;
   padding: 12px 24px;
@@ -368,7 +368,7 @@
 
 .create-list-page__result-btn {
   width: 100%;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -425,11 +425,11 @@
 .create-list-page__btn--cancel:hover {
   background: rgba(30, 41, 59, 0.8);
   color: #fff;
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: var(--primary-color-border);
 }
 
 .create-list-page__btn--save {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
   color: #fff;
 }
 
@@ -501,3 +501,4 @@
     transform: translateY(0);
   }
 }
+

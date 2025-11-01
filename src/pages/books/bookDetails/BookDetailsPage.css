@@ -149,7 +149,7 @@
   margin-bottom: 0.5rem;
   text-align: left;
   /* text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(135deg, #10b981, #3b82f6);
+  background: linear-gradient(135deg, #10b981, var(--primary-color));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; */
@@ -301,7 +301,7 @@
 .book-details__creator-photo-fallback {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #10b981, #3b82f6);
+  background: linear-gradient(135deg, #10b981, var(--primary-color));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -591,14 +591,14 @@
 }
 
 .book-details__tab:hover {
-  color: #3b82f6;
-  background: linear-gradient(90deg, #3b82f6 0%, #a78bfa 100%);
+  color: var(--primary-color);
+  background: linear-gradient(90deg, var(--primary-color) 0%, #a78bfa 100%);
 }
 
 .book-details__tab.active {
   color: #7c3aed;
   border-bottom-color: #a78bfa;
-  background: linear-gradient(90deg, #3b82f6 0%, #a78bfa 100%);
+  background: linear-gradient(90deg, var(--primary-color) 0%, #a78bfa 100%);
 }
 
 /* Tab Content */
@@ -639,12 +639,12 @@
 }
 
 .book-details__write-review-btn {
-  background: linear-gradient(90deg, #3b82f6 0%, #a78bfa 100%);
+  background: linear-gradient(90deg, var(--primary-color) 0%, #a78bfa 100%);
   color: #ffffff;
 }
 
 .book-details__write-review-btn:hover {
-  background: linear-gradient(90deg, #2563eb 0%, #7c3aed 100%);
+  background: linear-gradient(90deg, var(--primary-color-hover) 0%, #7c3aed 100%);
   transform: translateY(-2px);
 }
 
@@ -701,7 +701,7 @@
 .book-details__reviewer-avatar {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #3b82f6, #a78bfa);
+  background: linear-gradient(135deg, var(--primary-color), #a78bfa);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -767,3 +767,4 @@
   text-align: center;
   margin-top: 1rem;
 }
+

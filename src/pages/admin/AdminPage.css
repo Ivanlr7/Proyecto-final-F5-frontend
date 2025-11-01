@@ -2,7 +2,7 @@
 .admin-page__user-avatar-initials {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -43,7 +43,7 @@
 .admin-page__background-blob--blue {
   width: 600px;
   height: 600px;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
   top: -200px;
   right: -200px;
   animation-delay: 0s;
@@ -155,7 +155,7 @@
 }
 
 .admin-page__stat-value {
-  color: #3b82f6;
+  color: var(--primary-color);
   margin-bottom: 0.25rem;
 }
 
@@ -285,7 +285,7 @@
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(59, 130, 246, 0.3);
+  border: 2px solid var(--primary-color-border);
 }
 
 .admin-page__user-name {
@@ -364,7 +364,7 @@
 }
 
 .admin-page__action-btn--edit {
-  background: rgba(59, 130, 246, 0.1);
+  background: var(--primary-color-light);
   color: #60a5fa;
   border-color: rgba(59, 130, 246, 0.2);
 }
@@ -663,3 +663,4 @@
     min-width: 150px;
   }
 }
+

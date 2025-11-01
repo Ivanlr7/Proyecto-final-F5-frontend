@@ -11,12 +11,13 @@
 }
 
 .category-btn:hover {
-  border-color: #3b82f6;
-  color: #3b82f6;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .category-btn.active {
-  background-color: #3b82f6;
-  border-color: #3b82f6;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   color: #ffffff;
 }
+

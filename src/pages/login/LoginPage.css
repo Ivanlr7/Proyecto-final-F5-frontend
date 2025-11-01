@@ -63,7 +63,7 @@
 
 .login-page__back-btn:hover {
   background-color: rgba(30, 41, 59, 1);
-  border-color: #3b82f6;
+  border-color: var(--primary-color);
   color: #ffffff;
   transform: translateX(-4px);
 }
@@ -94,7 +94,7 @@
   left: 10%;
   width: 20rem;
   height: 20rem;
-  background-color: rgba(59, 130, 246, 0.3);
+  background-color: var(--primary-color-border);
   animation-delay: 0s;
 }
 
@@ -145,13 +145,13 @@
 .login-page__logo {
   width: 3.5rem;
   height: 3.5rem;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, #8b5cf6 100%);
   border-radius: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 1.5rem;
-  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 16px var(--primary-color-border);
 }
 
 .login-page__logo-text {
@@ -226,9 +226,9 @@
 }
 
 .login-page__input:focus {
-  border-color: #3b82f6;
+  border-color: var(--primary-color);
   background-color: rgba(30, 41, 59, 0.7);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 3px var(--primary-color-light);
 }
 
 .login-page__input--error {
@@ -254,7 +254,7 @@
 }
 
 .login-page__toggle-password:hover {
-  color: #3b82f6;
+  color: var(--primary-color);
 }
 
 .login-page__toggle-icon {
@@ -301,7 +301,7 @@
 .login-page__submit {
   width: 100%;
   padding: 0.875rem 1.5rem;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, #8b5cf6 100%);
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
@@ -310,7 +310,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 0.5rem;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px var(--primary-color-border);
 }
 
 .login-page__submit:hover {
@@ -343,7 +343,7 @@
 }
 
 .login-page__link:hover {
-  color: #3b82f6;
+  color: var(--primary-color);
   text-decoration: underline;
 }
 
@@ -394,3 +394,4 @@
     padding: 1.5rem 1rem;
   }
 }
+

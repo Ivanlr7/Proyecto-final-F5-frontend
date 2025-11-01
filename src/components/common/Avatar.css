@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
   overflow: hidden;
 }
 .avatar-component__img {
@@ -24,7 +24,7 @@
   font-weight: bold;
   font-size: 1.2rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
   position: absolute;
   top: 0;
   left: 0;
@@ -56,3 +56,4 @@
   text-align: center;
   width: 100%;
 }
+

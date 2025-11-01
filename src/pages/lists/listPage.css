@@ -13,7 +13,7 @@
   max-width: 100%;
   white-space: normal;
   word-break: break-word;
-  color: #3b82f6;
+  color: var(--primary-color);
   font-weight: 600;
   font-size: 1.2rem;
   text-decoration: none;
@@ -21,7 +21,7 @@
 }
 
 .list-card__name a:hover {
-  color: #2563eb;
+  color: var(--primary-color-hover);
   text-decoration: underline;
 }
 .list-card__cover-img-wrapper {
@@ -163,3 +163,4 @@
   box-shadow: none !important;
   border-radius: 8px !important;
 }
+
