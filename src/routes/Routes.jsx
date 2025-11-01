@@ -16,7 +16,7 @@ import BooksPage from '../pages/books/booksPage/BooksPage';
 import BookDetailsPage from '../pages/books/bookDetails/BookDetailsPage';
 import ListDetailPage from '../pages/lists/ListDetailPage';
 import ListPage from '../pages/lists/ListPage';
-import ListCreationPage from '../pages/lists/ListCreationPage';
+import ListCreationPage from '../pages/lists/ListCreationPage2';
 import AdminPage from '../pages/admin/AdminPage';
 import ProtectedAdminRoute from './ProtectedAdminRoute';
 const AppRoutes = () => (
@@ -36,7 +36,8 @@ const AppRoutes = () => (
     <Route path="/libros" element={<BooksPage />} />
     <Route path="/libros/:id" element={<BookDetailsPage />} />
   <Route path="/listas" element={<ListPage />} />
-  <Route path="/listas/crear" element={<ListCreationPage />} />
+  {/* <Route path="/listas/crear" element={<ListCreationPage />} /> */}
+  <Route path="/listas/crear/" element={<ListCreationPage />} />
   <Route path="/listas/:id" element={<ListDetailPage />} />
     <Route path="/admin" element={
       <ProtectedAdminRoute>
