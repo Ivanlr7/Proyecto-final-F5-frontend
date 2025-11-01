@@ -52,7 +52,12 @@ class BookRepository {
 	async getBooksBySubject(subject, page = 1) {
 		const limit = 20;
 		const offset = (page - 1) * limit;
-		const data = await this.getJson(`/subjects/${encodeURIComponent(subject)}.json`, { limit: String(limit), offset: String(offset) });
+
+		const normalizedSubject = subject
+			.toLowerCase()
+			.trim()
+			.replace(/\s+/g, '_');
+		const data = await this.getJson(`/subjects/${encodeURIComponent(normalizedSubject)}.json`, { limit: String(limit), offset: String(offset) });
 		return data?.works || [];
 	}
 
@@ -60,7 +65,7 @@ class BookRepository {
 		const id = workId.includes('/works/') ? workId.split('/').pop() : workId;
 		const work = await this.getJson(`/works/${id}.json`);
 		
-		// Obtener nombres de autores si existen
+
 		if (work.authors && Array.isArray(work.authors)) {
 			const authorPromises = work.authors.map(async (authorRef) => {
 				try {

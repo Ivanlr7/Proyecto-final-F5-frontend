@@ -12,7 +12,17 @@ class BookService {
 		const backdrop_url = coverId ? BookRepository.getCoverUrl(coverId, 'L') : null;
 
 		const authors = raw.author_name || raw.authors?.map(a => a.name).filter(Boolean) || [];
-		const subjects = raw.subject || raw.subjects || [];
+	
+		let subjects = [];
+		if (Array.isArray(raw.subject)) {
+			subjects = raw.subject;
+		} else if (Array.isArray(raw.subjects)) {
+			subjects = raw.subjects.map(s => {
+				if (typeof s === 'string') return s;
+				if (s.key) return s.key.replace('/subjects/', '');
+				return null;
+			}).filter(Boolean);
+		}
 		const publisher = raw.publisher || raw.publishers || [];
 		const language = raw.language || raw.languages?.map(l => l.key?.split('/').pop()) || [];
 		const first_publish_year = raw.first_publish_year || raw.first_publish_date || raw.created?.value?.slice(0,4);
@@ -26,8 +36,14 @@ class BookService {
 		const edition_count = raw.edition_count;
 		const number_of_pages_median = raw.number_of_pages_median || raw.number_of_pages;
 		const isbn = raw.isbn || raw.isbn13 || raw.isbn10 || [];
-		const person = raw.person || [];
-		const place = raw.place || [];
+		
+		// Person y place pueden venir como objetos con key
+		const person = Array.isArray(raw.person) 
+			? raw.person.map(p => typeof p === 'string' ? p : (p.key?.replace('/subjects/', '') || null)).filter(Boolean)
+			: [];
+		const place = Array.isArray(raw.place)
+			? raw.place.map(p => typeof p === 'string' ? p : (p.key?.replace('/subjects/', '') || null)).filter(Boolean)
+			: [];
 
 		return {
 			id,
