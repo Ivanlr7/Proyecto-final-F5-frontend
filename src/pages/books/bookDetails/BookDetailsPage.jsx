@@ -151,7 +151,7 @@ const BookDetailsPage = () => {
 				<div className="book-details__content">
 								{activeTab === 'details' && (
 						<div className="book-details__details">
-							<h2 className="book-details__section-title">Información del Libro</h2>
+					
 										{book.overview && (
 											<div className="book-details__section" style={{marginTop: '1rem'}}>
 												<h3 className="book-details__section-title">Sinopsis</h3>
