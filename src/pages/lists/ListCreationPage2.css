@@ -297,7 +297,8 @@
 
 .create-list-page__results-grid {
   display: grid;
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
   max-height: 500px;
   overflow-y: auto;
   padding: 4px;
@@ -323,38 +324,20 @@
 
 .create-list-page__result-item {
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 12px;
   transition: all 0.3s ease;
-  align-items: center;
-}
-
-.create-list-page__result-item:hover {
-  background: rgba(15, 23, 42, 0.8);
-  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .create-list-page__result-item .media-card {
-  width: 80px;
-  min-width: 80px;
-  max-width: 80px;
-  flex-shrink: 0;
+  width: 100%;
+  min-width: unset;
+  max-width: unset;
 }
 
 .create-list-page__result-item .media-card__image {
   min-width: unset;
   width: 100%;
-}
-
-.create-list-page__result-item .media-card:hover {
-  transform: none;
-}
-
-.create-list-page__result-item .media-card__overlay {
-  display: none;
 }
 
 .create-list-page__result-image {
@@ -384,20 +367,21 @@
 }
 
 .create-list-page__result-btn {
-  margin-left: auto;
+  width: 100%;
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: #fff;
   border: none;
-  padding: 8px 20px;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
   font-weight: 600;
+  font-size: 14px;
 }
 
 .create-list-page__result-btn:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
@@ -489,19 +473,9 @@
     width: 100%;
   }
 
-  .create-list-page__result-item {
-    gap: 8px;
-  }
-
-  .create-list-page__result-item .media-card {
-    width: 60px;
-    min-width: 60px;
-    max-width: 60px;
-  }
-
-  .create-list-page__result-btn {
-    padding: 6px 16px;
-    font-size: 14px;
+  .create-list-page__results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
   }
 }
 
@@ -511,15 +485,9 @@
     gap: 12px;
   }
 
-  .create-list-page__result-item .media-card {
-    width: 50px;
-    min-width: 50px;
-    max-width: 50px;
-  }
-
-  .create-list-page__result-btn {
-    padding: 6px 12px;
-    font-size: 12px;
+  .create-list-page__results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
   }
 }
 
