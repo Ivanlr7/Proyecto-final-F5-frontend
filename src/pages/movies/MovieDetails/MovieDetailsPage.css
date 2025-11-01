@@ -1,10 +1,34 @@
 
 .movie-details__suggested-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  width: 100%;
+  justify-items: center;
 }
+
+@media (max-width: 1024px) {
+  .movie-details__suggested-list {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-details__suggested-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 636px) {
+  .movie-details__suggested-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
 .movie-details-page {
   min-height: 100vh;
   background-color: #0f172a;

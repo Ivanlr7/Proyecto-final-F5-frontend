@@ -1,22 +1,30 @@
 /* Suggested List */
 .book-details__suggested-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
   width: 100%;
+  justify-items: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .book-details__suggested-list {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .book-details__suggested-list {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 636px) {
+  .book-details__suggested-list {
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
 }
