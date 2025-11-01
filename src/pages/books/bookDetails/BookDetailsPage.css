@@ -1,10 +1,26 @@
 /* Suggested List */
 .book-details__suggested-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  width: 100%;
 }
+
+@media (max-width: 768px) {
+  .book-details__suggested-list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-details__suggested-list {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+  }
+}
+
 /* Book Details Page Styles */
 
 .book-details {
