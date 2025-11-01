@@ -58,7 +58,28 @@ class BookRepository {
 
 	async getBookByKey(workId) {
 		const id = workId.includes('/works/') ? workId.split('/').pop() : workId;
-		return this.getJson(`/works/${id}.json`);
+		const work = await this.getJson(`/works/${id}.json`);
+		
+		// Obtener nombres de autores si existen
+		if (work.authors && Array.isArray(work.authors)) {
+			const authorPromises = work.authors.map(async (authorRef) => {
+				try {
+					const authorKey = authorRef.author?.key || authorRef.key;
+					if (authorKey) {
+						const author = await this.getAuthorByKey(authorKey);
+						return author.name;
+					}
+				} catch (err) {
+					console.error('Error fetching author:', err);
+				}
+				return null;
+			});
+			
+			const authorNames = await Promise.all(authorPromises);
+			work.author_name = authorNames.filter(Boolean);
+		}
+		
+		return work;
 	}
 
 	async getAuthorByKey(authorKey) {

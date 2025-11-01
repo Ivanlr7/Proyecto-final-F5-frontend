@@ -160,6 +160,12 @@ const BookDetailsPage = () => {
 										)}
               
 							<div className="book-details__info-grid">
+								{book.author_name && book.author_name.length > 0 && (
+									<div className="book-details__info-item">
+										<strong>Autor/a:</strong>
+										<span>{book.author_name.join(', ')}</span>
+									</div>
+								)}
 								{book.publisher && book.publisher.length > 0 && (
 									<div className="book-details__info-item">
 										<strong>Editorial:</strong>
