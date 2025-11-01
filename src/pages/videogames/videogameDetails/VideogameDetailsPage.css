@@ -5,7 +5,7 @@
   gap: 1.5rem;
   justify-content: center;
 }
-/* Movie Details Page Styles - Azul (#10b981) para diferenciar de series */
+/* Movie Details Page Styles - Azul (var(--primary-color)) para diferenciar de series */
 
 .videogame-details-page {
   min-height: 100vh;
@@ -28,7 +28,7 @@
   width: 40px;
   height: 40px;
   border: 4px solid #1e293b;
-  border-top: 4px solid #10b981;
+  border-top: 4px solid var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
@@ -41,7 +41,7 @@
 
 .back-button {
   padding: 0.75rem 1.5rem;
-  background-color: #10b981;
+  background-color: var(--primary-color);
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
@@ -52,7 +52,7 @@
 }
 
 .back-button:hover {
-  background-color: #059669;
+  background-color: var(--primary-color-hover);
 }
 
 
@@ -63,14 +63,14 @@
   gap: 0.5rem;
   background: none;
   border: none;
-  color: #10b981;
+  color: var(--primary-color);
   font-size: 1rem;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .videogame-details__back-btn:hover {
-  color: #059669;
+  color: var(--primary-color-hover);
 }
 
 /* Hero Section */
@@ -143,7 +143,7 @@
   margin-bottom: 0.5rem;
   text-align: left;
   /* text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(135deg, #10b981, #10b981);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; */
@@ -189,13 +189,13 @@
 }
 
 .videogame-details__genre {
-  background-color: rgba(16, 185, 129, 0.2);
-  color: #10b981;
+  background-color: var(--primary-color-light);
+  color: var(--primary-color);
   padding: 0.5rem 1rem;
   border-radius: 1rem;
   font-size: 0.875rem;
   font-weight: 500;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border: 1px solid var(--primary-color-border);
 }
 
 .videogame-details__tagline {
@@ -220,9 +220,9 @@
 .videogame-details__section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #10b981;
+  color: var(--primary-color);
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid rgba(16, 185, 129, 0.3);
+  border-bottom: 2px solid var(--primary-color-border);
   padding-bottom: 0.5rem;
 }
 
@@ -246,11 +246,11 @@
   padding: 1rem;
   background-color: #1e293b;
   border-radius: 0.5rem;
-  border-left: 4px solid #10b981;
+  border-left: 4px solid var(--primary-color);
 }
 
 .videogame-details__info-item strong {
-  color: #10b981;
+  color: var(--primary-color);
   font-weight: 600;
 }
 
@@ -292,7 +292,7 @@
 .videogame-details__creator-photo-fallback {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #10b981, #10b981);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -311,7 +311,7 @@
 
 .videogame-details__creator-info p {
   font-size: 0.875rem;
-  color: #10b981;
+  color: var(--primary-color);
   margin: 0;
 }
 
@@ -545,14 +545,14 @@
 }
 
 .videogame-details__tab:hover {
-  color: #10b981;
-  background-color: rgba(16, 185, 129, 0.05);
+  color: var(--primary-color);
+  background-color: rgba(59, 130, 246, 0.05);
 }
 
 .videogame-details__tab.active {
-  color: #10b981;
-  border-bottom-color: #10b981;
-  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  background-color: var(--primary-color-light);
 }
 
 /* Tab Content */
@@ -593,12 +593,12 @@
 }
 
 .videogame-details__write-review-btn {
-  background-color: #10b981;
+  background-color: var(--primary-color);
   color: #ffffff;
 }
 
 .videogame-details__write-review-btn:hover {
-  background-color: #059669;
+  background-color: var(--primary-color-hover);
   transform: translateY(-2px);
 }
 
@@ -655,7 +655,7 @@
 .videogame-details__reviewer-avatar {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #10b981, #10b981);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -707,4 +707,6 @@
   line-height: 1.6;
   margin: 0;
 }
+
+
 
