@@ -20,7 +20,7 @@
 .books-page__title {
   font-size: 3rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #f97316, #8b5cf6);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-hover));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -126,7 +126,7 @@
 
 .books-page__filters-title h3 {
   margin: 0;
-  color: #f97316;
+  color: var(--primary-color);
 }
 
 .books-page__clear-filters {
@@ -175,13 +175,13 @@
 }
 
 .filter-select:hover {
-  border-color: #f97316;
+  border-color: var(--primary-color);
 }
 
 .filter-select:focus {
   outline: none;
-  border-color: #f97316;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-color-light);
 }
 
 .books-page__filter-section {
@@ -216,13 +216,13 @@
 }
 
 .books-page__genre-btn:hover {
-  border-color: #8b5cf6;
-  color: #8b5cf6;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .books-page__genre-btn.active {
-  background-color: #8b5cf6;
-  border-color: #8b5cf6;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   color: #ffffff;
 }
 
@@ -243,7 +243,7 @@
 .books-page__year-select:focus,
 .books-page__rating-select:focus {
   outline: none;
-  border-color: #f97316;
+  border-color: var(--primary-color);
 }
 
 .books-page__year-select option,
