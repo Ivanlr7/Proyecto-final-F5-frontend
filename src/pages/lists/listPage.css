@@ -1,29 +1,3 @@
-.list-card__name {
-  max-width: 100%;
-  overflow: hidden;
-  margin: 12px 0 8px 0;
-}
-
-.list-card__name a {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  white-space: normal;
-  word-break: break-word;
-  color: var(--primary-color);
-  font-weight: 600;
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.list-card__name a:hover {
-  color: var(--primary-color-hover);
-  text-decoration: underline;
-}
 .list-card__cover-img-wrapper {
   width: 100%;
   height: 100%;
@@ -67,7 +41,34 @@
 
 .list-page__title {
   font-size: 2.2rem;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.list-page__create-btn {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
   margin-bottom: 32px;
+}
+
+.list-page__create-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+.list-page__create-btn:active {
+  transform: translateY(0);
 }
 
 .list-page__lists {
@@ -163,4 +164,3 @@
   box-shadow: none !important;
   border-radius: 8px !important;
 }
-
