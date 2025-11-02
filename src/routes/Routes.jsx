@@ -5,6 +5,7 @@ import About from '../pages/about/About';
 import Contact from '../pages/contact/Contact';
 import LegalNotice from '../pages/legal/LegalNotice';
 import CookiePolicy from '../pages/legal/CookiePolicy';
+import NotFound from '../pages/notFound/NotFound';
 import RegisterPage from '../pages/register/RegisterPage';
 import LoginPage from '../pages/login/LoginPage';
 import UserPage from '../pages/user/UserPage';
@@ -48,7 +49,7 @@ const AppRoutes = () => (
         <AdminPage />
       </ProtectedAdminRoute>
     } />
-    
+    <Route path="*" element={<NotFound />} />
   </Routes>
 );
 
