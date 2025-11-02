@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/home/HomePage';
 import About from '../pages/about/About';
 import Contact from '../pages/contact/Contact';
+import LegalNotice from '../pages/legal/LegalNotice';
+import CookiePolicy from '../pages/legal/CookiePolicy';
 import RegisterPage from '../pages/register/RegisterPage';
 import LoginPage from '../pages/login/LoginPage';
 import UserPage from '../pages/user/UserPage';
@@ -24,6 +26,8 @@ const AppRoutes = () => (
     <Route path="/" element={<Home />} />
     <Route path="/about" element={<About />} />
     <Route path="/contact" element={<Contact />} />
+    <Route path="/aviso-legal" element={<LegalNotice />} />
+    <Route path="/politica-cookies" element={<CookiePolicy />} />
     <Route path="/register" element={<RegisterPage />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/me" element={<UserPage />} />

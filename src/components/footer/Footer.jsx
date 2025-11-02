@@ -19,10 +19,10 @@ export default function Footer() {
           <Link to="/contact" className="footer__link">
             Contacto
           </Link>
-          <Link to="/legal" className="footer__link">
+          <Link to="/aviso-legal" className="footer__link">
             Aviso Legal
           </Link>
-          <Link to="/cookies" className="footer__link">
+          <Link to="/politica-cookies" className="footer__link">
             Política de Cookies
           </Link>
         </div>

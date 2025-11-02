@@ -1,0 +1,227 @@
+.legal {
+  min-height: 100vh;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.legal__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.legal__background-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.2;
+  animation: float 20s infinite ease-in-out;
+}
+
+.legal__background-blob--blue {
+  width: 500px;
+  height: 500px;
+  background: var(--primary-color);
+  top: -10%;
+  right: -10%;
+  animation-delay: 0s;
+}
+
+.legal__background-blob--purple {
+  width: 400px;
+  height: 400px;
+  background: #8b5cf6;
+  bottom: -10%;
+  left: -5%;
+  animation-delay: 7s;
+}
+
+.legal__container {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.legal__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.legal__icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-color-light), transparent);
+  border: 2px solid var(--primary-color-border);
+  border-radius: 50%;
+  color: var(--primary-color);
+}
+
+.legal__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.75rem;
+}
+
+.legal__subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.legal__date {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.legal__content {
+  background-color: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  border-radius: 1rem;
+  padding: 3rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.legal__section {
+  margin-bottom: 3rem;
+}
+
+.legal__section:last-child {
+  margin-bottom: 0;
+}
+
+.legal__section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+}
+
+.legal__section-header h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.legal__section h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 1.5rem 0 1rem;
+}
+
+.legal__section p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.legal__section ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.legal__section ul li {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.legal__section ul li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.legal__section strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.legal__link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.legal__link:hover {
+  color: var(--primary-color-hover);
+  text-decoration: underline;
+}
+
+.legal__footer {
+  background-color: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.legal__footer p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin: 0;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -30px) rotate(120deg);
+  }
+  66% {
+    transform: translate(-20px, 20px) rotate(240deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .legal {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .legal__title {
+    font-size: 2rem;
+  }
+
+  .legal__content {
+    padding: 2rem 1.5rem;
+  }
+
+  .legal__section-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .legal__section h3 {
+    font-size: 1.1rem;
+  }
+}
