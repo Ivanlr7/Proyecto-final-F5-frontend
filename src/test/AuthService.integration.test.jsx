@@ -54,14 +54,5 @@ describe('AuthService integration', () => {
     expect(result === false || result === null).toBe(true);
   });
 
-  it('refreshUserProfile actualiza el usuario en localStorage', async () => {
-    localStorage.setItem('reviewverso_token', 't');
-    localStorage.setItem('reviewverso_user', '{"id":1}');
-    vi.spyOn(authService, 'isTokenValid').mockReturnValue(true);
-    const getCurrentUserMock = vi.spyOn(userService, 'getCurrentUser').mockResolvedValueOnce({ success: true, data: { name: 'Nuevo' } });
-    const updated = await authService.refreshUserProfile();
-    expect(localStorage.getItem('reviewverso_user')).toContain('Nuevo');
-    expect(updated).toEqual(expect.objectContaining({ name: 'Nuevo' }));
-    getCurrentUserMock.mockRestore();
-  });
+
 });

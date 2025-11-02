@@ -1,6 +1,7 @@
 # ReviewVerso 🎬📚🎮📺
 
-> A comprehensive entertainment review platform where users can discover, review, and organize their favorite movies, TV shows, video games, and books.
+
+> Reviewverso is a platform that brings users a universe of content where they can review any movies, TV series, video games, and books they want and create lists of all their favorite content. All in one place.
 
 [![React](https://img.shields.io/badge/React-19.1.1-blue.svg)](https://reactjs.org/)
 [![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-2.9.0-purple.svg)](https://redux-toolkit.js.org/)
@@ -33,7 +34,7 @@
 - 🎮 **Video Games** - Integrated with IGDB API
 - 📚 **Books** - Connected to OpenLibrary API
 - ⭐ **Review System** - Write, edit, and like reviews
-- 📋 **Custom Lists** - Create and manage personalized collections
+- 📋 **Custom Lists** - Create and manage personalized collections of any type of content
 - 👥 **User Profiles** - Personal area with review and list management
 - 🔐 **Authentication** - Secure JWT-based auth system
 - 🎨 **Modern UI** - Responsive design with smooth animations
@@ -544,25 +545,6 @@ test('fetches popular movies', async () => {
 
 ---
 
-## 👥 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. **Fork the repository**
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-3. **Commit your changes**
-   ```bash
-   git commit -m 'Add amazing feature'
-   ```
-4. **Push to the branch**
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-5. **Open a Pull Request**
-
 ### Code Style Guidelines
 
 - Follow ESLint rules
@@ -573,11 +555,6 @@ We welcome contributions! Please follow these steps:
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 ## 👨‍💻 Authors
 
@@ -593,11 +570,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Lucide** - For the beautiful icons
 - **React Community** - For the amazing ecosystem
 
----
-
-## 📞 Contact
-
-For questions or support, please open an issue on GitHub or contact us through the application's contact page.
 
 ---
 
