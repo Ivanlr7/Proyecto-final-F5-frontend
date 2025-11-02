@@ -237,8 +237,8 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
 
                 // Debug: mostrar usuario logueado y usuario de la review
                 console.log('authUser:', authUser, 'reviewUser:', review.idUser || review.userId, 'review:', review);
-                const isOwnReview = (review.idUser && String(review.idUser) === String(userId)) || (review.userId && String(review.userId) === String(userId));
-                const isAdmin = Array.isArray(userRole) ? userRole.includes('admin') : userRole === 'admin';
+                const isOwnReview = isAuthenticated && authUser && ((review.idUser && String(review.idUser) === String(authUser.userId)) || (review.userId && String(review.userId) === String(authUser.userId)));
+                const isAdmin = isAuthenticated && Array.isArray(userRole) ? userRole.includes('admin') : userRole === 'admin';
                 return (
                   <div className="media-reviews__review" key={review.idReview}>
                     <div className="media-reviews__review-header">
