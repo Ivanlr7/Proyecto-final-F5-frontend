@@ -270,35 +270,36 @@ export default function ShowsPage() {
                 ))}
               </div>
             </div>
-            {/* Year Filter */}
-            <div className="shows-page__filter-section">
-              <label className="shows-page__filter-label">Año de estreno:</label>
-              <select 
-                className="shows-page__year-select"
-                value={selectedYear}
-                onChange={(e) => handleYearChange(e.target.value)}
-              >
-                <option value="">Todos los años</option>
-                {Array.from({length: 30}, (_, i) => new Date().getFullYear() - i).map(year => (
-                  <option key={year} value={year}>{year}</option>
-                ))}
-              </select>
-            </div>
-            {/* Rating Filter */}
-            <div className="shows-page__filter-section">
-              <label className="shows-page__filter-label">Puntuación mínima:</label>
-              <select 
-                className="shows-page__rating-select"
-                value={minRating}
-                onChange={(e) => handleRatingChange(e.target.value)}
-              >
-                <option value="">Cualquier puntuación</option>
-                <option value="9">9.0+</option>
-                <option value="8">8.0+</option>
-                <option value="7">7.0+</option>
-                <option value="6">6.0+</option>
-                <option value="5">5.0+</option>
-              </select>
+            {/* Year and Rating Filters in same row */}
+            <div className="shows-page__dropdown-row">
+              <div className="shows-page__filter-section">
+                <label className="shows-page__filter-label">Año de estreno:</label>
+                <select 
+                  className="shows-page__year-select"
+                  value={selectedYear}
+                  onChange={(e) => handleYearChange(e.target.value)}
+                >
+                  <option value="">Todos los años</option>
+                  {Array.from({length: 30}, (_, i) => new Date().getFullYear() - i).map(year => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="shows-page__filter-section">
+                <label className="shows-page__filter-label">Puntuación mínima:</label>
+                <select 
+                  className="shows-page__rating-select"
+                  value={minRating}
+                  onChange={(e) => handleRatingChange(e.target.value)}
+                >
+                  <option value="">Cualquier puntuación</option>
+                  <option value="9">9.0+</option>
+                  <option value="8">8.0+</option>
+                  <option value="7">7.0+</option>
+                  <option value="6">6.0+</option>
+                  <option value="5">5.0+</option>
+                </select>
+              </div>
             </div>
           </div>
         )}

@@ -174,18 +174,25 @@
   color: #ffffff;
 }
 
+.shows-page__dropdown-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
 .shows-page__year-select,
 .shows-page__rating-select {
-  width: 100%;
-  max-width: 300px;
-  padding: 0.75rem;
-  background-color: #334155;
-  color: #ffffff;
-  border: 1px solid #475569;
+  padding: 0.75rem 1rem;
+  background-color: #0f172a;
+  border: 1px solid #334155;
   border-radius: 0.5rem;
+  color: #ffffff;
   font-size: 1rem;
   cursor: pointer;
   transition: border-color 0.3s ease;
+  min-width: 200px;
 }
 
 .shows-page__year-select:focus,
@@ -197,7 +204,7 @@
 
 .shows-page__year-select option,
 .shows-page__rating-select option {
-  background-color: #334155;
+  background-color: #0f172a;
   color: #ffffff;
 }
 
