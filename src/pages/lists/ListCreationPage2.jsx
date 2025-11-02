@@ -160,60 +160,6 @@ const CreateListPage = () => {
         </div>
 
         <div className="create-list-page__content">
-          {/* Información de la lista */}
-          <div className="create-list-page__info-section">
-            <div className="create-list-page__form-group">
-              <label className="create-list-page__label">
-                Título de la lista *
-              </label>
-              <input
-                type="text"
-                className="create-list-page__input"
-                placeholder="Ej: Mis películas favoritas de ciencia ficción"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-
-            <div className="create-list-page__form-group">
-              <label className="create-list-page__label">
-                Descripción (opcional)
-              </label>
-              <textarea
-                className="create-list-page__textarea"
-                placeholder="Describe tu lista..."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={3}
-              />
-            </div>
-
-            {/* Items añadidos */}
-            {addedItems.length > 0 && (
-              <div className="create-list-page__added-section">
-                <h3 className="create-list-page__section-title">
-                  Elementos en la lista ({addedItems.length})
-                </h3>
-                <div className="create-list-page__added-grid">
-                  {addedItems.map((item) => (
-                    <div key={`${item.id}-${item.type}`} className="create-list-page__item-wrapper">
-                      <MediaCard 
-                        item={item} 
-                        type={item.type}
-                      />
-                      <button
-                        className="create-list-page__remove-btn"
-                        onClick={() => handleRemoveItem(item)}
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
           {/* Buscador de contenido */}
           <div className="create-list-page__search-section">
             <h3 className="create-list-page__section-title">Buscar contenido</h3>
@@ -318,21 +264,75 @@ const CreateListPage = () => {
               </div>
             )}
           </div>
+
+          {/* Información de la lista */}
+          <div className="create-list-page__info-section">
+            <div className="create-list-page__form-group">
+              <label className="create-list-page__label">
+                Título de la lista *
+              </label>
+              <input
+                type="text"
+                className="create-list-page__input"
+                placeholder="Ej: Mis películas favoritas de ciencia ficción"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+
+            <div className="create-list-page__form-group">
+              <label className="create-list-page__label">
+                Descripción (opcional)
+              </label>
+              <textarea
+                className="create-list-page__textarea"
+                placeholder="Describe tu lista..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={3}
+              />
+            </div>
+
+            {/* Items añadidos */}
+            {addedItems.length > 0 && (
+              <div className="create-list-page__added-section">
+                <h3 className="create-list-page__section-title">
+                  Elementos en la lista ({addedItems.length})
+                </h3>
+                <div className="create-list-page__added-grid">
+                  {addedItems.map((item) => (
+                    <div key={`${item.id}-${item.type}`} className="create-list-page__item-wrapper">
+                      <MediaCard 
+                        item={item} 
+                        type={item.type}
+                      />
+                      <button
+                        className="create-list-page__remove-btn"
+                        onClick={() => handleRemoveItem(item)}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Botones de acción */}
         <div className="create-list-page__actions">
           <button 
-            className="create-list-page__btn create-list-page__btn--cancel"
-            onClick={handleCancel}
-          >
-            Cancelar
-          </button>
-          <button 
             className="create-list-page__btn create-list-page__btn--save"
             onClick={handleSave}
           >
             Guardar Lista
+          </button>
+          <button 
+            className="create-list-page__btn create-list-page__btn--cancel"
+            onClick={handleCancel}
+          >
+            Cancelar
           </button>
         </div>
       </div>

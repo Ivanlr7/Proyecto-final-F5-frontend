@@ -155,45 +155,53 @@ const ListCreationPage = () => {
           placeholder={`Buscar ${typeLabels[selectedType]?.toLowerCase()}...`}
           asForm={false}
         />
-        <div className="list-creation-page__search-results">
-          {searchResults.length > 0 && (
-            <div className="list-creation-page__results-list">
-              {searchResults.map(item => {
-                const isAdded = addedItems.some(i => i.id === item.id && i.type === item.type);
-                return (
-                  <div key={item.id} className="list-creation-page__result-item">
-                    <MediaCard item={item} type={item.type} className="media-card--mini" />
-                    {isAdded ? (
-                      <button className="list-creation-page__add-btn" type="button" onClick={() => handleRemoveItem(item)}>
-                        Quitar
-                      </button>
-                    ) : (
-                      <button className="list-creation-page__add-btn" type="button" onClick={() => handleAddItem(item)}>
-                        Añadir
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-        <div className="list-creation-page__added-items">
-          <h4>Elementos añadidos ({addedItems.length})</h4>
-          <div className="list-creation-page__added-list">
-            {addedItems.map(item => (
-              <div key={item.id + item.type} className="list-creation-page__added-item">
-                <MediaCard item={item} type={item.type} className="media-card--mini" />
-                <button className="list-creation-page__remove-btn" type="button" onClick={() => handleRemoveItem(item)}>
-                  Quitar
-                </button>
+        <div className="list-creation-page__content">
+          <div className="list-creation-page__search-results">
+            <h4>Resultados de búsqueda</h4>
+            {searchResults.length > 0 && (
+              <div className="list-creation-page__results-list">
+                {searchResults.map(item => {
+                  const isAdded = addedItems.some(i => i.id === item.id && i.type === item.type);
+                  return (
+                    <div key={item.id} className="list-creation-page__result-item">
+                      <MediaCard item={item} type={item.type} className="media-card--mini" />
+                      {isAdded ? (
+                        <button className="list-creation-page__add-btn" type="button" onClick={() => handleRemoveItem(item)}>
+                          Quitar
+                        </button>
+                      ) : (
+                        <button className="list-creation-page__add-btn" type="button" onClick={() => handleAddItem(item)}>
+                          Añadir
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-            ))}
+            )}
+          </div>
+          <div className="list-creation-page__added-items">
+            <h4>Elementos añadidos ({addedItems.length})</h4>
+            <div className="list-creation-page__added-list">
+              {addedItems.map(item => (
+                <div key={item.id + item.type} className="list-creation-page__added-item">
+                  <MediaCard item={item} type={item.type} className="media-card--mini" />
+                  <button className="list-creation-page__remove-btn" type="button" onClick={() => handleRemoveItem(item)}>
+                    Quitar
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <button className="list-creation-page__submit-btn" type="submit" disabled={!newList.name || addedItems.length === 0}>
-          Guardar lista
-        </button>
+        <div className="list-creation-page__actions">
+          <button className="list-creation-page__submit-btn" type="submit" disabled={!newList.name || addedItems.length === 0}>
+            Guardar lista
+          </button>
+          <button className="list-creation-page__cancel-btn" type="button" onClick={() => navigate('/listas')}>
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
   );
