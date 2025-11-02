@@ -150,12 +150,21 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
     BOOK: 'media-reviews--book'
   }[contentType] || '';
 
+  const handleWriteReviewClick = () => {
+    if (!isAuthenticated) {
+      showModalMessage('alert', 'Autenticación requerida', 'Debes iniciar sesión para escribir una reseña');
+      return;
+    }
+    setShowReviewModal(true);
+    setEditingReview(null);
+  };
+
   return (
     <div className={`media-reviews ${typeClass}`}>
       {/* Write Review Section */}
       <section className="media-reviews__section">
         <div className="media-reviews__review-actions">
-          <button className="media-reviews__write-review-btn" onClick={() => { setShowReviewModal(true); setEditingReview(null); }}>
+          <button className="media-reviews__write-review-btn" onClick={handleWriteReviewClick}>
             <MessageSquare size={20} />
             Escribir Reseña
           </button>
@@ -164,12 +173,6 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
             onClose={() => { setShowReviewModal(false); setEditingReview(null); }}
             initialData={editingReview}
             onSubmit={async (data) => {
-              if (!isAuthenticated || !token) {
-                showModalMessage('alert', 'Autenticación requerida', 'Debes iniciar sesión para escribir o editar una reseña');
-                setShowReviewModal(false);
-                setEditingReview(null);
-                return;
-              }
               if (editingReview) {
                 // Editar review existente
                 const reviewRequest = {
@@ -233,10 +236,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
 
 
                 const profileImgUrl = review.userProfileImageUrl || review.profileImage || null;
-                const userInitial = (review.userName || review.username || 'U').charAt(0).toUpperCase();
 
-                // Debug: mostrar usuario logueado y usuario de la review
-                console.log('authUser:', authUser, 'reviewUser:', review.idUser || review.userId, 'review:', review);
                 const isOwnReview = isAuthenticated && authUser && ((review.idUser && String(review.idUser) === String(authUser.userId)) || (review.userId && String(review.userId) === String(authUser.userId)));
                 const isAdmin = isAuthenticated && Array.isArray(userRole) ? userRole.includes('admin') : userRole === 'admin';
                 return (
