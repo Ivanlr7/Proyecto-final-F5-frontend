@@ -37,16 +37,6 @@ const ListPage = () => {
     setShowModal(true);
   };
 
-  // Manejar clic en crear nueva lista
-  const handleCreateListClick = () => {
-    console.log('isAuthenticated:', isAuthenticated, 'token:', token);
-    if (!isAuthenticated || !token) {
-      showModalMessage('alert', 'Autenticación requerida', 'Debes iniciar sesión para crear una lista');
-      return;
-    }
-    navigate('/listas/crear');
-  };
-
   useEffect(() => {
     const fetchLists = async () => {
       setLoading(true);
@@ -95,7 +85,17 @@ const ListPage = () => {
   return (
     <div className="list-page">
       <h1 className="list-page__title">Listas</h1>
-      <button className="list-page__create-btn" onClick={handleCreateListClick}>
+      <button 
+        className="list-page__create-btn" 
+        onClick={(e) => {
+          e.preventDefault();
+          if (isAuthenticated !== true || !token) {
+            showModalMessage('alert', 'Autenticación requerida', 'Debes iniciar sesión para crear una lista');
+            return;
+          }
+          navigate('/listas/crear');
+        }}
+      >
         Crear nueva lista
       </button>
       {loading ? <p>Cargando...</p> : error ? <p style={{ color: 'red' }}>{error}</p> : (
