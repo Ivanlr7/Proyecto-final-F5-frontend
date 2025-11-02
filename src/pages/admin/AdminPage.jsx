@@ -7,6 +7,7 @@ import userService from "../../api/services/UserService";
 import { ArrowLeft, Save, X, User, Mail, Search, Trash2 } from "lucide-react";
 import EditButton from "../../components/common/EditButton";
 import DeleteButton from "../../components/common/DeleteButton";
+import Modal from "../../components/common/Modal";
 import "./AdminPage.css";
 
 export default function AdminPage({ onNavigateToHome }) {
@@ -47,6 +48,10 @@ export default function AdminPage({ onNavigateToHome }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Filtrar usuarios basado en el término de búsqueda
   const filteredUsers = users.filter((user) =>
@@ -78,12 +83,15 @@ export default function AdminPage({ onNavigateToHome }) {
         if (authUser && userId === authUser.idUser) {
           await dispatch(updateUserThunk({ id: userId, userData, token }));
         }
+        setSuccessMessage("Usuario actualizado correctamente");
+        setShowSuccessModal(true);
       }
       setEditingUser(null);
       setEditedData({ userName: "", email: "", profileImage: "" });
       setImagePreview(null);
     } catch (err) {
-      alert(err.message || "Error al actualizar usuario");
+      setErrorMessage(err.message || "Error al actualizar usuario");
+      setShowErrorModal(true);
     }
   };
 
@@ -115,8 +123,11 @@ export default function AdminPage({ onNavigateToHome }) {
       try {
         await userService.deleteUser(userToDelete.idUser, token);
         setUsers(users.filter(user => user.idUser !== userToDelete.idUser));
+        setSuccessMessage(`Usuario ${userToDelete.userName} eliminado correctamente`);
+        setShowSuccessModal(true);
       } catch (err) {
-        alert(err.message || "Error al eliminar usuario");
+        setErrorMessage(err.message || "Error al eliminar usuario");
+        setShowErrorModal(true);
       }
     }
     setShowDeleteModal(false);
@@ -331,40 +342,43 @@ export default function AdminPage({ onNavigateToHome }) {
       </div>
 
       {/* Delete Confirmation Modal */}
-      {showDeleteModal && (
-        <div className="admin-page__modal-overlay" onClick={handleDeleteCancel}>
-          <div className="admin-page__modal" onClick={(e) => e.stopPropagation()}>
-            <div className="admin-page__modal-header">
-              <h2 className="admin-page__modal-title">Confirmar Eliminación</h2>
-            </div>
-            <div className="admin-page__modal-content">
-              <p className="admin-page__modal-text">
-                ¿Estás seguro de que deseas eliminar al usuario{" "}
-                <strong>{userToDelete?.userName}</strong>?
-              </p>
-              <p className="admin-page__modal-subtext">
-                Esta acción no se puede deshacer.
-              </p>
-            </div>
-            <div className="admin-page__modal-actions">
-             
-              <button
-                onClick={handleDeleteConfirm}
-                className="admin-page__modal-btn admin-page__modal-btn--delete"
-              >
-                <Trash2 className="admin-page__modal-btn-icon" />
-                Eliminar Usuario
-              </button>
-               <button
-                onClick={handleDeleteCancel}
-                className="admin-page__modal-btn admin-page__modal-btn--cancel"
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        type="confirm"
+        title="Confirmar Eliminación"
+        message={
+          <>
+            ¿Estás seguro de que deseas eliminar al usuario{" "}
+            <strong>{userToDelete?.userName}</strong>?
+          </>
+        }
+        subMessage="Esta acción no se puede deshacer."
+        confirmText="Eliminar Usuario"
+        cancelText="Cancelar"
+        icon={<Trash2 className="modal__icon" />}
+      />
+
+      {/* Success Modal */}
+      <Modal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        type="success"
+        title="¡Operación exitosa!"
+        message={successMessage}
+        confirmText="Aceptar"
+      />
+
+      {/* Error Modal */}
+      <Modal
+        isOpen={showErrorModal}
+        onClose={() => setShowErrorModal(false)}
+        type="error"
+        title="Error"
+        message={errorMessage}
+        confirmText="Aceptar"
+      />
     </div>
   );
 }

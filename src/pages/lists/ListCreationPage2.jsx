@@ -7,6 +7,7 @@ import ShowService from '../../api/services/ShowService';
 import BookService from '../../api/services/BookService';
 import VideogameService from '../../api/services/VideogameService';
 import MediaCard from '../../components/MediaCard/MediaCard';
+import Modal from '../../components/common/Modal';
 import './ListCreationPage2.css';
 
 const listService = new ListService();
@@ -21,6 +22,15 @@ const CreateListPage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [addedItems, setAddedItems] = useState([]);
   const [searching, setSearching] = useState(false);
+
+  // Estados para los modales
+  const [showModal, setShowModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({
+    type: 'alert',
+    title: '',
+    message: '',
+    onConfirm: null
+  });
 
   const services = {
     movie: MovieService,
@@ -83,17 +93,23 @@ const CreateListPage = () => {
     return addedItems.some(i => i.id === item.id && i.type === item.type);
   };
 
+  // Función auxiliar para mostrar modales
+  const showModalMessage = (type, title, message, onConfirm = null) => {
+    setModalConfig({ type, title, message, onConfirm });
+    setShowModal(true);
+  };
+
   const handleSave = async () => {
     if (!title.trim()) {
-      alert('Por favor, ingresa un título para la lista');
+      showModalMessage('alert', 'Campo requerido', 'Por favor, escribe un título para la lista');
       return;
     }
     if (addedItems.length === 0) {
-      alert('Por favor, agrega al menos un elemento a la lista');
+      showModalMessage('alert', 'Lista vacía', 'Por favor, agrega al menos un elemento a la lista');
       return;
     }
     if (!user) {
-      alert('Debes iniciar sesión para crear una lista');
+      showModalMessage('error', 'Autenticación requerida', 'Debes iniciar sesión para crear una lista');
       return;
     }
     
@@ -126,18 +142,24 @@ const CreateListPage = () => {
     }, token);
 
     if (res.success) {
-      alert('Lista creada exitosamente');
-      navigate('/listas');
+      showModalMessage('success', '¡Listo!', 'Lista creada con éxito', () => {
+        navigate('/listas');
+      });
     } else {
-      alert(res.error || 'Error al crear la lista');
+      showModalMessage('error', 'Error', res.error || 'Error al crear la lista');
     }
   };
 
   const handleCancel = () => {
     if (title || description || addedItems.length > 0) {
-      if (window.confirm('¿Estás seguro de que quieres cancelar? Se perderán todos los cambios.')) {
-        navigate('/listas');
-      }
+      showModalMessage(
+        'confirm',
+        'Confirmar cancelación',
+        '¿Estás seguro de que quieres cancelar? Se perderán todos los cambios.',
+        () => {
+          navigate('/listas');
+        }
+      );
     } else {
       navigate('/listas');
     }
@@ -336,6 +358,23 @@ const CreateListPage = () => {
           </button>
         </div>
       </div>
+
+      {/* Modal Component */}
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={() => {
+          if (modalConfig.onConfirm) {
+            modalConfig.onConfirm();
+          }
+          setShowModal(false);
+        }}
+        type={modalConfig.type}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        confirmText={modalConfig.type === 'confirm' ? 'Confirmar' : 'Aceptar'}
+        cancelText="Cancelar"
+      />
     </div>
   );
 };
