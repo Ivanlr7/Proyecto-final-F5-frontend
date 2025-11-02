@@ -6,6 +6,7 @@ import ReviewModal from './ReviewModal';
 import ReviewService from '../../api/services/ReviewService';
 import { Star, User, MessageSquare, ThumbsUp } from 'lucide-react';
 import Avatar from '../../components/common/Avatar';
+import Modal from '../common/Modal';
 import './MediaReviews.css';
 
 const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
@@ -16,6 +17,21 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
   const [reviews, setReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [reviewsError, setReviewsError] = useState(null);
+
+  // Estados para el modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({
+    type: 'alert',
+    title: '',
+    message: '',
+    onConfirm: null
+  });
+
+  // Función auxiliar para mostrar modales
+  const showModalMessage = (type, title, message, onConfirm = null) => {
+    setModalConfig({ type, title, message, onConfirm });
+    setShowModal(true);
+  };
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -96,7 +112,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
 
   const handleLike = async (idReview) => {
     if (!isAuthenticated || !token) {
-      alert('Debes iniciar sesión para dar like');
+      showModalMessage('alert', 'Autenticación requerida', 'Debes iniciar sesión para dar like');
       return;
     }
     setLikeLoading(prev => ({ ...prev, [idReview]: true }));
@@ -109,7 +125,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
 
         setLiked(prev => ({ ...prev, [idReview]: false }));
         setLikeCount(prev => ({ ...prev, [idReview]: Math.max(0, (prev[idReview] || 1) - 1) }));
-        alert(res.error || 'Error al dar like');
+        showModalMessage('error', 'Error', res.error || 'Error al dar like');
       }
     } else {
   
@@ -120,7 +136,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
     
         setLiked(prev => ({ ...prev, [idReview]: true }));
         setLikeCount(prev => ({ ...prev, [idReview]: (prev[idReview] || 0) + 1 }));
-        alert(res.error || 'Error al quitar like');
+        showModalMessage('error', 'Error', res.error || 'Error al quitar like');
       }
     }
     setLikeLoading(prev => ({ ...prev, [idReview]: false }));
@@ -149,7 +165,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
             initialData={editingReview}
             onSubmit={async (data) => {
               if (!isAuthenticated || !token) {
-                alert('Debes iniciar sesión para escribir o editar una reseña');
+                showModalMessage('alert', 'Autenticación requerida', 'Debes iniciar sesión para escribir o editar una reseña');
                 setShowReviewModal(false);
                 setEditingReview(null);
                 return;
@@ -167,7 +183,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                   setShowReviewModal(false);
                   setEditingReview(null);
                 } else {
-                  alert(res.error || 'Error al editar la reseña');
+                  showModalMessage('error', 'Error', res.error || 'Error al editar la reseña');
                 }
               } else {
                 // Crear nueva review
@@ -184,7 +200,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                   setReviews(prev => [res.data, ...prev]);
                   setShowReviewModal(false);
                 } else {
-                  alert(res.error || 'Error al enviar la reseña');
+                  showModalMessage('error', 'Error', res.error || 'Error al enviar la reseña');
                 }
               }
             }}
@@ -285,13 +301,19 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                             setShowReviewModal(true);
                           }} />
                           <DeleteButton onClick={async () => {
-                            if (!window.confirm('¿Seguro que quieres eliminar esta reseña?')) return;
-                            const res = await reviewService.deleteReview(review.idReview, token);
-                            if (res.success) {
-                              setReviews(prev => prev.filter(r => r.idReview !== review.idReview));
-                            } else {
-                              alert(res.error || 'Error al eliminar la reseña');
-                            }
+                            showModalMessage(
+                              'confirm',
+                              'Confirmar eliminación',
+                              '¿Seguro que quieres eliminar esta reseña?',
+                              async () => {
+                                const res = await reviewService.deleteReview(review.idReview, token);
+                                if (res.success) {
+                                  setReviews(prev => prev.filter(r => r.idReview !== review.idReview));
+                                } else {
+                                  showModalMessage('error', 'Error', res.error || 'Error al eliminar la reseña');
+                                }
+                              }
+                            );
                           }} />
                         </div>
                       )}
@@ -302,6 +324,23 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
           </div>
         )}
       </section>
+
+      {/* Modal Component */}
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={() => {
+          if (modalConfig.onConfirm) {
+            modalConfig.onConfirm();
+          }
+          setShowModal(false);
+        }}
+        type={modalConfig.type}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        confirmText={modalConfig.type === 'confirm' ? 'Eliminar' : 'Aceptar'}
+        cancelText="Cancelar"
+      />
     </div>
   );
 };

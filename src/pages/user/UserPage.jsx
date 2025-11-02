@@ -6,6 +6,7 @@ import { ArrowLeft, User, Mail, Edit2, Save, X } from "lucide-react";
 import Avatar from "../../components/common/Avatar";
 import userService from "../../api/services/UserService";
 import { updateUserThunk } from "../../store/slices/authSlice";
+import Modal from "../../components/common/Modal";
 import "./UserPage.css";
 
 export default function UserPage({ onNavigateToHome }) {
@@ -23,22 +24,42 @@ export default function UserPage({ onNavigateToHome }) {
   const [imagePreview, setImagePreview] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
+  // Estados para el modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({
+    type: 'alert',
+    title: '',
+    message: '',
+    onConfirm: null
+  });
+
+  // Función auxiliar para mostrar modales
+  const showModalMessage = (type, title, message, onConfirm = null) => {
+    setModalConfig({ type, title, message, onConfirm });
+    setShowModal(true);
+  };
+
   const handleDeleteAccount = async () => {
-    if (!window.confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.")) {
-      return;
-    }
-    try {
-      setDeleteLoading(true);
-      setError(null);
-      await userService.deleteUser(profileData.idUser, token);
-      // Cerrar sesión y redirigir
-      await dispatch(logoutThunk());
-      if (onNavigateToHome) onNavigateToHome();
-    } catch (error) {
-      setError(error.message || "Error al eliminar la cuenta");
-    } finally {
-      setDeleteLoading(false);
-    }
+    showModalMessage(
+      'confirm',
+      'Confirmar eliminación de cuenta',
+      '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.',
+      async () => {
+        try {
+          setDeleteLoading(true);
+          setError(null);
+          await userService.deleteUser(profileData.idUser, token);
+          // Cerrar sesión y redirigir
+          await dispatch(logoutThunk());
+          if (onNavigateToHome) onNavigateToHome();
+        } catch (error) {
+          setError(error.message || "Error al eliminar la cuenta");
+          showModalMessage('error', 'Error', error.message || "Error al eliminar la cuenta");
+        } finally {
+          setDeleteLoading(false);
+        }
+      }
+    );
   };
   // Cargar datos del usuario al montar el componente
   useEffect(() => {
@@ -324,6 +345,23 @@ export default function UserPage({ onNavigateToHome }) {
           </div>
         </div>
       </div>
+
+      {/* Modal Component */}
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={() => {
+          if (modalConfig.onConfirm) {
+            modalConfig.onConfirm();
+          }
+          setShowModal(false);
+        }}
+        type={modalConfig.type}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        confirmText={modalConfig.type === 'confirm' ? 'Eliminar' : 'Aceptar'}
+        cancelText="Cancelar"
+      />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import BookService from '../../api/services/BookService';
 import VideogameService from '../../api/services/VideogameService';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MediaCard from '../../components/MediaCard/MediaCard';
+import Modal from '../../components/common/Modal';
 import './ListCreationPage.css';
 
 const listService = new ListService();
@@ -21,6 +22,15 @@ const ListCreationPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [addedItems, setAddedItems] = useState([]);
   const navigate = useNavigate();
+
+  // Estados para el modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({
+    type: 'alert',
+    title: '',
+    message: '',
+    onConfirm: null
+  });
 
   const services = {
     movie: MovieService,
@@ -56,7 +66,7 @@ const ListCreationPage = () => {
         results = await services.videogame.searchGames(query);
         results = results.map(r => ({ ...r, type: 'videogame' }));
       }
-    } catch (e) {
+    } catch {
       results = [];
     }
     setSearchResults(results);
@@ -79,10 +89,16 @@ const ListCreationPage = () => {
     setAddedItems(prev => prev.filter(i => !(i.id === item.id && i.type === item.type)));
   };
 
+  // Función auxiliar para mostrar modales
+  const showModalMessage = (type, title, message, onConfirm = null) => {
+    setModalConfig({ type, title, message, onConfirm });
+    setShowModal(true);
+  };
+
   const handleCreateList = async (e) => {
     e.preventDefault();
     if (!user) {
-      alert('Debes iniciar sesión para crear una lista');
+      showModalMessage('error', 'Autenticación requerida', 'Debes iniciar sesión para crear una lista');
       return;
     }
     const typeMap = {
@@ -110,9 +126,11 @@ const ListCreationPage = () => {
       items,
     }, token);
     if (res.success) {
-      navigate('/listas');
+      showModalMessage('success', '¡Éxito!', 'Lista creada exitosamente', () => {
+        navigate('/listas');
+      });
     } else {
-      alert(res.error || 'Error al crear la lista');
+      showModalMessage('error', 'Error', res.error || 'Error al crear la lista');
     }
   };
 
@@ -155,54 +173,62 @@ const ListCreationPage = () => {
           placeholder={`Buscar ${typeLabels[selectedType]?.toLowerCase()}...`}
           asForm={false}
         />
-        <div className="list-creation-page__content">
-          <div className="list-creation-page__search-results">
-            <h4>Resultados de búsqueda</h4>
-            {searchResults.length > 0 && (
-              <div className="list-creation-page__results-list">
-                {searchResults.map(item => {
-                  const isAdded = addedItems.some(i => i.id === item.id && i.type === item.type);
-                  return (
-                    <div key={item.id} className="list-creation-page__result-item">
-                      <MediaCard item={item} type={item.type} className="media-card--mini" />
-                      {isAdded ? (
-                        <button className="list-creation-page__add-btn" type="button" onClick={() => handleRemoveItem(item)}>
-                          Quitar
-                        </button>
-                      ) : (
-                        <button className="list-creation-page__add-btn" type="button" onClick={() => handleAddItem(item)}>
-                          Añadir
-                        </button>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-          <div className="list-creation-page__added-items">
-            <h4>Elementos añadidos ({addedItems.length})</h4>
-            <div className="list-creation-page__added-list">
-              {addedItems.map(item => (
-                <div key={item.id + item.type} className="list-creation-page__added-item">
-                  <MediaCard item={item} type={item.type} className="media-card--mini" />
-                  <button className="list-creation-page__remove-btn" type="button" onClick={() => handleRemoveItem(item)}>
-                    Quitar
-                  </button>
-                </div>
-              ))}
+        <div className="list-creation-page__search-results">
+          {searchResults.length > 0 && (
+            <div className="list-creation-page__results-list">
+              {searchResults.map(item => {
+                const isAdded = addedItems.some(i => i.id === item.id && i.type === item.type);
+                return (
+                  <div key={item.id} className="list-creation-page__result-item">
+                    <MediaCard item={item} type={item.type} className="media-card--mini" />
+                    {isAdded ? (
+                      <button className="list-creation-page__add-btn" type="button" onClick={() => handleRemoveItem(item)}>
+                        Quitar
+                      </button>
+                    ) : (
+                      <button className="list-creation-page__add-btn" type="button" onClick={() => handleAddItem(item)}>
+                        Añadir
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
             </div>
+          )}
+        </div>
+        <div className="list-creation-page__added-items">
+          <h4>Elementos añadidos ({addedItems.length})</h4>
+          <div className="list-creation-page__added-list">
+            {addedItems.map(item => (
+              <div key={item.id + item.type} className="list-creation-page__added-item">
+                <MediaCard item={item} type={item.type} className="media-card--mini" />
+                <button className="list-creation-page__remove-btn" type="button" onClick={() => handleRemoveItem(item)}>
+                  Quitar
+                </button>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="list-creation-page__actions">
-          <button className="list-creation-page__submit-btn" type="submit" disabled={!newList.name || addedItems.length === 0}>
-            Guardar lista
-          </button>
-          <button className="list-creation-page__cancel-btn" type="button" onClick={() => navigate('/listas')}>
-            Cancelar
-          </button>
-        </div>
+        <button className="list-creation-page__submit-btn" type="submit" disabled={!newList.name || addedItems.length === 0}>
+          Guardar lista
+        </button>
       </form>
+
+      {/* Modal Component */}
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={() => {
+          if (modalConfig.onConfirm) {
+            modalConfig.onConfirm();
+          }
+          setShowModal(false);
+        }}
+        type={modalConfig.type}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        confirmText="Aceptar"
+      />
     </div>
   );
 };

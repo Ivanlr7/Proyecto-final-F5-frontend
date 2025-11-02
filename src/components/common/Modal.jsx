@@ -2,21 +2,7 @@ import React from 'react';
 import { Trash2, AlertCircle, CheckCircle, Info } from 'lucide-react';
 import './Modal.css';
 
-/**
- * Modal Component - Componente modal reutilizable
- * 
- * @param {Object} props
- * @param {boolean} props.isOpen - Controla si el modal está visible
- * @param {function} props.onClose - Función para cerrar el modal
- * @param {function} props.onConfirm - Función para confirmar (solo para tipo 'confirm')
- * @param {string} props.title - Título del modal
- * @param {string} props.message - Mensaje principal del modal
- * @param {string} props.subMessage - Mensaje secundario (opcional)
- * @param {string} props.type - Tipo de modal: 'confirm', 'alert', 'success', 'error', 'info'
- * @param {string} props.confirmText - Texto del botón de confirmación
- * @param {string} props.cancelText - Texto del botón de cancelación
- * @param {React.ReactNode} props.icon - Icono personalizado (opcional)
- */
+
 const Modal = ({
   isOpen,
   onClose,
