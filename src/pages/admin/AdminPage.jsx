@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserThunk } from "../../store/slices/authSlice";
 import userService from "../../api/services/UserService";
-import { ArrowLeft, Save, X, User, Mail, Search } from "lucide-react";
+import { ArrowLeft, Save, X, User, Mail, Search, Trash2 } from "lucide-react";
 import EditButton from "../../components/common/EditButton";
 import DeleteButton from "../../components/common/DeleteButton";
 import "./AdminPage.css";
@@ -347,18 +347,19 @@ export default function AdminPage({ onNavigateToHome }) {
               </p>
             </div>
             <div className="admin-page__modal-actions">
-              <button
-                onClick={handleDeleteCancel}
-                className="admin-page__modal-btn admin-page__modal-btn--cancel"
-              >
-                Cancelar
-              </button>
+             
               <button
                 onClick={handleDeleteConfirm}
                 className="admin-page__modal-btn admin-page__modal-btn--delete"
               >
                 <Trash2 className="admin-page__modal-btn-icon" />
                 Eliminar Usuario
+              </button>
+               <button
+                onClick={handleDeleteCancel}
+                className="admin-page__modal-btn admin-page__modal-btn--cancel"
+              >
+                Cancelar
               </button>
             </div>
           </div>
