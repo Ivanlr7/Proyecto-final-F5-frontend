@@ -464,46 +464,7 @@ Base URL: Configured via `VITE_API_BASE_URL`
 
 ## 🧪 Testing
 
-### Run Tests
 
-```bash
-npm run test
-```
-
-### Run Tests with Coverage
-
-```bash
-npm run test -- --coverage
-```
-
-### Test Structure
-
-- **Unit Tests** - Component and service testing
-- **Integration Tests** - API integration tests
-- **Coverage Reports** - Located in `coverage/` directory
-
-### Example Test Files
-
-```javascript
-// Component test
-import { render, screen } from '@testing-library/react';
-import MediaCard from '../MediaCard';
-
-test('renders movie card', () => {
-  const movie = { id: 1, title: 'Test Movie', poster_path: '/test.jpg' };
-  render(<MediaCard item={movie} type="movie" />);
-  expect(screen.getByText('Test Movie')).toBeInTheDocument();
-});
-
-// Service test
-import MovieService from '../MovieService';
-
-test('fetches popular movies', async () => {
-  const result = await MovieService.getPopularMovies();
-  expect(result.data.results).toBeDefined();
-  expect(Array.isArray(result.data.results)).toBe(true);
-});
-```
 
 ---
 
@@ -560,19 +521,4 @@ test('fetches popular movies', async () => {
 
 - **Ivanlr7** - [GitHub Profile](https://github.com/Ivanlr7)
 
----
 
-## 🙏 Acknowledgments
-
-- **TMDB** - For the comprehensive movie and TV show database
-- **IGDB** - For the video game database
-- **OpenLibrary** - For the book database
-- **Lucide** - For the beautiful icons
-- **React Community** - For the amazing ecosystem
-
-
----
-
-<div align="center">
-  <strong>Built with ❤️ using React and Redux</strong>
-</div>
