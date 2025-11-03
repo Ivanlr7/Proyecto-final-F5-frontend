@@ -35,7 +35,7 @@ const SearchBar = ({ onSearch, onClear, isSearching, searchQuery, placeholder = 
               minLength={2}
             />
             <button type="submit" className="search-button">
-              🔍 Buscar
+             Buscar
             </button>
             {isSearching && (
               <button 
