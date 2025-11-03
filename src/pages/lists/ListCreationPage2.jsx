@@ -22,6 +22,7 @@ const CreateListPage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [addedItems, setAddedItems] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   // Estados para los modales
   const [showModal, setShowModal] = useState(false);
@@ -50,10 +51,12 @@ const CreateListPage = () => {
     e.preventDefault();
     if (!searchQuery.trim()) {
       setSearchResults([]);
+      setHasSearched(false);
       return;
     }
 
     setSearching(true);
+    setHasSearched(true);
     let results = [];
     try {
       if (contentType === 'movie') {
@@ -196,6 +199,7 @@ const CreateListPage = () => {
                     setContentType('movie');
                     setSearchQuery('');
                     setSearchResults([]);
+                    setHasSearched(false);
                   }}
                 >
                   Películas
@@ -207,6 +211,7 @@ const CreateListPage = () => {
                     setContentType('series');
                     setSearchQuery('');
                     setSearchResults([]);
+                    setHasSearched(false);
                   }}
                 >
                   Series
@@ -218,6 +223,7 @@ const CreateListPage = () => {
                     setContentType('videogame');
                     setSearchQuery('');
                     setSearchResults([]);
+                    setHasSearched(false);
                   }}
                 >
                   Videojuegos
@@ -229,6 +235,7 @@ const CreateListPage = () => {
                     setContentType('book');
                     setSearchQuery('');
                     setSearchResults([]);
+                    setHasSearched(false);
                   }}
                 >
                   Libros
@@ -280,7 +287,7 @@ const CreateListPage = () => {
               </div>
             )}
 
-            {searchQuery && searchResults.length === 0 && !searching && (
+            {hasSearched && searchResults.length === 0 && !searching && (
               <div className="create-list-page__no-results">
                 <p>No se encontraron resultados para "{searchQuery}"</p>
               </div>

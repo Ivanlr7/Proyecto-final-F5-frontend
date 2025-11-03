@@ -10,6 +10,7 @@ import ShowService from '../../api/services/ShowService';
 import BookService from '../../api/services/BookService';
 import VideogameService from '../../api/services/VideogameService';
 import Modal from '../../components/common/Modal';
+import Spinner from '../../components/common/Spinner';
 
 const listService = new ListService();
 
@@ -98,7 +99,11 @@ const ListPage = () => {
       >
         Crear nueva lista
       </button>
-      {loading ? <p>Cargando...</p> : error ? <p style={{ color: 'red' }}>{error}</p> : (
+      {loading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '300px' }}>
+          <Spinner size={60} />
+        </div>
+      ) : error ? <p style={{ color: 'red' }}>{error}</p> : (
         <div className="list-page__lists">
           {listsWithDetails.map(list => (
             <div key={list.id} className="list-card">
