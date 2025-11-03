@@ -3,6 +3,13 @@ import React from 'react';
 import "./HeroSection.css";
 
 export default function HeroSection() {
+  const scrollToReviews = () => {
+    const reviewsSection = document.querySelector('.featured-section');
+    if (reviewsSection) {
+      reviewsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <section className="hero-section">
       {/* Background pattern */}
@@ -26,8 +33,8 @@ export default function HeroSection() {
           Explora un universo de películas, series, videojuegos y libros. ¡Tu próxima aventura te espera!
         </p>
         
-        <button className="hero-section__cta">
-          Explorar Reseñas
+        <button className="hero-section__cta" onClick={scrollToReviews}>
+          Explorar reseñas
         </button>
       </div>
     </section>

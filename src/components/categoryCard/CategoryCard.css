@@ -1,5 +1,7 @@
 .category-card {
   cursor: pointer;
+  text-decoration: none;
+  display: block;
 }
 
 .category-card__wrapper {

@@ -31,7 +31,7 @@ export default function Header() {
     }
   }, [dispatch, isInitialized])
 
-  // Cargar imagen de perfil cuando el usuario esté autenticado
+
   useEffect(() => {
     const loadProfileImage = async () => {
       if (isAuthenticated && token && user) {
@@ -68,10 +68,10 @@ export default function Header() {
       console.error('Error al cerrar sesión:', error)
     }
   }
-  // Handlers para dropdown
+
   const handleDropdownOpen = () => setDropdownOpen(true);
   const handleDropdownClose = () => setDropdownOpen(false);
-  // Cierra el dropdown al hacer click fuera
+
   useEffect(() => {
     if (!dropdownOpen) return;
     const handleClick = (e) => {
@@ -152,12 +152,12 @@ export default function Header() {
           <Menu size={28} />
         </button>
 
-        {/* Acciones en escritorio (solo una vez) */}
+        {/* Acciones en escritorio */}
         <div className="header__actions">
           {!isAuthenticated ? (
             <>
               <Link to="/login" className="header__login-btn">Iniciar Sesión</Link>
-              <Link to="/register" className="header__register-btn">Registrarse</Link>
+              {/* <Link to="/register" className="header__register-btn">Registrarse</Link> */}
             </>
           ) : (
             <>

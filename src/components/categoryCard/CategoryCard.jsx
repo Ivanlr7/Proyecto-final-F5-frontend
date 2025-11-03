@@ -1,12 +1,13 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ImageWithFallback } from '../common/ImageWithFallback';
 import './CategoryCard.css';
 
 
-export default function CategoryCard({ title, description, imageUrl, className = "" }) {
+export default function CategoryCard({ title, description, imageUrl, className = "", link = "#" }) {
   return (
-    <div className={`category-card ${className}`}>
+    <Link to={link} className={`category-card ${className}`}>
       <div className="category-card__wrapper">
         <div className="category-card__image-container">
           <ImageWithFallback
@@ -22,6 +23,6 @@ export default function CategoryCard({ title, description, imageUrl, className =
           <p className="category-card__description">{description}</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

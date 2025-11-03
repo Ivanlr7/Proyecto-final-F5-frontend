@@ -23,22 +23,26 @@ export default function HomePage() {
     {
       title: "Películas",
       description: "Reseñas de los últimos estrenos y clásicos del cine",
-      imageUrl: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3ZpZSUyMGNpbmVtYSUyMGZpbG0lMjBkYXJrfGVufDF8fHx8MTc1OTc0NjE1NXww&ixlib=rb-4.1.0&q=80&w=1080"
+      imageUrl: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3ZpZSUyMGNpbmVtYSUyMGZpbG0lMjBkYXJrfGVufDF8fHx8MTc1OTc0NjE1NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      link: "/peliculas"
     },
     {
       title: "Series",
       description: "Análisis de series populares y nuevos lanzamientos",
-      imageUrl: "https://images.unsplash.com/photo-1607110654203-d5665bd64105?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0diUyMHNlcmllcyUyMHRlbGV2aXNpb24lMjBzaG93fGVufDF8fHx8MTc1OTc0NjE1Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+      imageUrl: "https://images.unsplash.com/photo-1607110654203-d5665bd64105?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0diUyMHNlcmllcyUyMHRlbGV2aXNpb24lMjBzaG93fGVufDF8fHx8MTc1OTc0NjE1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      link: "/series"
     },
     {
       title: "Videojuegos",
       description: "Opiniones sobre los videojuegos más jugados",
-      imageUrl: "https://images.unsplash.com/photo-1655976796204-308e6f3deaa8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnYW1pbmclMjB2aWRlb2dhbWVzJTIwY29udHJvbGxlcnxlbnwxfHx8fDE3NTk3NDYxNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+      imageUrl: "https://images.unsplash.com/photo-1655976796204-308e6f3deaa8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnYW1pbmclMjB2aWRlb2dhbWVzJTIwY29udHJvbGxlcnxlbnwxfHx8fDE3NTk3NDYxNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      link: "/videojuegos"
     },
     {
       title: "Libros",
       description: "Reseñas de bestsellers y otros libros literarios",
-      imageUrl: "https://images.unsplash.com/photo-1582203914689-d5cc1850fcb2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib29rcyUyMHJlYWRpbmclMjBsaWJyYXJ5fGVufDF8fHx8MTc1OTY1MTMxM3ww&ixlib=rb-4.1.0&q=80&w=1080"
+      imageUrl: "https://images.unsplash.com/photo-1582203914689-d5cc1850fcb2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib29rcyUyMHJlYWRpbmclMjBsaWJyYXJ5fGVufDF8fHx8MTc1OTY1MTMxM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      link: "/libros"
     }
   ];
 
@@ -196,6 +200,7 @@ export default function HomePage() {
                 title={category.title}
                 description={category.description}
                 imageUrl={category.imageUrl}
+                link={category.link}
               />
             ))}
           </div>
