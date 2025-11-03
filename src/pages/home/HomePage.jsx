@@ -51,10 +51,10 @@ export default function HomePage() {
       const result = await ReviewService.getAllReviews();
       
       if (result.success && Array.isArray(result.data)) {
-        // Ordenar por fecha (más recientes primero) y tomar las primeras 6
+        // Ordenar por fecha (más recientes primero) y tomar las primeras 4
         const sortedReviews = result.data
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 6);
+          .slice(0, 4);
         
         // Debug: ver estructura de las reviews
         if (sortedReviews.length > 0) {
