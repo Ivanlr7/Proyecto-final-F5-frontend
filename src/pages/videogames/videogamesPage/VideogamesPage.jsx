@@ -233,7 +233,7 @@ const VideogamesPage = () => {
               active={activeFilter === 'upcoming'}
               onClick={() => setActiveFilter('upcoming')}
             >
-              Próximos
+              Próximos lanzamientos
             </CategoryButton>
           </div>
         </div>
@@ -247,7 +247,7 @@ const VideogamesPage = () => {
         {showAdvancedFilters && (
           <div className="videogames-page__advanced-filters">
             <div className="videogames-page__filters-title">
-              <h3>Filtros Avanzados</h3>
+              <h3>Filtros avanzados</h3>
               {(selectedGenre || selectedPlatform || selectedRating || selectedYear) && (
                 <button 
                   className="videogames-page__clear-filters"

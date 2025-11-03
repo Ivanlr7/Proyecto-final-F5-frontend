@@ -120,7 +120,7 @@ const BooksPage = () => {
 	}, [fetchBooks]);
 
 	useEffect(() => {
-		// Calcular totalPages de forma simple (no precisa, pero funcional visualmente)
+
 		if (books.length === 20) {
 			setTotalPages(currentPage + 1);
 		} else {
@@ -210,12 +210,6 @@ const BooksPage = () => {
 							Populares
 						</CategoryButton>
 						<CategoryButton
-							active={activeFilter === 'recent'}
-							onClick={() => handleFilterChange('recent')}
-						>
-							Recientes
-						</CategoryButton>
-						<CategoryButton
 							active={activeFilter === 'classic'}
 							onClick={() => handleFilterChange('classic')}
 						>
@@ -237,7 +231,7 @@ const BooksPage = () => {
 				{showAdvancedFilters && (
 					<div className="books-page__advanced-filters">
 						<div className="books-page__filters-title">
-							<h3>Filtros Avanzados</h3>
+							<h3>Filtros avanzados</h3>
 							{(selectedSubject || selectedRating || selectedYear) && (
 								<button 
 									className="books-page__clear-filters"

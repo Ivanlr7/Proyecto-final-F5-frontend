@@ -236,13 +236,13 @@ export default function MoviesPage() {
         {showAdvancedFilters && (
           <div className="movies-page__advanced-filters">
             <h3 className="movies-page__filters-title">
-              Filtros Avanzados
+              Filtros avanzados
               {useFilters && (
                 <button 
                   className="movies-page__clear-filters"
                   onClick={clearFilters}
                 >
-                  Limpiar Filtros
+                  Limpiar filtros
                 </button>
               )}
             </h3>

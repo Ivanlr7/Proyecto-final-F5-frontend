@@ -245,13 +245,13 @@ export default function ShowsPage() {
         {showAdvancedFilters && (
           <div className="shows-page__advanced-filters">
             <h3 className="shows-page__filters-title">
-              Filtros Avanzados
+              Filtros avanzados
               {useFilters && (
                 <button 
                   className="shows-page__clear-filters"
                   onClick={clearFilters}
                 >
-                  Limpiar Filtros
+                  Limpiar filtros
                 </button>
               )}
             </h3>

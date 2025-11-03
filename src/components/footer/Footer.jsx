@@ -22,10 +22,10 @@ export default function Footer() {
             Contacto
           </Link>
           <Link to="/aviso-legal" className="footer__link">
-            Aviso Legal
+            Aviso legal
           </Link>
           <Link to="/politica-cookies" className="footer__link">
-            Política de Cookies
+            Política de cookies
           </Link>
         </div>
         
