@@ -4,34 +4,21 @@ import HeroSection from '../../components/hero/HeroSection';
 import CategoryCard from '../../components/categoryCard/CategoryCard';
 import ReviewHomeCard from '../../components/review/ReviewHomeCard';
 import Slider from '../../components/slider/Slider';
+import Spinner from '../../components/common/Spinner';
 import movieService from '../../api/services/MovieService';
 import showService from '../../api/services/ShowService';
+import reviewService from '../../api/services/ReviewService';
+import bookService from '../../api/services/BookService';
+import videogameService from '../../api/services/VideogameService';
 import MediaCard from '../../components/MediaCard/MediaCard';
 
-
-// Componente ReviewCard
-function ReviewCard({ title, description, imageUrl, rating, category, categoryColor }) {
-  return (
-    <div className="review-card">
-      <div className="review-card__image">
-        <img src={imageUrl} alt={title} />
-      </div>
-      <div className="review-card__content">
-        <span className={`review-card__category ${categoryColor}`}>{category}</span>
-        <h3 className="review-card__title">{title}</h3>
-        <p className="review-card__description">{description}</p>
-        <div className="review-card__rating">
-          {Array.from({ length: 5 }, (_, i) => (
-            <span key={i} className={`star ${i < rating ? 'filled' : ''}`}>★</span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
+const ReviewService = new reviewService();
 
 export default function HomePage() {
-  const [mixedContent, setMixedContent] = useState([]);
+  const [featuredReviews, setFeaturedReviews] = useState([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [reviewsError, setReviewsError] = useState(null);
+  
   const categories = [
     {
       title: "Películas",
@@ -55,40 +42,100 @@ export default function HomePage() {
     }
   ];
 
-  const featuredReviews = [
-    {
-      title: "El Legado Oculto",
-      description: "Una película de misterio que te mantendrá al borde de tu asiento",
-      imageUrl: "https://images.unsplash.com/photo-1742274317501-57e147afc0c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxteXN0ZXJ5JTIwYWR2ZW50dXJlJTIwYm9va3xlbnwxfHx8fDE3NTk3NDYxNTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      rating: 4,
-      category: "PELÍCULA",
-      categoryColor: "bg-blue-500/20 text-blue-400"
-    },
-    {
-      title: "Sombras del Pasado",
-      description: "Una serie llena de misterio y elementos envolventes",
-      imageUrl: "https://images.unsplash.com/photo-1695143302413-425685b8f590?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZWFjZWZ1bCUyMHN1bnNldCUyMG5hdHVyZXxlbnwxfHx8fDE3NTk3NDYxNTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      rating: 5,
-      category: "SERIE",
-      categoryColor: "bg-green-500/20 text-green-400"
-    },
-    {
-      title: "Mundo Virtual",
-      description: "Un videojuego innovador que lleva la narrativa a otro nivel",
-      imageUrl: "https://images.unsplash.com/photo-1603459404909-2ce99c16ab54?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aXJ0dWFsJTIwcmVhbGl0eSUyMGZ1dHVyZXxlbnwxfHx8fDE3NTk3NDYxNjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      rating: 5,
-      category: "VIDEOJUEGO",
-      categoryColor: "bg-purple-500/20 text-purple-400"
-    },
-    {
-      title: "El Enigma de la Noche",
-      description: "Un libro que te hará dudar de lo que crees saber del mundo",
-      imageUrl: "https://images.unsplash.com/photo-1599840676930-e6f403ca41bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuaWdodCUyMG15c3RlcnklMjBkYXJrfGVufDF8fHx8MTc1OTc0NjE2MHww&ixlib=rb-4.1.0&q=80&w=1080",
-      rating: 5,
-      category: "LIBRO",
-      categoryColor: "bg-orange-500/20 text-orange-400"
+  // Función para cargar reviews reales de la base de datos
+  const fetchFeaturedReviews = async () => {
+    try {
+      setReviewsLoading(true);
+      setReviewsError(null);
+      
+      const result = await ReviewService.getAllReviews();
+      
+      if (result.success && Array.isArray(result.data)) {
+        // Ordenar por fecha (más recientes primero) y tomar las primeras 6
+        const sortedReviews = result.data
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 6);
+        
+        // Debug: ver estructura de las reviews
+        if (sortedReviews.length > 0) {
+          console.log('📋 Estructura de review:', sortedReviews[0]);
+          console.log('📋 Todas las keys:', Object.keys(sortedReviews[0]));
+        }
+
+        // Enriquecer reviews con datos del contenido
+        const enrichedReviews = await Promise.all(
+          sortedReviews.map(async (review) => {
+            try {
+              let contentData = null;
+              const contentType = review.contentType?.toUpperCase();
+              const contentId = review.contentId;
+
+              if (!contentId || !contentType) {
+                console.warn('Review sin contentId o contentType:', review);
+                return review;
+              }
+
+              // Obtener datos según el tipo de contenido
+              if (contentType === 'MOVIE') {
+                const movieResult = await movieService.getMovieDetails(contentId);
+                if (movieResult?.data) {
+                  contentData = {
+                    contentTitle: movieResult.data.title,
+                    contentImageUrl: movieResult.data.poster_path 
+                      ? `https://image.tmdb.org/t/p/w500${movieResult.data.poster_path}`
+                      : ''
+                  };
+                }
+              } else if (contentType === 'SHOW' || contentType === 'SERIES') {
+                const showResult = await showService.getShowDetails(contentId);
+                if (showResult?.data) {
+                  contentData = {
+                    contentTitle: showResult.data.name,
+                    contentImageUrl: showResult.data.poster_path 
+                      ? `https://image.tmdb.org/t/p/w500${showResult.data.poster_path}`
+                      : ''
+                  };
+                }
+              } else if (contentType === 'GAME' || contentType === 'VIDEOGAME') {
+                const gameResult = await videogameService.getGameById(contentId);
+                if (gameResult) {
+                  contentData = {
+                    contentTitle: gameResult.name || 'Videojuego',
+                    contentImageUrl: gameResult.cover_url || ''
+                  };
+                }
+              } else if (contentType === 'BOOK') {
+                const bookResult = await bookService.getBookById(contentId);
+                if (bookResult) {
+                  contentData = {
+                    contentTitle: bookResult.title || 'Libro',
+                    contentImageUrl: bookResult.cover_url || ''
+                  };
+                }
+              }
+
+              return contentData ? { ...review, ...contentData } : review;
+            } catch (error) {
+              console.error('Error enriqueciendo review:', error);
+              return review;
+            }
+          })
+        );
+        
+        setFeaturedReviews(enrichedReviews);
+        console.log('✅ Reviews enriquecidas:', enrichedReviews);
+      } else {
+        setReviewsError('No se pudieron cargar las reviews');
+        setFeaturedReviews([]);
+      }
+    } catch (error) {
+      console.error('Error cargando reviews:', error);
+      setReviewsError(error.message || 'Error al cargar reviews');
+      setFeaturedReviews([]);
+    } finally {
+      setReviewsLoading(false);
     }
-  ];
+  };
 
   // Función para obtener contenido mixto de películas y series
   const fetchMixedPopularContent = async () => {
@@ -121,12 +168,8 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    const loadContent = async () => {
-      const content = await fetchMixedPopularContent();
-      setMixedContent(content);
-    };
-
-    loadContent();
+    // Cargar reviews al montar el componente
+    fetchFeaturedReviews();
   }, []);
 
   return (
@@ -165,19 +208,39 @@ export default function HomePage() {
       <section className="featured-section">
         <div className="featured-section__container">
           <h2 className="featured-section__title">Reseñas destacadas</h2>
-          <div className="featured-section__grid">
-            {featuredReviews.map((review, index) => (
-              <ReviewHomeCard
-                key={index}
-                title={review.title}
-                description={review.description}
-                imageUrl={review.imageUrl}
-                rating={review.rating}
-                category={review.category}
-                categoryColor={review.categoryColor}
-              />
-            ))}
-          </div>
+          
+          {reviewsLoading && (
+            <div className="featured-section__loading">
+              <Spinner size={60} />
+              <p>Cargando reseñas...</p>
+            </div>
+          )}
+
+          {reviewsError && (
+            <div className="featured-section__error">
+              <p>❌ {reviewsError}</p>
+            </div>
+          )}
+
+          {!reviewsLoading && !reviewsError && featuredReviews.length === 0 && (
+            <div className="featured-section__empty">
+              <p>No hay reseñas disponibles aún</p>
+              <p className="featured-section__empty-subtitle">
+                Sé el primero en compartir tu opinión
+              </p>
+            </div>
+          )}
+
+          {!reviewsLoading && !reviewsError && featuredReviews.length > 0 && (
+            <div className="featured-section__grid">
+              {featuredReviews.map((review) => (
+                <ReviewHomeCard
+                  key={review.idReview}
+                  review={review}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
