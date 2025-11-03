@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import './Slider.css';
 
-/**
- * Slider component for displaying any type of media content (movies, shows, books, etc.)
- * @param {function} fetchItems - async function to fetch items (should return an array)
- * @param {function} renderItem - function to render a single item (receives item as argument)
- * @param {string} [title] - Optional title for the slider
- */
+
 const Slider = ({ fetchItems, renderItem, title }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,7 +21,7 @@ const Slider = ({ fetchItems, renderItem, title }) => {
           setLoading(false);
         }
       })
-      .catch(err => {
+      .catch(() => {
         if (mounted) {
           setError('Error al cargar los datos');
           setLoading(false);
@@ -44,20 +38,34 @@ const Slider = ({ fetchItems, renderItem, title }) => {
     <div className="slider__container">
       {title && <h2 className="slider__title">{title}</h2>}
       <Swiper
-        effect={'coverflow'}
-        grabCursor={true}
-        centeredSlides={true}
-        slidesPerView={'3'}
-        coverflowEffect={{
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: false,
+        slidesPerView={3}
+        spaceBetween={30}
+        pagination={{
+          clickable: true,
         }}
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 2500, disableOnInteraction: false }}
-        modules={[EffectCoverflow, Autoplay]}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        breakpoints={{
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          600: {
+            slidesPerView: 1,
+            spaceBetween: 15,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 25,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+        }}
+        modules={[Pagination, Autoplay]}
         className="slider__swiper"
       >
         {items.map((item, idx) => (
