@@ -152,6 +152,11 @@
   .header__nav-actions {
     display: none;
   }
+
+  /* Ocultar enlaces que solo deben aparecer en móvil */
+  .header__nav-link--mobile-only {
+    display: none !important;
+  }
 }
 .header {
   background-color: rgba(15, 23, 42, 0.9);

@@ -112,6 +112,17 @@ export default function Header() {
           <Link to="videojuegos" className="header__nav-link header__nav-link--active">Videojuegos</Link>
           <Link to="libros" className="header__nav-link header__nav-link--active">Libros</Link>
           <Link to="listas" className="header__nav-link header__nav-link--active">Listas</Link>
+          
+          {/* Opciones de usuario autenticado en menú móvil */}
+          {isAuthenticated && (
+            <>
+              <Link to="/me" className="header__nav-link header__nav-link--active header__nav-link--mobile-only">Área Personal</Link>
+              {Array.isArray(role) && role.includes('admin') && (
+                <Link to="/admin" className="header__nav-link header__nav-link--active header__nav-link--mobile-only">Zona Admin</Link>
+              )}
+            </>
+          )}
+          
           <div className="header__nav-actions">
             {!isAuthenticated ? (
               <>
