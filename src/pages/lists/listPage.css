@@ -35,6 +35,7 @@
 }
 .list-page {
   max-width: 900px;
+  min-height: 100vh;
   margin: 0 auto;
   padding: 32px;
 }
@@ -74,6 +75,7 @@
 .list-page__lists {
   display: flex;
   flex-wrap: wrap;
+  margin-left: 5%;
   gap: 32px;
 }
 
@@ -163,4 +165,11 @@
   min-height: 0 !important;
   box-shadow: none !important;
   border-radius: 8px !important;
+}
+
+@media (max-width: 900px) {
+  .list-page__lists {
+    margin-left: 0;
+    justify-content: center;
+  }
 }

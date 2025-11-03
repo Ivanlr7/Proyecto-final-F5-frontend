@@ -21,7 +21,7 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí iría la lógica para enviar el formulario
+  
     console.log('Form submitted:', formData);
     setIsSubmitted(true);
     setTimeout(() => {
