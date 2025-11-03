@@ -52,8 +52,21 @@
 
 .featured-section__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
+  max-width: 1280px;
+}
+
+@media (min-width: 1280px) {
+  .featured-section__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .featured-section__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Estados de carga, error y vacío para reviews */
