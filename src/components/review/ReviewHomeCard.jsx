@@ -4,31 +4,21 @@ import Avatar from "../common/Avatar";
 import { useNavigate } from "react-router-dom";
 import "./ReviewHomeCard.css";
 
-/**
- * ReviewHomeCard - Componente para mostrar tarjetas de reviews
- * Puede funcionar en dos modos:
- * 1. Modo estático (sin review): Muestra datos pasados directamente como props
- * 2. Modo dinámico (con review): Muestra una review real del sistema con usuario y fecha
- */
+
 export default function ReviewHomeCard({ 
-  // Props para modo estático (compatibilidad con HomePage actual)
+
   title, 
   description, 
   imageUrl, 
   rating, 
   category,
-  // Props para modo dinámico (nuevas)
+
   review,
   onClick
 }) {
   const navigate = useNavigate();
 
-  // Debug: mostrar estructura de review
-  if (review && !review.contentTitle && !review.title) {
-    console.log('⚠️ Review sin título:', review);
-  }
 
-  // Si se pasa una review, extraer los datos de ella
   const displayData = review ? {
     title: review.contentTitle || review.title || review.movieTitle || review.seriesTitle || review.gameTitle || review.bookTitle || 'Sin título',
     description: review.reviewText || review.description || review.text || '',
@@ -105,7 +95,7 @@ export default function ReviewHomeCard({
     if (onClick) {
       onClick(review || displayData);
     } else if (displayData.contentType && displayData.contentId) {
-      // Navegar a la página del contenido
+    
       const typeMap = {
         'MOVIE': 'peliculas',
         'SHOW': 'series',
@@ -121,7 +111,7 @@ export default function ReviewHomeCard({
     }
   };
 
-  // Truncar descripción para modo review
+
   const truncateText = (text, maxLength = 150) => {
     if (!text) return '';
     if (text.length <= maxLength) return text;
