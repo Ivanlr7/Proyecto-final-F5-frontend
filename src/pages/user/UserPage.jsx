@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../store/slices/authSlice";
-import { ArrowLeft, User, Mail, Edit2, Save, X, BookOpen } from "lucide-react";
+import { ArrowLeft, User, Mail, Edit2, Save, X } from "lucide-react";
 import Avatar from "../../components/common/Avatar";
-import ReviewHomeCard from "../../components/review/ReviewHomeCard";
 import userService from "../../api/services/UserService";
-import reviewService from "../../api/services/ReviewService";
 import { updateUserThunk } from "../../store/slices/authSlice";
 import Modal from "../../components/common/Modal";
 import "./UserPage.css";
-
-const ReviewService = new reviewService();
 
 export default function UserPage({ onNavigateToHome }) {
   const { user: authUser, token, isAuthenticated } = useSelector(state => state.auth);
@@ -26,11 +22,6 @@ export default function UserPage({ onNavigateToHome }) {
   const [editedData, setEditedData] = useState({ ...profileData });
   const [imagePreview, setImagePreview] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  
-  // Estados para reviews del usuario
-  const [userReviews, setUserReviews] = useState([]);
-  const [reviewsLoading, setReviewsLoading] = useState(false);
-  const [reviewsError, setReviewsError] = useState(null);
 
   // Estados para el modal
   const [showModal, setShowModal] = useState(false);
@@ -118,36 +109,6 @@ export default function UserPage({ onNavigateToHome }) {
       setLoading(false);
     }
   }, [isAuthenticated, token, authUser]);
-
-  // Cargar reviews del usuario
-  useEffect(() => {
-    const loadUserReviews = async () => {
-      if (!profileData.idUser) return;
-      
-      try {
-        setReviewsLoading(true);
-        setReviewsError(null);
-        
-        const result = await ReviewService.getReviewsByUser(profileData.idUser);
-        
-        if (result.success && Array.isArray(result.data)) {
-          setUserReviews(result.data);
-          console.log('✅ Reviews cargadas:', result.data);
-        } else {
-          setReviewsError('No se pudieron cargar las reviews');
-        }
-      } catch (error) {
-        console.error('Error cargando reviews:', error);
-        setReviewsError(error.message || 'Error al cargar reviews');
-      } finally {
-        setReviewsLoading(false);
-      }
-    };
-
-    if (profileData.idUser) {
-      loadUserReviews();
-    }
-  }, [profileData.idUser]);
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
@@ -364,55 +325,6 @@ export default function UserPage({ onNavigateToHome }) {
             </div>
           )}
         </div>
-
-        {/* Sección de Reviews del Usuario */}
-        {isAuthenticated && !loading && profileData.idUser && (
-          <div className="user-profile__reviews-section">
-            <div className="user-profile__reviews-header">
-              <h2 className="user-profile__reviews-title">
-                <BookOpen className="user-profile__reviews-icon" />
-                Mis Reseñas
-              </h2>
-              <span className="user-profile__reviews-count">
-                {userReviews.length} {userReviews.length === 1 ? 'reseña' : 'reseñas'}
-              </span>
-            </div>
-
-            {reviewsLoading && (
-              <div className="user-profile__reviews-loading">
-                <div className="loading-spinner"></div>
-                <p>Cargando tus reseñas...</p>
-              </div>
-            )}
-
-            {reviewsError && (
-              <div className="user-profile__reviews-error">
-                <p>❌ {reviewsError}</p>
-              </div>
-            )}
-
-            {!reviewsLoading && !reviewsError && userReviews.length === 0 && (
-              <div className="user-profile__reviews-empty">
-                <BookOpen size={48} className="user-profile__empty-icon" />
-                <p>Aún no has creado ninguna reseña</p>
-                <p className="user-profile__empty-subtitle">
-                  Comienza a compartir tus opiniones sobre películas, series, juegos y libros
-                </p>
-              </div>
-            )}
-
-            {!reviewsLoading && !reviewsError && userReviews.length > 0 && (
-              <div className="user-profile__reviews-grid">
-                {userReviews.map((review) => (
-                  <ReviewHomeCard
-                    key={review.idReview}
-                    review={review}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Modal Component */}
