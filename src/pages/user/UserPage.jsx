@@ -174,10 +174,10 @@ export default function UserPage({ onNavigateToHome }) {
       </div>
 
       {/* Back Button */}
-      <button className="user-profile__back-btn" onClick={onNavigateToHome}>
+      {/* <button className="user-profile__back-btn" onClick={onNavigateToHome}>
         <ArrowLeft className="user-profile__back-icon" />
         Volver al Inicio
-      </button>
+      </button> */}
 
       {/* Container */}
       <div className="user-profile__container">
@@ -325,24 +325,6 @@ export default function UserPage({ onNavigateToHome }) {
               </div>
             </div>
           )}
-
-          {/* Additional test Info */}
-          <div className="user-profile__footer">
-            <div className="user-profile__stats">
-              <div className="user-profile__stat">
-                <span className="user-profile__stat-value">24</span>
-                <span className="user-profile__stat-label">Reseñas</span>
-              </div>
-              <div className="user-profile__stat">
-                <span className="user-profile__stat-value">128</span>
-                <span className="user-profile__stat-label">Me gusta</span>
-              </div>
-              <div className="user-profile__stat">
-                <span className="user-profile__stat-value">56</span>
-                <span className="user-profile__stat-label">Siguiendo</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
