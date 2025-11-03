@@ -464,7 +464,7 @@ Base URL: Configured via `VITE_API_BASE_URL`
 
 ## 🧪 Testing
 
-
+![alt text](image.png)
 
 ---
 
@@ -496,25 +496,10 @@ Base URL: Configured via `VITE_API_BASE_URL`
 
 ### Typography
 
-- **Headings** - Inter, system-ui
+- **Headings** - Zalando, system-ui
 - **Body** - System fonts for optimal performance
 
-### Spacing
 
-- Uses 8px base unit for consistent spacing
-- Flexbox and Grid for layouts
-
----
-
-### Code Style Guidelines
-
-- Follow ESLint rules
-- Use BEM methodology for CSS
-- Write meaningful commit messages
-- Add tests for new features
-- Update documentation as needed
-
----
 
 
 ## 👨‍💻 Authors

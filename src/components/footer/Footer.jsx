@@ -9,9 +9,11 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__container">
         <div className="footer__brand">
-          <div className="footer__logo">
-            <span className="footer__logo-text">R</span>
-          </div>
+          <img 
+            src="/logo.svg" 
+            alt="ReviewVerso Logo" 
+            className="footer__logo"
+          />
           <span className="footer__brand-name">ReviewVerso</span>
         </div>
         

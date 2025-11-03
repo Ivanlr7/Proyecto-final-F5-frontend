@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/home/HomePage';
-import About from '../pages/about/About';
 import Contact from '../pages/contact/Contact';
 import LegalNotice from '../pages/legal/LegalNotice';
 import CookiePolicy from '../pages/legal/CookiePolicy';
@@ -25,7 +24,6 @@ import ProtectedAdminRoute from './ProtectedAdminRoute';
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="/about" element={<About />} />
     <Route path="/contact" element={<Contact />} />
     <Route path="/aviso-legal" element={<LegalNotice />} />
     <Route path="/politica-cookies" element={<CookiePolicy />} />

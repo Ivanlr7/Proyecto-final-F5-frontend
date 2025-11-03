@@ -88,9 +88,9 @@ export default function Header() {
       <div className="header__container">
         {/* Logo */}
         <div className="header__brand">
-          <div className="header__logo">
-            <span className="header__logo-text">R</span>
-          </div>
+          <Link to="/" className="header__logo">
+            <img src="/logo.svg" alt="ReviewVerso Logo" className="header__logo-image" />
+          </Link>
           <Link to="/" className="header__brand-name">ReviewVerso</Link>
         </div>
 

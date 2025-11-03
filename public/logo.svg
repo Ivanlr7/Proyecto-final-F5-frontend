@@ -1,0 +1,36 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5B9FED;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="darkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c4f7c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo circular con gradiente oscuro -->
+  <circle cx="100" cy="100" r="90" fill="url(#darkGradient)"/>
+  
+  <!-- Círculo exterior decorativo -->
+  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#blueGradient)" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Letra R con tipografía Zalando Sans SemiExpanded Bold -->
+  <text 
+    x="100" 
+    y="100" 
+    text-anchor="middle" 
+    dominant-baseline="central"
+    font-family="'Zalando Sans SemiExpanded', 'Arial', sans-serif"
+    font-weight="700"
+    font-size="115"
+    fill="url(#blueGradient)"
+    style="letter-spacing: 0px;">R</text>
+  
+  <!-- Elementos decorativos - pequeños puntos alrededor -->
+  <circle cx="100" cy="15" r="3" fill="url(#blueGradient)" opacity="0.6"/>
+  <circle cx="185" cy="100" r="3" fill="url(#blueGradient)" opacity="0.6"/>
+  <circle cx="100" cy="185" r="3" fill="url(#blueGradient)" opacity="0.6"/>
+  <circle cx="15" cy="100" r="3" fill="url(#blueGradient)" opacity="0.6"/>
+</svg>

@@ -16,9 +16,9 @@ export default function HeroSection() {
 
       <div className="hero-section__container">
         <h1 className="hero-section__title">
-          Descubre y Comparte tus{" "}
+          Descubre y comparte tus{" "}
           <span className="hero-section__title-gradient">
-            Pasiones
+            pasiones
           </span>
         </h1>
         

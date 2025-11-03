@@ -101,11 +101,10 @@ export default function HomePage() {
       const movies = moviesResult.status === 'fulfilled' ? moviesResult.value.slice(0, 10) : [];
       const shows = showsResult.status === 'fulfilled' ? showsResult.value.slice(0, 10) : [];
 
-      // Normalizar formato de películas y series
   const normalizedMovies = movies.map(item => ({ ...item, contentType: 'movie' }));
   const normalizedShows = shows.map(item => ({ ...item, contentType: 'series' }));
 
-      // Combinar y mezclar aleatoriamente
+
       const allContent = [...normalizedMovies, ...normalizedShows];
       const shuffled = allContent.sort(() => Math.random() - 0.5);
       
@@ -141,7 +140,7 @@ export default function HomePage() {
           <Slider
             fetchItems={fetchMixedPopularContent}
             renderItem={renderMixedContentCard}
-            title="Contenido Popular"
+            title="Contenido popular"
           />
         </div>
       </section>
@@ -165,7 +164,7 @@ export default function HomePage() {
   {/* Featured Reviews Section */}
       <section className="featured-section">
         <div className="featured-section__container">
-          <h2 className="featured-section__title">Reseñas Destacadas</h2>
+          <h2 className="featured-section__title">Reseñas destacadas</h2>
           <div className="featured-section__grid">
             {featuredReviews.map((review, index) => (
               <ReviewHomeCard

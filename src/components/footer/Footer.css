@@ -25,16 +25,11 @@
 .footer__logo {
   width: 2rem;
   height: 2rem;
-  background-color: var(--primary-color);
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: transform 0.2s ease;
 }
 
-.footer__logo-text {
-  color: #ffffff;
-  font-weight: 700;
+.footer__logo:hover {
+  transform: scale(1.05);
 }
 
 .footer__brand-name {
@@ -68,16 +63,9 @@
   text-align: center;
 }
 
-@media (max-width: 768px) {
-  .footer {
-
-  }
-}
-
 @media (max-width: 640px) {
   .footer {
     padding: 1.5rem 0;
-  
   }
 
   .footer__brand-name {

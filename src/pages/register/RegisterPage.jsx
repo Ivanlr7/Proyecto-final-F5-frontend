@@ -184,9 +184,11 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
         <div className="register-page__card">
    
           <div className="register-page__header">
-            <div className="register-page__logo">
-              <span className="register-page__logo-text">R</span>
-            </div>
+            <img 
+              src="/logo.svg" 
+              alt="ReviewVerso Logo" 
+              className="register-page__logo"
+            />
             <h1 className="register-page__title">Crear Cuenta</h1>
             <p className="register-page__subtitle">
               Únete a ReviewVerso y comienza a compartir tus reseñas

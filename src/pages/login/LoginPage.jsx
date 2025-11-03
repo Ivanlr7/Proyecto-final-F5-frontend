@@ -181,9 +181,11 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister, onLo
         <div className="login-page__card">
           {/* Header */}
           <div className="login-page__header">
-            <div className="login-page__logo">
-              <span className="login-page__logo-text">R</span>
-            </div>
+            <img 
+              src="/logo.svg" 
+              alt="ReviewVerso Logo" 
+              className="login-page__logo"
+            />
             <h1 className="login-page__title">Iniciar Sesión</h1>
             <p className="login-page__subtitle">
               Bienvenido de vuelta a ReviewVerso
