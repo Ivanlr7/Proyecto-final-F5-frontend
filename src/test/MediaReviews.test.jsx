@@ -62,7 +62,7 @@ describe('MediaReviews', () => {
     console.log('Titulos encontrados:', titulos1.length, titulos2.length);
     expect(titulos1.length).toBeGreaterThan(0);
     expect(titulos2.length).toBeGreaterThan(0);
-    // Botón leer más para texto largo
+
     const leerMasBtns = await screen.findAllByText((content) => content.includes('Leer más'));
     expect(leerMasBtns.length).toBeGreaterThan(0);
     fireEvent.click(leerMasBtns[0]);
