@@ -18,8 +18,12 @@
 
 .review-card__image-container {
   position: relative;
-  height: 12rem;
+  height: 16rem;
   overflow: hidden;
+  background-color: rgba(15, 23, 42, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .review-card__image {
