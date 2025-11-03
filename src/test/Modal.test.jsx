@@ -443,8 +443,7 @@ describe('Modal', () => {
       render(
         <Modal isOpen={true} onClose={mockOnClose} title="Test" message="Mensaje" />
       );
-      
-      // Click en el mensaje no debe cerrar
+
       const message = screen.getByText('Mensaje');
       fireEvent.click(message);
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -462,10 +461,10 @@ describe('Modal', () => {
         <Modal isOpen={true} onClose={vi.fn()} title="Test" message="Mensaje" />
       );
       
-      // No debe mostrar botón de cancelar (solo confirm lo muestra)
+ 
       expect(screen.queryByText('Cancelar')).not.toBeInTheDocument();
       
-      // Debe aplicar clase primary (default para alert)
+
       const confirmButton = screen.getByText('Aceptar');
       expect(confirmButton).toHaveClass('modal__btn--primary');
     });
