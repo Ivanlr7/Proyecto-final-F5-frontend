@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../store/slices/authSlice";
 import { ArrowLeft, User, Mail, Edit2, Save, X } from "lucide-react";

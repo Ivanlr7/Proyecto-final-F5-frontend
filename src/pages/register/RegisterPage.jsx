@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Eye, EyeOff, Upload, User, Mail, Lock, Check, X, ArrowLeft } from "lucide-react";
 import registerService from "../../api/services/RegisterService";
 import "./RegisterPage.css";
@@ -92,9 +92,7 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-
     setMessage({ type: '', text: '' });
-    setErrors({});
     
     if (validateForm()) {
       setIsLoading(true);
