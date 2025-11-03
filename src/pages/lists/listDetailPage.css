@@ -7,24 +7,37 @@
 .list-detail-page__title {
   font-size: 2.2rem;
   margin-bottom: 16px;
+  text-align: left;
 }
 
 .list-detail-page__meta {
   margin-bottom: 24px;
-  color: #7dd3fc;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .list-detail-page__author {
-  color: #60a5fa;
+  color: #ffffff;
   font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.list-detail-page__author b {
+  color: #60a5fa;
+}
+
+.list-detail-page__avatar {
+  order: -1;
 }
 
 .list-detail-page__desc {
-  color: #7dd3fc;
+  color: #ffffff;
   font-size: 1rem;
+  text-align: left;
 }
 
 .list-detail-page__grid {

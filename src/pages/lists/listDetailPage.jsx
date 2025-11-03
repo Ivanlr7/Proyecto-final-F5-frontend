@@ -68,13 +68,15 @@ const ListDetailPage = () => {
     <div className="list-detail-page">
       <h1 className="list-detail-page__title">{list.title}</h1>
       <div className="list-detail-page__meta">
-        <Avatar
-          image={list.userProfileImageUrl}
-          name={list.userName || 'U'}
-          size={36}
-          className="list-detail-page__avatar"
-        />
-        <span className="list-detail-page__author">Creada por <b>{list.userName || 'Usuario'}</b></span>
+        <div className="list-detail-page__author">
+          <Avatar
+            image={list.userProfileImageUrl}
+            name={list.userName || 'U'}
+            size={36}
+            className="list-detail-page__avatar"
+          />
+          <span>Creada por <b>{list.userName || 'Usuario'}</b></span>
+        </div>
         <span className="list-detail-page__desc">{list.description}</span>
       </div>
       <div className="list-detail-page__grid">
