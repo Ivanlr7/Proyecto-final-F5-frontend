@@ -91,7 +91,7 @@ describe('Contact', () => {
       expect(screen.getByText(/¡Mensaje Enviado!/i)).toBeInTheDocument();
     });
     
-    // Avanzar el tiempo para que se limpie el formulario
+
     vi.advanceTimersByTime(3000);
     
     await waitFor(() => {

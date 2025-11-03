@@ -6,9 +6,9 @@ import CookiePolicy from '../pages/legal/CookiePolicy';
 
 describe('CookiePolicy', () => {
   beforeEach(() => {
-    // Limpiar localStorage antes de cada test
+
     localStorage.clear();
-    // Limpiar mocks de alert
+
     vi.clearAllMocks();
   });
 
