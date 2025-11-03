@@ -197,7 +197,11 @@ class ShowService {
     let firstAirYear = null;
     if (show.first_air_date) {
       try {
-        firstAirYear = new Date(show.first_air_date).getFullYear();
+        const year = new Date(show.first_air_date).getFullYear();
+        // Validar que el año no es NaN
+        if (!isNaN(year)) {
+          firstAirYear = year;
+        }
       } catch {
         console.warn('Error parseando fecha de primera emisión:', show.first_air_date);
       }
