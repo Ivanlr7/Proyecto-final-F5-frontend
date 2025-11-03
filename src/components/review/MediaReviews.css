@@ -107,6 +107,7 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+  justify-content: center;
   margin-bottom: 1.5rem;
 }
 
@@ -115,20 +116,23 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--primary-color-hover);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
   color: #fff;
   border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-weight: 500;
+  border-radius: 0.75rem;
+  padding: 0.875rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px var(--primary-color-border);
 }
 
 .media-reviews__write-review-btn:hover,
 .media-reviews__add-favorites-btn:hover {
-  background: #1d4ed8;
+  background: linear-gradient(135deg, var(--primary-color-hover) 0%, #1d4ed8 100%);
   transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
 }
 
 .media-reviews__section-title {

@@ -166,7 +166,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
         <div className="media-reviews__review-actions">
           <button className="media-reviews__write-review-btn" onClick={handleWriteReviewClick}>
             <MessageSquare size={20} />
-            Escribir Reseña
+            Escribir reseña
           </button>
           <ReviewModal
             open={showReviewModal}
