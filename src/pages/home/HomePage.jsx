@@ -57,7 +57,7 @@ export default function HomePage() {
           .slice(0, 4);
         
 
-        // Enriquecer reviews con datos del contenido
+
         const enrichedReviews = await Promise.all(
           sortedReviews.map(async (review) => {
             try {
@@ -69,16 +69,17 @@ export default function HomePage() {
                 console.warn('Review sin contentId o contentType:', review);
                 return review;
               }
-
-              // Obtener datos según el tipo de contenido
+              // Obtiene los datos en función del contenido
               if (contentType === 'MOVIE') {
                 const movieResult = await movieService.getMovieDetails(contentId);
                 if (movieResult?.data) {
                   contentData = {
                     contentTitle: movieResult.data.title,
-                    contentImageUrl: movieResult.data.poster_path 
-                      ? `https://image.tmdb.org/t/p/w500${movieResult.data.poster_path}`
-                      : ''
+                    contentImageUrl: movieResult.data.backdrop_path 
+                      ? `https://image.tmdb.org/t/p/w1280${movieResult.data.backdrop_path}`
+                      : (movieResult.data.poster_path 
+                        ? `https://image.tmdb.org/t/p/w500${movieResult.data.poster_path}`
+                        : '')
                   };
                 }
               } else if (contentType === 'SHOW' || contentType === 'SERIES') {
@@ -86,9 +87,11 @@ export default function HomePage() {
                 if (showResult?.data) {
                   contentData = {
                     contentTitle: showResult.data.name,
-                    contentImageUrl: showResult.data.poster_path 
-                      ? `https://image.tmdb.org/t/p/w500${showResult.data.poster_path}`
-                      : ''
+                    contentImageUrl: showResult.data.backdrop_path 
+                      ? `https://image.tmdb.org/t/p/w1280${showResult.data.backdrop_path}`
+                      : (showResult.data.poster_path 
+                        ? `https://image.tmdb.org/t/p/w500${showResult.data.poster_path}`
+                        : '')
                   };
                 }
               } else if (contentType === 'GAME' || contentType === 'VIDEOGAME') {
@@ -96,7 +99,7 @@ export default function HomePage() {
                 if (gameResult) {
                   contentData = {
                     contentTitle: gameResult.name || 'Videojuego',
-                    contentImageUrl: gameResult.cover_url || ''
+                    contentImageUrl: gameResult.backdrop_url || gameResult.screenshot_url || gameResult.cover_url || ''
                   };
                 }
               } else if (contentType === 'BOOK') {
@@ -104,7 +107,7 @@ export default function HomePage() {
                 if (bookResult) {
                   contentData = {
                     contentTitle: bookResult.title || 'Libro',
-                    contentImageUrl: bookResult.cover_url || ''
+                    contentImageUrl: bookResult.backdrop_url || bookResult.cover_url || ''
                   };
                 }
               }

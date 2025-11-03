@@ -61,7 +61,7 @@ export default function ReviewHomeCard({
   const getCategoryClass = () => {
     const cat = displayData.category?.toUpperCase();
     if (cat === "PELÍCULA" || cat === "MOVIE") return "review-card__category--movie";
-    if (cat === "SERIE" || cat === "SHOW") return "review-card__category--series";
+    if (cat === "SERIE" || cat === "SHOW" || cat === "SERIES") return "review-card__category--series";
     if (cat === "VIDEOJUEGO" || cat === "GAME") return "review-card__category--game";
     if (cat === "LIBRO" || cat === "BOOK") return "review-card__category--book";
     return "";
@@ -70,7 +70,7 @@ export default function ReviewHomeCard({
   const getCategoryDisplay = () => {
     const cat = displayData.category?.toUpperCase();
     if (cat === "MOVIE") return "PELÍCULA";
-    if (cat === "SHOW") return "SERIE";
+    if (cat === "SHOW" || cat === "SERIES") return "SERIE";
     if (cat === "GAME") return "VIDEOJUEGO";
     if (cat === "BOOK") return "LIBRO";
     return displayData.category;
