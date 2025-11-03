@@ -5,7 +5,6 @@ import { MemoryRouter } from 'react-router-dom';
 import RegisterPage from '../pages/register/RegisterPage';
 import registerService from '../api/services/RegisterService';
 
-// Mock de useNavigate
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
@@ -15,14 +14,14 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// Mock del registerService
+
 vi.mock('../api/services/RegisterService', () => ({
   default: {
     registerUser: vi.fn(),
   },
 }));
 
-// Función helper para renderizar con router
+
 const renderWithRouter = (component) => {
   return render(
     <MemoryRouter>

@@ -7,7 +7,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import LoginPage from '../pages/login/LoginPage';
 import authReducer from '../store/slices/authSlice';
 
-// Mock de useNavigate
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
@@ -17,7 +16,7 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// Función helper para crear un store de prueba
+
 const createTestStore = (initialState = {}) => {
   return configureStore({
     reducer: {
@@ -38,7 +37,7 @@ const createTestStore = (initialState = {}) => {
   });
 };
 
-// Función helper para renderizar con providers
+
 const renderWithProviders = (component, initialState = {}) => {
   const store = createTestStore(initialState);
   return render(
