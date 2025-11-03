@@ -33,11 +33,11 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister, onLo
     }
   }, [isAuthenticated, navigate]);
 
-  // Manejar errores de Redux
+
   useEffect(() => {
     if (authError) {
       setMessage({ type: 'error', text: authError });
-      // Limpiar el error después de mostrarlo
+ 
       const timer = setTimeout(() => {
         dispatch(clearError());
       }, 5000);
@@ -91,7 +91,7 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister, onLo
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Limpiar mensajes previos
+
     setMessage({ type: '', text: '' });
     
     setTouched({
@@ -104,34 +104,35 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister, onLo
 
     if (isUsernameValid && isPasswordValid) {
       try {
-        // Preparar datos para Redux (usar identifier como espera el backend)
+
         const loginData = {
-          identifier: formData.usernameOrEmail, // El backend espera 'identifier'
+          identifier: formData.usernameOrEmail, 
           password: formData.password
         };
         
-        // Usar Redux thunk en lugar del AuthService directamente
+
         const result = await dispatch(loginThunk(loginData)).unwrap();
         
+   
         setMessage({ 
           type: 'success', 
-          text: result.message || '¡Sesión iniciada con éxito!' 
+          text: result.message || '¡Login exitoso!' 
         });
         
-        // Limpiar formulario
+  
         setFormData({
           usernameOrEmail: "",
           password: ""
         });
         
-        // Opcional: Llamar callback de éxito
+
         if (onLoginSuccess) {
           setTimeout(() => {
             onLoginSuccess(result.user, result.token);
           }, 1000);
         }
         
-        // Redirigir después del login exitoso
+
         setTimeout(() => {
           navigate('/');
         }, 1000);
