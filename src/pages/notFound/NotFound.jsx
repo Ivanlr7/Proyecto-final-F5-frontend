@@ -12,11 +12,6 @@ export default function NotFound() {
 
   return (
     <div className="not-found">
-      <div className="not-found__background">
-        <div className="not-found__background-blob not-found__background-blob--blue" />
-        <div className="not-found__background-blob not-found__background-blob--purple" />
-      </div>
-
       <div className="not-found__container">
         <div className="not-found__content">
           {/* Icon */}
@@ -29,10 +24,12 @@ export default function NotFound() {
 
           {/* Title */}
           <h2 className="not-found__title">Página no encontrada</h2>
+          <h3 className="not-found__subtitle">¿Te has perdido por el ReviewVerso?</h3>
+
 
           {/* Description */}
           <p className="not-found__description">
-            Lo sentimos, la página que estás buscando no existe o ha sido movida.
+            Lo sentimos, la página que estás buscando no existe o se ha movido de ubicaión.
             Verifica la URL o regresa a la página principal.
           </p>
 
