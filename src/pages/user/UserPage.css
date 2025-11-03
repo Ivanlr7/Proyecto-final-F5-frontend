@@ -155,6 +155,10 @@
   box-shadow: 0 8px 24px var(--primary-color-border);
 }
 
+.user-profile__logo-img {
+width: 20%;
+}
+
 .user-profile__logo-text {
   color: #ffffff;
   font-size: 2rem;

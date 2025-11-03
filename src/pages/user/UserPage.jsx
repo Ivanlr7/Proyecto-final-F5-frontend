@@ -183,9 +183,6 @@ export default function UserPage({ onNavigateToHome }) {
         <div className="user-profile__card">
           {/* Header */}
           <div className="user-profile__header">
-            <div className="user-profile__logo">
-              <span className="user-profile__logo-text">R</span>
-            </div>
             <h1 className="user-profile__title">Mi Perfil</h1>
             <p className="user-profile__subtitle">
               Gestiona tu información personal
