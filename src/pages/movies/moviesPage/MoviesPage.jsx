@@ -23,8 +23,23 @@ export default function MoviesPage() {
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedYear, setSelectedYear] = useState('');
   const [minRating, setMinRating] = useState('');
+  const [selectedProviders, setSelectedProviders] = useState([]);
   const [useFilters, setUseFilters] = useState(false);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [showGenresDropdown, setShowGenresDropdown] = useState(false);
+  const [showProvidersDropdown, setShowProvidersDropdown] = useState(false);
+
+  // Plataformas de streaming más populares en España
+  const streamingProviders = [
+    { id: 8, name: 'Netflix', logoPath: '/9A1JSVmSxsyaBK4SUFsYVqbAYfW.jpg' },
+    { id: 119, name: 'Amazon Prime', logoPath: '/emthp39XA2YScoYL1p0sdbAH2WA.jpg' },
+    { id: 337, name: 'Disney Plus', logoPath: '/7rwgEs15tFwyR9NPQ5vpzxTj19Q.jpg' },
+    { id: 384, name: 'HBO Max', logoPath: '/Ajqyt5aNxNGjmF9uOfxArGrdf3X.jpg' },
+    { id: 350, name: 'Apple TV Plus', logoPath: '/6uhKBfmtzFqOcLousHwZuzcrScK.jpg' },
+    { id: 531, name: 'Paramount Plus', logoPath: '/xbhHHa1YgtpwhC8lb1NQ3ACVcLd.jpg' },
+    { id: 1899, name: 'Max', logoPath: '/zxrVdFjIjLqkfnwyghnfywTn3Lh.jpg' },
+    { id: 2, name: 'Apple iTunes', logoPath: '/2E03IAZsX4ZaUqM7tXlctEPMGWS.jpg' }
+  ];
 
   // Estados para búsqueda
   const [searchQuery, setSearchQuery] = useState('');
@@ -65,6 +80,8 @@ export default function MoviesPage() {
             genres: selectedGenres.length > 0 ? selectedGenres : undefined,
             year: selectedYear || undefined,
             minRating: minRating ? parseFloat(minRating) : undefined,
+            watchProviders: selectedProviders.length > 0 ? selectedProviders : undefined,
+            watchRegion: 'ES',
             sortBy: 'popularity.desc'
           };
           result = await movieService.getMoviesWithFilters(filters);
@@ -94,7 +111,7 @@ export default function MoviesPage() {
     };
 
     loadMovies();
-  }, [category, currentPage, useFilters, selectedGenres, selectedYear, minRating, isSearching, searchQuery]);
+  }, [category, currentPage, useFilters, selectedGenres, selectedYear, minRating, selectedProviders, isSearching, searchQuery]);
 
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
@@ -126,10 +143,23 @@ export default function MoviesPage() {
     setUseFilters(true);
   };
 
+  const handleProviderToggle = (providerId) => {
+    setSelectedProviders(prev => {
+      if (prev.includes(providerId)) {
+        return prev.filter(id => id !== providerId);
+      } else {
+        return [...prev, providerId];
+      }
+    });
+    setCurrentPage(1);
+    setUseFilters(true);
+  };
+
   const clearFilters = () => {
     setSelectedGenres([]);
     setSelectedYear('');
     setMinRating('');
+    setSelectedProviders([]);
     setUseFilters(false);
     setCurrentPage(1);
   };
@@ -247,49 +277,99 @@ export default function MoviesPage() {
               )}
             </h3>
             {/* Genres Filter */}
-            <div className="movies-page__filter-section">
-              <label className="movies-page__filter-label">Géneros:</label>
-              <div className="movies-page__genres">
-                {genres.map((genre) => (
-                  <button
-                    key={genre.id}
-                    className={`movies-page__genre-btn ${selectedGenres.includes(genre.id) ? 'active' : ''}`}
-                    onClick={() => handleGenreToggle(genre.id)}
-                  >
-                    {genre.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-            {/* Year & Rating Filter */}
             <div className="movies-page__dropdown-row">
               <div className="movies-page__filter-section" style={{marginBottom: 0}}>
-                <label className="movies-page__filter-label">Año:</label>
-                <select 
-                  className="movies-page__year-select"
-                  value={selectedYear}
-                  onChange={(e) => handleYearChange(e.target.value)}
-                >
-                  <option value="">Todos los años</option>
-                  {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
-                    <option key={year} value={year}>{year}</option>
-                  ))}
-                </select>
+                <label className="movies-page__filter-label">Géneros</label>
+                <div className="movies-page__genres-dropdown">
+                  <button 
+                    className="movies-page__genres-dropdown-btn"
+                    onClick={() => setShowGenresDropdown(!showGenresDropdown)}
+                  >
+                    {selectedGenres.length > 0 
+                      ? `${selectedGenres.length} seleccionado${selectedGenres.length > 1 ? 's' : ''}`
+                      : 'Seleccionar géneros'}
+                    <span className={`movies-page__dropdown-arrow ${showGenresDropdown ? 'open' : ''}`}>▼</span>
+                  </button>
+                  {showGenresDropdown && (
+                    <div className="movies-page__genres-dropdown-content">
+                      {genres.map((genre) => (
+                        <button
+                          key={genre.id}
+                          className={`movies-page__genre-btn ${selectedGenres.includes(genre.id) ? 'active' : ''}`}
+                          onClick={() => handleGenreToggle(genre.id)}
+                        >
+                          {genre.name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="movies-page__filter-section" style={{marginBottom: 0}}>
-                <label className="movies-page__filter-label">Puntuación mínima:</label>
-                <select 
-                  className="movies-page__rating-select"
-                  value={minRating}
-                  onChange={(e) => handleRatingChange(e.target.value)}
-                >
-                  <option value="">Cualquier puntuación</option>
-                  <option value="5">5+ ⭐</option>
-                  <option value="6">6+ ⭐</option>
-                  <option value="7">7+ ⭐</option>
-                  <option value="8">8+ ⭐</option>
-                  <option value="9">9+ ⭐</option>
-                </select>
+                <label className="movies-page__filter-label">Plataformas</label>
+                <div className="movies-page__genres-dropdown">
+                  <button 
+                    className="movies-page__genres-dropdown-btn"
+                    onClick={() => setShowProvidersDropdown(!showProvidersDropdown)}
+                  >
+                    {selectedProviders.length > 0 
+                      ? `${selectedProviders.length} seleccionada${selectedProviders.length > 1 ? 's' : ''}`
+                      : 'Seleccionar plataformas'}
+                    <span className={`movies-page__dropdown-arrow ${showProvidersDropdown ? 'open' : ''}`}>▼</span>
+                  </button>
+                  {showProvidersDropdown && (
+                    <div className="movies-page__genres-dropdown-content">
+                      {streamingProviders.map((provider) => (
+                        <button
+                          key={provider.id}
+                          className={`movies-page__provider-btn ${selectedProviders.includes(provider.id) ? 'active' : ''}`}
+                          onClick={() => handleProviderToggle(provider.id)}
+                        >
+                          <img 
+                            src={`https://image.tmdb.org/t/p/original${provider.logoPath}`}
+                            alt={provider.name}
+                            className="movies-page__provider-logo"
+                          />
+                          <span>{provider.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="movies-page__filter-section" style={{marginBottom: 0}}>
+                <label className="movies-page__filter-label">Año</label>
+                <div className="movies-page__select-wrapper">
+                  <select 
+                    className="movies-page__year-select"
+                    value={selectedYear}
+                    onChange={(e) => handleYearChange(e.target.value)}
+                  >
+                    <option value="">Todos los años</option>
+                    {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
+                      <option key={year} value={year}>{year}</option>
+                    ))}
+                  </select>
+                  <span className="movies-page__select-arrow">▼</span>
+                </div>
+              </div>
+              <div className="movies-page__filter-section" style={{marginBottom: 0}}>
+                <label className="movies-page__filter-label">Puntuación</label>
+                <div className="movies-page__select-wrapper">
+                  <select 
+                    className="movies-page__rating-select"
+                    value={minRating}
+                    onChange={(e) => handleRatingChange(e.target.value)}
+                  >
+                    <option value="">Cualquier puntuación</option>
+                    <option value="5">5+ ⭐</option>
+                    <option value="6">6+ ⭐</option>
+                    <option value="7">7+ ⭐</option>
+                    <option value="8">8+ ⭐</option>
+                    <option value="9">9+ ⭐</option>
+                  </select>
+                  <span className="movies-page__select-arrow">▼</span>
+                </div>
               </div>
             </div>
           </div>

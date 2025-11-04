@@ -126,7 +126,7 @@ export default function Header() {
           <div className="header__nav-actions">
             {!isAuthenticated ? (
               <>
-                <Link to="/login" className="header__login-btn header__login-btn--mobile">Iniciar Sesión</Link>
+                <Link to="/login" className="header__login-btn header__login-btn--mobile">Iniciar sesión</Link>
                 <Link to="/register" className="header__register-btn header__register-btn--mobile">Registrarse</Link>
               </>
             ) : (
@@ -156,7 +156,7 @@ export default function Header() {
         <div className="header__actions">
           {!isAuthenticated ? (
             <>
-              <Link to="/login" className="header__login-btn">Iniciar Sesión</Link>
+              <Link to="/login" className="header__login-btn">Iniciar sesión</Link>
               {/* <Link to="/register" className="header__register-btn">Registrarse</Link> */}
             </>
           ) : (

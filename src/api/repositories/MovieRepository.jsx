@@ -142,6 +142,12 @@ class MovieRepository {
         params['vote_count.gte'] = filters.minVotes || 100; 
       }
 
+      // Filtro de plataformas de streaming
+      if (filters.watchProviders && filters.watchProviders.length > 0) {
+        params.with_watch_providers = filters.watchProviders.join('|');
+        params.watch_region = filters.watchRegion || 'ES';
+      }
+
       const response = await this.client.get('/discover/movie', { params });
 
       return {

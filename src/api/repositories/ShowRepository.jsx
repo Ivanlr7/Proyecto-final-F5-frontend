@@ -141,6 +141,12 @@ class ShowRepository {
       params.air_date_lte = filters.air_date_lte;
     }
 
+    // Filtro de plataformas de streaming
+    if (filters.watchProviders && filters.watchProviders.length > 0) {
+      params.with_watch_providers = filters.watchProviders.join('|');
+      params.watch_region = filters.watchRegion || 'ES';
+    }
+
     return await this.makeRequest('/discover/tv', params);
   }
 
