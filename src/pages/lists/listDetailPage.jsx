@@ -6,6 +6,7 @@ import MovieService from '../../api/services/MovieService';
 import ShowService from '../../api/services/ShowService';
 import BookService from '../../api/services/BookService';
 import VideogameService from '../../api/services/VideogameService';
+import Spinner from '../../components/common/Spinner';
 import './ListDetailPage.css';
 import Avatar from '../../components/common/Avatar';
 
@@ -60,7 +61,14 @@ const ListDetailPage = () => {
     fetchList();
   }, [id]);
 
-  if (loading) return <div className="list-detail-page">Cargando...</div>;
+  if (loading) return (
+    <div className="list-detail-page">
+      <div className="list-detail-page__loading">
+        <Spinner size={48} />
+        <p>Cargando lista...</p>
+      </div>
+    </div>
+  );
   if (error) return <div className="list-detail-page" style={{color:'red'}}>{error}</div>;
   if (!list) return null;
 
