@@ -261,70 +261,82 @@ const VideogamesPage = () => {
             <div className="videogames-page__filters-grid">
               {/* Genre Filter */}
               <div className="filter-group">
-                <label htmlFor="genre-filter">🎮 Género</label>
-                <select 
-                  id="genre-filter"
-                  value={selectedGenre}
-                  onChange={(e) => setSelectedGenre(e.target.value)}
-                  className="filter-select"
-                >
-                  {genres.map(genre => (
-                    <option key={genre.id} value={genre.id}>
-                      {genre.name}
-                    </option>
-                  ))}
-                </select>
+                <label htmlFor="genre-filter">Género</label>
+                <div className="videogames-page__select-wrapper">
+                  <select 
+                    id="genre-filter"
+                    value={selectedGenre}
+                    onChange={(e) => setSelectedGenre(e.target.value)}
+                    className="filter-select"
+                  >
+                    {genres.map(genre => (
+                      <option key={genre.id} value={genre.id}>
+                        {genre.name}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="videogames-page__select-arrow">▼</span>
+                </div>
               </div>
 
               {/* Platform Filter */}
               <div className="filter-group">
-                <label htmlFor="platform-filter">🕹️ Plataforma</label>
-                <select 
-                  id="platform-filter"
-                  value={selectedPlatform}
-                  onChange={(e) => setSelectedPlatform(e.target.value)}
-                  className="filter-select"
-                >
-                  {platforms.map(platform => (
-                    <option key={platform.id} value={platform.id}>
-                      {platform.name}
-                    </option>
-                  ))}
-                </select>
+                <label htmlFor="platform-filter">Plataforma</label>
+                <div className="videogames-page__select-wrapper">
+                  <select 
+                    id="platform-filter"
+                    value={selectedPlatform}
+                    onChange={(e) => setSelectedPlatform(e.target.value)}
+                    className="filter-select"
+                  >
+                    {platforms.map(platform => (
+                      <option key={platform.id} value={platform.id}>
+                        {platform.name}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="videogames-page__select-arrow">▼</span>
+                </div>
               </div>
 
               {/* Rating Filter */}
               <div className="filter-group">
-                <label htmlFor="rating-filter">⭐ Valoración</label>
-                <select 
-                  id="rating-filter"
-                  value={selectedRating}
-                  onChange={(e) => setSelectedRating(e.target.value)}
-                  className="filter-select"
-                >
-                  {ratings.map(rating => (
-                    <option key={rating.id} value={rating.id}>
-                      {rating.name}
-                    </option>
-                  ))}
-                </select>
+                <label htmlFor="rating-filter">Valoración</label>
+                <div className="videogames-page__select-wrapper">
+                  <select 
+                    id="rating-filter"
+                    value={selectedRating}
+                    onChange={(e) => setSelectedRating(e.target.value)}
+                    className="filter-select"
+                  >
+                    {ratings.map(rating => (
+                      <option key={rating.id} value={rating.id}>
+                        {rating.name}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="videogames-page__select-arrow">▼</span>
+                </div>
               </div>
 
               {/* Year Filter */}
               <div className="filter-group">
-                <label htmlFor="year-filter">📅 Año</label>
-                <select 
-                  id="year-filter"
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className="filter-select"
-                >
-                  {years.map(year => (
-                    <option key={year.id} value={year.id}>
-                      {year.name}
-                    </option>
-                  ))}
-                </select>
+                <label htmlFor="year-filter">Año</label>
+                <div className="videogames-page__select-wrapper">
+                  <select 
+                    id="year-filter"
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(e.target.value)}
+                    className="filter-select"
+                  >
+                    {years.map(year => (
+                      <option key={year.id} value={year.id}>
+                        {year.name}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="videogames-page__select-arrow">▼</span>
+                </div>
               </div>
             </div>
           </div>

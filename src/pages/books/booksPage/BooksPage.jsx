@@ -244,54 +244,63 @@ const BooksPage = () => {
 
 						<div className="books-page__filters-grid">
 							<div className="filter-group">
-								<label htmlFor="subject-filter">📚 Género</label>
-								<select 
-									id="subject-filter"
-									value={selectedSubject}
-									onChange={(e) => {
-										setSelectedSubject(e.target.value);
-										setActiveFilter('');
-									}}
-									className="filter-select"
-								>
-									{subjects.map(subject => (
-										<option key={subject.id} value={subject.id}>
-											{subject.name}
-										</option>
-									))}
-								</select>
+								<label htmlFor="subject-filter">Género</label>
+								<div className="books-page__select-wrapper">
+									<select 
+										id="subject-filter"
+										value={selectedSubject}
+										onChange={(e) => {
+											setSelectedSubject(e.target.value);
+											setActiveFilter('');
+										}}
+										className="filter-select"
+									>
+										{subjects.map(subject => (
+											<option key={subject.id} value={subject.id}>
+												{subject.name}
+											</option>
+										))}
+									</select>
+									<span className="books-page__select-arrow">▼</span>
+								</div>
 							</div>
 
 							<div className="filter-group">
-								<label htmlFor="rating-filter">⭐ Valoración</label>
-								<select 
-									id="rating-filter"
-									value={selectedRating}
-									onChange={(e) => setSelectedRating(e.target.value)}
-									className="filter-select"
-								>
-									{ratings.map(rating => (
-										<option key={rating.id} value={rating.id}>
-											{rating.name}
-										</option>
-									))}
-								</select>
+								<label htmlFor="rating-filter">Valoración</label>
+								<div className="books-page__select-wrapper">
+									<select 
+										id="rating-filter"
+										value={selectedRating}
+										onChange={(e) => setSelectedRating(e.target.value)}
+										className="filter-select"
+									>
+										{ratings.map(rating => (
+											<option key={rating.id} value={rating.id}>
+												{rating.name}
+											</option>
+										))}
+									</select>
+									<span className="books-page__select-arrow">▼</span>
+								</div>
 							</div>
 
 							<div className="filter-group">
-								<label htmlFor="year-filter">📅 Año de Publicación</label>
-								<select 
-									id="year-filter"
-									value={selectedYear}
-									onChange={(e) => setSelectedYear(e.target.value)}
-									className="filter-select"
-								>
-									{years.map(year => (
-										<option key={year.id} value={year.id}>
-											{year.name}
-										</option>
-									))}
-								</select>
+								<label htmlFor="year-filter">Año de Publicación</label>
+								<div className="books-page__select-wrapper">
+									<select 
+										id="year-filter"
+										value={selectedYear}
+										onChange={(e) => setSelectedYear(e.target.value)}
+										className="filter-select"
+									>
+										{years.map(year => (
+											<option key={year.id} value={year.id}>
+												{year.name}
+											</option>
+										))}
+									</select>
+									<span className="books-page__select-arrow">▼</span>
+								</div>
 							</div>
 						</div>
 					</div>
