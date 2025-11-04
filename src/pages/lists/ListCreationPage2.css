@@ -4,65 +4,17 @@
   min-height: 100vh;
   background-color: #0f172a;
   position: relative;
-  overflow: hidden;
   padding: 100px 0 60px;
 }
 
-/* Background */
-.create-list-page__background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.create-list-page__background-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.2;
-  animation: float 20s ease-in-out infinite;
-}
-
-.create-list-page__background-blob--blue {
-  width: 600px;
-  height: 600px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
-  top: -200px;
-  right: -200px;
-  animation-delay: 0s;
-}
-
-.create-list-page__background-blob--purple {
-  width: 500px;
-  height: 500px;
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-  bottom: -150px;
-  left: -150px;
-  animation-delay: 7s;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(30px, -30px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-}
-
+/* Container */
 .create-list-page__container {
   position: relative;
   z-index: 10;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 24px;
+  overflow-x: hidden;
 }
 
 .create-list-page__header {
@@ -98,6 +50,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 24px;
+  overflow: hidden;
 }
 
 .create-list-page__section-title {
@@ -150,11 +103,13 @@
 
 .create-list-page__added-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
   gap: 16px;
   max-height: 400px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 4px;
+  width: 100%;
 }
 
 .create-list-page__item-wrapper {
@@ -163,13 +118,14 @@
 
 .create-list-page__item-wrapper .media-card {
   width: 100%;
-  min-width: unset;
-  max-width: unset;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .create-list-page__item-wrapper .media-card__image {
-  min-width: unset;
+  min-width: 0;
   width: 100%;
+  max-width: 100%;
 }
 
 .create-list-page__remove-btn {
@@ -297,10 +253,11 @@
 
 .create-list-page__results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
   gap: 20px;
   max-height: 500px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 4px;
 }
 
@@ -331,13 +288,14 @@
 
 .create-list-page__result-item .media-card {
   width: 100%;
-  min-width: unset;
-  max-width: unset;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .create-list-page__result-item .media-card__image {
-  min-width: unset;
+  min-width: 0;
   width: 100%;
+  max-width: 100%;
 }
 
 .create-list-page__result-image {
@@ -363,6 +321,7 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
@@ -444,7 +403,11 @@
   }
   
   .create-list-page__added-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(120px, 100%), 1fr));
+  }
+  
+  .create-list-page__results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
   }
 }
 
@@ -474,19 +437,24 @@
   }
 
   .create-list-page__results-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
     gap: 16px;
+  }
+  
+  .create-list-page__added-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(110px, 100%), 1fr));
+    gap: 12px;
   }
 }
 
 @media (max-width: 480px) {
   .create-list-page__added-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(min(90px, 100%), 1fr));
+    gap: 10px;
   }
 
   .create-list-page__results-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(120px, 100%), 1fr));
     gap: 12px;
   }
 }

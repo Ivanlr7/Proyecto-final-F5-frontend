@@ -170,12 +170,6 @@ const CreateListPage = () => {
 
   return (
     <div className="create-list-page">
-      {/* Animated Background */}
-      <div className="create-list-page__background">
-        <div className="create-list-page__background-blob create-list-page__background-blob--blue"></div>
-        <div className="create-list-page__background-blob create-list-page__background-blob--purple"></div>
-      </div>
-
       <div className="create-list-page__container">
         <div className="create-list-page__header">
           <h1 className="create-list-page__title">Crear Nueva Lista</h1>
