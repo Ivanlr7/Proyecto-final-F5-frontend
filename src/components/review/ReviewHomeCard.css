@@ -69,13 +69,13 @@
 }
 
 .review-card__category--game {
-  background-color: rgba(168, 85, 247, 0.2);
-  color: #c084fc;
+  background-color: rgba(139, 92, 246, 0.2);
+  color: #a78bfa;
 }
 
 .review-card__category--book {
-  background-color: rgba(249, 115, 22, 0.2);
-  color: #fb923c;
+  background-color: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
 }
 
 .review-card__rating {

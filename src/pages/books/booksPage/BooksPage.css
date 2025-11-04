@@ -20,7 +20,7 @@
 .books-page__title {
   font-size: 3rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-hover));
+  background: linear-gradient(135deg, #a855f7, #c084fc);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
