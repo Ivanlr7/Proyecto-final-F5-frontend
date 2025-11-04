@@ -93,7 +93,13 @@ describe('MediaReviews', () => {
         <MediaReviews contentType="MOVIE" contentId="123" />
       </Provider>
     );
-    const writeReviewButtons = screen.queryAllByText((content) => content.includes('Escribir Reseña'));
+    
+    // Esperar a que se carguen las reseñas primero
+    await screen.findAllByText((content) => content.includes('Título 1'));
+    
+    const writeReviewButtons = screen.queryAllByText((content) => content.includes('Escribir reseña'));
+    expect(writeReviewButtons.length).toBeGreaterThan(0);
+    
     fireEvent.click(writeReviewButtons[0]);
     await waitFor(() => {
       expect(screen.queryAllByText((content) => content.includes('Enviar reseña')).length).toBeGreaterThan(0);
