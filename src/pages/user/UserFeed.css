@@ -35,7 +35,7 @@
 
 .user-feed__section-title {
   font-size: 1.8rem;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   margin-bottom: 24px;
 }
 
@@ -98,7 +98,7 @@
   color: #7dd3fc;
 }
 
-/* Estilos heredados de ListPage para las cards */
+
 .list-card {
   background: #1a2332;
   border-radius: 16px;
