@@ -17,6 +17,7 @@
   --primary-color-hover: #2563eb;
   --primary-color-light: rgba(59, 130, 246, 0.1);
   --primary-color-border: rgba(59, 130, 246, 0.3);
+  --text-secondary: white;
 }
 
 a {
