@@ -49,7 +49,7 @@ const UserFeed = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Cargar reviews del usuario
+  // Carga las reviews del usuario
   useEffect(() => {
     const fetchUserReviews = async () => {
       if (!user || !token) return;
@@ -60,7 +60,7 @@ const UserFeed = () => {
         const result = await reviewService.getAllReviews();
         
         if (result.success && Array.isArray(result.data)) {
-          // Filtrar solo las reviews del usuario actual
+          // Filtra solo las reviews del usuario actual
           const currentUserId = user.userId || user.id;
           const filteredReviews = result.data.filter(
             review => String(review.userId || review.idUser) === String(currentUserId)

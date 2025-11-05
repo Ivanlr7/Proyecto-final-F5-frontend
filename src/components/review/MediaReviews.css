@@ -23,7 +23,7 @@
     color: var(--primary-color);
 }
 .media-reviews--show .media-reviews__like-btn.liked {
-  background: #2a1833;
+  background: #1e293b;
 }
 
 .media-reviews--videogame .media-reviews__section-title,
@@ -31,7 +31,7 @@
    color: var(--primary-color);
 }
 .media-reviews--videogame .media-reviews__like-btn.liked {
-  background: #1a3323;
+  background: #1e293b;
 }
 
 .media-reviews--book .media-reviews__section-title,
@@ -39,7 +39,7 @@
    color: var(--primary-color);
 }
 .media-reviews--book .media-reviews__like-btn.liked {
-  background: #33281a;
+  background: #1e293b;
 }
 
 .media-reviews__actions-row {
