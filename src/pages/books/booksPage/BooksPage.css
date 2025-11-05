@@ -292,23 +292,31 @@
 .books-page__error {
   text-align: center;
   padding: 4rem 0;
-  color: #ef4444;
+  color: var(--primary-color);
+}
+
+.books-page__error h2 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
 }
 
 .books-page__retry-btn {
   margin-top: 1rem;
   padding: 0.75rem 1.5rem;
-  background-color: #f97316;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .books-page__retry-btn:hover {
-  background-color: #ea580c;
+  background: linear-gradient(135deg, var(--primary-color-hover) 0%, #1d4ed8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
 }
 
 /* books Grid */
