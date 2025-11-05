@@ -16,14 +16,14 @@ class BookRepository {
 					headers: {
 						'Accept': 'application/json',
 					},
-					signal: AbortSignal.timeout(10000) // 10 segundos timeout
+					signal: AbortSignal.timeout(10000)
 				});
 				
 				if (!res.ok) {
-					// Si es 503, esperar y reintentar
+			
 					if (res.status === 503 && attempt < retries - 1) {
 						console.warn(`OpenLibrary devolvió 503, reintentando... (${attempt + 1}/${retries})`);
-						await this.sleep((attempt + 1) * 1000); // Espera incremental
+						await this.sleep((attempt + 1) * 1000); 
 						continue;
 					}
 					throw new Error(`OpenLibrary error ${res.status} for ${url}`);

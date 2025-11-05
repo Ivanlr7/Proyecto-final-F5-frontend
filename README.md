@@ -6,7 +6,6 @@
 [![React](https://img.shields.io/badge/React-19.1.1-blue.svg)](https://reactjs.org/)
 [![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-2.9.0-purple.svg)](https://redux-toolkit.js.org/)
 [![Vite](https://img.shields.io/badge/Vite-7.1.7-yellow.svg)](https://vitejs.dev/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
@@ -437,7 +436,7 @@ Base URL: Configured via `VITE_API_BASE_URL`
 #### Authentication Endpoints
 - `POST /auth/login` - User login
 - `POST /auth/logout` - User logout
-- `POST /auth/register` - User registration
+- `POST /register` - User registration
 
 #### User Endpoints
 - `GET /users/me` - Get current user
@@ -505,5 +504,9 @@ Base URL: Configured via `VITE_API_BASE_URL`
 ## 👨‍💻 Authors
 
 - **Ivanlr7** - [GitHub Profile](https://github.com/Ivanlr7)
+-**Frontend** - [https://github.com/Ivanlr7/Proyecto-final-F5-frontend](https://github.com/Ivanlr7/Proyecto-final-F5-frontend)
+-**Backend** - [https://github.com/Ivanlr7/Proyecto-final-F5-backend](https://github.com/Ivanlr7/Proyecto-final-F5-backend)
+
+
 
 
