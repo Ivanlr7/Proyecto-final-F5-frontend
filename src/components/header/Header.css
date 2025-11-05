@@ -74,7 +74,7 @@
   opacity: 0.7;
   cursor: not-allowed;
 }
-/* Navigation - Menú móvil por defecto */
+
 .header__nav {
   position: fixed;
   top: 0;
@@ -125,7 +125,7 @@
   width: 100%;
 }
 
-/* En escritorio: ocultar botón hamburguesa y mostrar nav horizontal */
+
 @media (min-width: 768px) {
   .header__burger {
     display: none;
@@ -153,7 +153,7 @@
     display: none;
   }
 
-  /* Ocultar enlaces que solo deben aparecer en móvil */
+
   .header__nav-link--mobile-only {
     display: none !important;
   }
@@ -241,7 +241,7 @@
   .header__actions {
     display: flex;
   }
-  /* Mostrar avatar de escritorio solo en escritorio o cuando el menú móvil está cerrado */
+
   .header__avatar--mobile {
     display: none !important;
   }
@@ -304,7 +304,7 @@
   outline-offset: 2px;
 }
 
-/* Botones de login y register - escritorio */
+
 .header__login-btn {
   padding: 0.5rem 1rem;
   background-color: transparent;

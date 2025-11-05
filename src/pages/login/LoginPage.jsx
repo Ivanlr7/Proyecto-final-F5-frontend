@@ -10,7 +10,7 @@ export default function LoginPage({ onNavigateToHome, onNavigateToRegister, onLo
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  // Estado de Redux
+
   const { 
     isAuthenticated, 
     loading: isLoading, 

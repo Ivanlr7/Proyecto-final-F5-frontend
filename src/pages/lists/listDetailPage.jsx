@@ -25,7 +25,7 @@ const ListDetailPage = () => {
       const res = await service.getListById(id);
       if (res.success) {
         setList(res.data);
-        // Buscar detalles de cada item
+    
         if (res.data.items && res.data.items.length > 0) {
           const fetchers = res.data.items.map(async (item) => {
             const type = (item.contentType || '').toLowerCase();

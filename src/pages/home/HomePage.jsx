@@ -46,7 +46,7 @@ export default function HomePage() {
     }
   ];
 
-  // Función para cargar reviews reales de la base de datos
+
   const fetchFeaturedReviews = async () => {
     try {
       setReviewsLoading(true);

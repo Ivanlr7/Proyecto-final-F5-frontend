@@ -8,7 +8,7 @@ class UserRepository {
      
     });
 
-    // Interceptor para errores
+
     this.apiClient.interceptors.response.use(
       (response) => response,
       (error) => {
@@ -18,7 +18,6 @@ class UserRepository {
     );
   }
 
-  // Obtener el usuario actual autenticado
   async getCurrentUser(token) {
     const response = await this.apiClient.get("/users/me", {
       headers: {
@@ -33,7 +32,6 @@ class UserRepository {
     };
   }
 
-  // Obtener usuario por ID
   async getUserById(id, token) {
     const response = await this.apiClient.get(`/users/${id}`, {
       headers: {
@@ -63,16 +61,16 @@ class UserRepository {
     };
   }
 
-  // Actualizar usuario
+
   async updateUser(id, userData, token) {
-    // Siempre usar FormData
+
     const formData = new FormData();
     const userPayload = {
       userName: userData.userName,
       email: userData.email
     };
     
-    // Crear un Blob con el JSON y especificar su Content-Type
+   
     const jsonBlob = new Blob([JSON.stringify(userPayload)], { type: 'application/json' });
     formData.append('data', jsonBlob);
     
@@ -94,7 +92,7 @@ class UserRepository {
     };
   }
 
-  // Eliminar usuario
+
   async deleteUser(id, token) {
     const response = await this.apiClient.delete(`/users/${id}`, {
       headers: {

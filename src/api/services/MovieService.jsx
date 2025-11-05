@@ -8,7 +8,7 @@ class MovieService {
 
   async getPopularMovies(page = 1) {
     try {
-      // Validar página
+  
       if (page < 1 || page > 1000) {
         throw new Error('La página debe estar entre 1 y 1000');
       }

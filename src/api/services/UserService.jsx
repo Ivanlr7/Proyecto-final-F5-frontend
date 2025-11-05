@@ -68,7 +68,7 @@ class UserService {
     }
   }
 
-  // Obtener usuario por ID con validación
+
   async getUserById(id, token) {
     try {
       this.validateUserId(id);
@@ -95,7 +95,7 @@ class UserService {
     }
   }
 
-  // Actualizar usuario con validación
+
   async updateUser(id, userData, token) {
     try {
       this.validateUserId(id);
@@ -105,17 +105,16 @@ class UserService {
         throw new Error('Token de autenticación requerido');
       }
 
-      // Si profileImage es un File, lo pasamos; si no, lo omitimos para no actualizar
       let dataToSend = { ...userData };
       if (!(userData.profileImage instanceof File)) {
-        // No enviar profileImage si no es un File (no hay nueva imagen)
+    
         delete dataToSend.profileImage;
       }
 
       const result = await this.userRepository.updateUser(id, dataToSend, token);
       
       if (result.success && result.data) {
-        // Procesar la URL de la imagen automáticamente
+
         const updatedUserData = {
           ...result.data,
           profileImage: this.getImageUrl(result.data.profileImage)
@@ -136,7 +135,7 @@ class UserService {
     }
   }
 
-  // Obtener todos los usuarios (admin)
+
   async getAllUsers(token) {
     try {
       if (!token) {
@@ -161,7 +160,7 @@ class UserService {
     }
   }
 
-  // Eliminar usuario
+
   async deleteUser(id, token) {
     try {
       this.validateUserId(id);
@@ -183,7 +182,6 @@ class UserService {
     }
   }
 
-  // Validaciones
   validateUserId(id) {
     if (!id || isNaN(id) || id <= 0) {
       throw new Error('ID de usuario inválido');
@@ -209,7 +207,7 @@ class UserService {
     return emailRegex.test(email);
   }
 
-  // Manejo centralizado de errores
+
   handleUserServiceError(error) {
     if (error.response) {
       const status = error.response.status;
@@ -236,7 +234,7 @@ class UserService {
   }
 }
 
-// Crear instancia única
+
 const userService = new UserService();
 
 export default userService;

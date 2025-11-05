@@ -5,7 +5,7 @@ class ReviewService {
     this.reviewRepository = new ReviewRepository();
   }
 
-  //Token gestionado con redux para comprobar la autenticación
+
   async createReview(reviewRequest, token) {
    
     if (!token) {

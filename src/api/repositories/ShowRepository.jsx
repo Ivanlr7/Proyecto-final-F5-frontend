@@ -8,16 +8,14 @@ class ShowRepository {
     }
   }
 
-  // Método base para hacer peticiones
+
   async makeRequest(endpoint, params = {}) {
     try {
       const url = new URL(`${this.baseUrl}${endpoint}`);
       
-      // Agregar API key y parámetros
       url.searchParams.append('api_key', this.apiKey);
       url.searchParams.append('language', 'es-ES');
       
-      // Agregar parámetros adicionales
       Object.entries(params).forEach(([key, value]) => {
         if (value !== null && value !== undefined && value !== '') {
           url.searchParams.append(key, value);
@@ -50,19 +48,18 @@ class ShowRepository {
     }
   }
 
-  // Obtener series populares
+
   async getPopularShows(page = 1) {
     return await this.makeRequest('/tv/popular', { page });
   }
 
-  // Obtener detalles de una serie
+ 
   async getShowDetails(showId) {
     return await this.makeRequest(`/tv/${showId}`, {
       append_to_response: 'credits,videos,recommendations,similar'
     });
   }
 
-  // Buscar series
   async searchShows(query, page = 1) {
     return await this.makeRequest('/search/tv', { 
       query: encodeURIComponent(query),
@@ -70,7 +67,7 @@ class ShowRepository {
     });
   }
 
-  // Obtener series por categoría
+
   async getShowsByCategory(category, page = 1) {
     const categoryMap = {
       'airing_today': '/tv/airing_today',
@@ -92,16 +89,15 @@ class ShowRepository {
     return await this.makeRequest(endpoint, { page });
   }
 
-  // Obtener géneros de series
+
   async getShowGenres() {
     return await this.makeRequest('/genre/tv/list');
   }
 
-  // Descubrir series con filtros
+
   async discoverShows(filters = {}, page = 1) {
     const params = { page };
 
-    // Mapear filtros
     if (filters.genres && filters.genres.length > 0) {
       params.with_genres = filters.genres.join(',');
     }
@@ -120,7 +116,7 @@ class ShowRepository {
       params.sort_by = 'popularity.desc';
     }
 
-    // Filtros adicionales específicos para series
+  
     if (filters.with_networks) {
       params.with_networks = filters.with_networks;
     }
@@ -141,7 +137,7 @@ class ShowRepository {
       params.air_date_lte = filters.air_date_lte;
     }
 
-    // Filtro de plataformas de streaming
+
     if (filters.watchProviders && filters.watchProviders.length > 0) {
       params.with_watch_providers = filters.watchProviders.join('|');
       params.watch_region = filters.watchRegion || 'ES';
@@ -150,32 +146,30 @@ class ShowRepository {
     return await this.makeRequest('/discover/tv', params);
   }
 
-  // Obtener créditos de una serie
+
   async getShowCredits(showId) {
     return await this.makeRequest(`/tv/${showId}/credits`);
   }
 
-  // Obtener videos/trailers de una serie
   async getShowVideos(showId) {
     return await this.makeRequest(`/tv/${showId}/videos`);
   }
 
-  // Obtener series similares
+
   async getSimilarShows(showId, page = 1) {
     return await this.makeRequest(`/tv/${showId}/similar`, { page });
   }
 
-  // Obtener recomendaciones de series
+
   async getShowRecommendations(showId, page = 1) {
     return await this.makeRequest(`/tv/${showId}/recommendations`, { page });
   }
 
-  // Obtener detalles de una temporada
+
   async getSeasonDetails(showId, seasonNumber) {
     return await this.makeRequest(`/tv/${showId}/season/${seasonNumber}`);
   }
 
-  // Obtener detalles de un episodio
   async getEpisodeDetails(showId, seasonNumber, episodeNumber) {
     return await this.makeRequest(`/tv/${showId}/season/${seasonNumber}/episode/${episodeNumber}`);
   }

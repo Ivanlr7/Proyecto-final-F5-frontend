@@ -7,7 +7,7 @@ class ShowService {
 
   async getPopularShows(page = 1) {
     try {
-      // Validar página
+
       if (page < 1 || page > 1000) {
         throw new Error('La página debe estar entre 1 y 1000');
       }
@@ -178,7 +178,7 @@ class ShowService {
     }
   }
 
-  // Procesar una lista de series
+
   processShowList(shows) {
     if (!Array.isArray(shows)) {
       return [];
@@ -187,18 +187,16 @@ class ShowService {
     return shows.map(show => this.processShow(show));
   }
 
-  // Procesar una serie individual
   processShow(show) {
     if (!show || typeof show !== 'object') {
       return null;
     }
 
-    // Formatear fecha de primera emisión
     let firstAirYear = null;
     if (show.first_air_date) {
       try {
         const year = new Date(show.first_air_date).getFullYear();
-        // Validar que el año no es NaN
+
         if (!isNaN(year)) {
           firstAirYear = year;
         }
@@ -207,7 +205,7 @@ class ShowService {
       }
     }
 
-    // Formatear rating a escala de 10
+  
     let formattedVoteAverage = null;
     if (show.vote_average !== null && show.vote_average !== undefined) {
       formattedVoteAverage = parseFloat(show.vote_average).toFixed(1);
@@ -253,7 +251,7 @@ class ShowService {
     };
   }
 
-  // Manejo de errores
+
   handleShowServiceError(error) {
     const errorMessage = error.message || 'Error desconocido en el servicio de series';
     
@@ -266,6 +264,5 @@ class ShowService {
   }
 }
 
-// Crear instancia singleton
 const showService = new ShowService();
 export default showService;

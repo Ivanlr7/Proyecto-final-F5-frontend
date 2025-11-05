@@ -21,17 +21,15 @@ class AuthService {
         this.setToken(result.data.token);
         
     
-        // Decodificar información básica del JWT
         const tokenInfo = this.decodeTokenPayload(result.data.token);
-        
-        // Intentar obtener datos completos del usuario usando UserService
+      
         let completeUserInfo = tokenInfo;
         try {
           const userResult = await userService.getCurrentUser(result.data.token);
           if (userResult.success && userResult.data) {
             completeUserInfo = {
-              ...tokenInfo, // Mantener datos del JWT
-              ...userResult.data // Agregar datos completos del backend
+              ...tokenInfo,
+              ...userResult.data 
             };
             console.log('✅ Datos completos del usuario obtenidos:', completeUserInfo);
           }
@@ -189,7 +187,7 @@ class AuthService {
     }
   }
 
-  // Método para actualizar datos del usuario usando UserService
+
   async refreshUserProfile() {
     try {
       const token = this.getToken();
@@ -199,7 +197,7 @@ class AuthService {
 
       const result = await userService.getCurrentUser(token);
       if (result.success && result.data) {
-        // Mantener datos existentes del JWT y agregar datos del backend
+       
         const currentUser = this.getUser() || {};
         const updatedUser = {
           ...currentUser,

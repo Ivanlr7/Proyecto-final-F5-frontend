@@ -48,7 +48,7 @@ const ListPage = () => {
       showModalMessage('alert', 'Autenticación requerida', 'Debes iniciar sesión para editar una lista');
       return;
     }
-    // Navegar a la página de creación con los datos de la lista
+
     navigate('/listas/crear', { state: { editingList: list } });
   };
 
@@ -66,7 +66,7 @@ const ListPage = () => {
       async () => {
         const res = await listService.deleteList(listId, token);
         if (res.success) {
-          // Eliminar la lista del estado local
+
           setListsWithDetails(prev => prev.filter(list => (list.idList || list.id) !== listId));
           showModalMessage('alert', 'Éxito', 'Lista eliminada correctamente');
         } else {
@@ -82,7 +82,7 @@ const ListPage = () => {
       setError(null);
       const res = await listService.getAllLists();
       if (res.success) {
-        // Para cada lista, obtener detalles de los primeros 4 items
+
         const listsDetails = await Promise.all(res.data.map(async (list) => {
           if (list.items && list.items.length > 0) {
             const fetchers = list.items.slice(0, 4).map(async (item) => {
@@ -144,7 +144,7 @@ const ListPage = () => {
       ) : error ? <p style={{ color: 'red' }}>{error}</p> : (
         <div className="list-page__lists">
           {listsWithDetails.map(list => {
-            // Determinar si el usuario actual es el autor de la lista
+
             const listUserId = list.idUser || list.userId;
             const currentUserId = authUser?.userId || authUser?.id;
             const isOwnList = isAuthenticated && currentUserId && String(listUserId) === String(currentUserId);

@@ -18,7 +18,6 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [reviewsError, setReviewsError] = useState(null);
 
-  // Estados para el modal
   const [showModal, setShowModal] = useState(false);
   const [modalConfig, setModalConfig] = useState({
     type: 'alert',
@@ -27,7 +26,6 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
     onConfirm: null
   });
 
-  // Función auxiliar para mostrar modales
   const showModalMessage = (type, title, message, onConfirm = null) => {
     setModalConfig({ type, title, message, onConfirm });
     setShowModal(true);
@@ -54,7 +52,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
     if (contentType && contentId) fetchReviews();
   }, [contentType, contentId]);
 
-  // Estado de expansión para cada review (por id)
+
   const [expandedReviews, setExpandedReviews] = useState({});
   const [likeLoading, setLikeLoading] = useState({});
   // Estado de likes y contador, persistente en localStorage
@@ -189,7 +187,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
                   showModalMessage('error', 'Error', res.error || 'Error al editar la reseña');
                 }
               } else {
-                // Crear nueva review
+           
                 const reviewRequest = {
                   contentType,
                   contentId,

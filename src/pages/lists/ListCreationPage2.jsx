@@ -100,13 +100,13 @@ const CreateListPage = () => {
     return addedItems.some(i => i.id === item.id && i.type === item.type);
   };
 
-  // Función auxiliar para mostrar modales
+
   const showModalMessage = (type, title, message, onConfirm = null) => {
     setModalConfig({ type, title, message, onConfirm });
     setShowModal(true);
   };
 
-  // useEffect para cargar los datos de la lista al editar
+ 
   useEffect(() => {
     const loadEditingList = async () => {
       if (editingList) {

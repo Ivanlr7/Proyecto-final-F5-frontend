@@ -31,7 +31,7 @@ const Modal = ({
     }
   };
 
-  // Seleccionar el icono según el tipo
+ 
   const getIcon = () => {
     if (icon) return icon;
     
@@ -49,7 +49,7 @@ const Modal = ({
     }
   };
 
-  // Determinar la clase del botón de confirmación según el tipo
+
   const getConfirmButtonClass = () => {
     switch (type) {
       case 'confirm':

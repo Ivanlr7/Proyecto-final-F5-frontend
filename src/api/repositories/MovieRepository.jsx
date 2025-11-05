@@ -65,7 +65,6 @@ class MovieRepository {
     }
   }
 
-  // Buscar películas
   async searchMovies(query, page = 1) {
     try {
       const response = await this.client.get('/search/movie', {

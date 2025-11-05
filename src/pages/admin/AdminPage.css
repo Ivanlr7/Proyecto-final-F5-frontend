@@ -1,4 +1,4 @@
-/* Avatar initials fallback (match header style) */
+
 .admin-page__user-avatar-initials {
   width: 48px;
   height: 48px;
@@ -11,7 +11,7 @@
   font-size: 0.875rem;
   border-radius: 50%;
 }
-/* Admin Page Component Styles - BEM Methodology */
+
 
 .admin-page {
   min-height: 100vh;

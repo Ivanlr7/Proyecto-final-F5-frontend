@@ -11,7 +11,7 @@ import Modal from "../../components/common/Modal";
 import "./AdminPage.css";
 
 export default function AdminPage({ onNavigateToHome }) {
-  // Usuarios reales desde el backend
+
   const [users, setUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [errorUsers, setErrorUsers] = useState(null);
@@ -53,7 +53,7 @@ export default function AdminPage({ onNavigateToHome }) {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Filtrar usuarios basado en el término de búsqueda
+  
   const filteredUsers = users.filter((user) =>
     user.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -79,7 +79,7 @@ export default function AdminPage({ onNavigateToHome }) {
       const result = await userService.updateUser(userId, userData, token);
       if (result.success && result.data) {
         setUsers(users.map(user => user.idUser === userId ? result.data : user));
-        // Si el usuario editado es el autenticado, actualizar también en Redux
+    
         if (authUser && userId === authUser.idUser) {
           await dispatch(updateUserThunk({ id: userId, userData, token }));
         }
@@ -100,7 +100,7 @@ export default function AdminPage({ onNavigateToHome }) {
     setEditedData({ userName: "", email: "", profileImage: "" });
     setImagePreview(null);
   };
-  // Manejar cambio de imagen (file input)
+
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {

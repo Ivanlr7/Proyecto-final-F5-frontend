@@ -52,14 +52,14 @@ const MovieDetailsPage = () => {
     }
   }, [id]);
 
-  // Cargar sugerencias al cambiar a la pestaña
+
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (activeTab !== 'sugerencias' || !id) return;
       setSuggestedLoading(true);
       setSuggestedError(null);
       try {
-        // Obtener similares y recomendaciones en paralelo
+      
         const [similarRes, recRes] = await Promise.all([
           movieService.movieRepository.getSimilarMovies(id, 1),
           movieService.movieRepository.getMovieRecommendations(id, 1)
@@ -69,7 +69,7 @@ const MovieDetailsPage = () => {
           results = results.concat(movieService.processMovieList(similarRes.data.results));
         }
         if (recRes.success && Array.isArray(recRes.data.results)) {
-          // Evitar duplicados por id
+   
           const recFiltered = movieService.processMovieList(recRes.data.results).filter(r => !results.some(s => s.id === r.id));
           results = results.concat(recFiltered);
         }
@@ -83,7 +83,7 @@ const MovieDetailsPage = () => {
     fetchSuggestions();
   }, [activeTab, id]);
 
-  // Cargar reseñas de la película
+
   useEffect(() => {
     const fetchReviews = async () => {
       setReviewsLoading(true);
