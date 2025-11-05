@@ -4,17 +4,44 @@ const OPENLIB_BASE_URL = 'https://openlibrary.org';
 const COVERS_BASE_URL = 'https://covers.openlibrary.org/b/id';
 
 class BookRepository {
-	async getJson(path, params = {}) {
+	async getJson(path, params = {}, retries = 3) {
 		const url = new URL(path, OPENLIB_BASE_URL);
 		Object.entries(params).forEach(([k, v]) => {
 			if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, v);
 		});
 
-		const res = await fetch(url.toString());
-		if (!res.ok) {
-			throw new Error(`OpenLibrary error ${res.status} for ${url}`);
+		for (let attempt = 0; attempt < retries; attempt++) {
+			try {
+				const res = await fetch(url.toString(), {
+					headers: {
+						'Accept': 'application/json',
+					},
+					signal: AbortSignal.timeout(10000) // 10 segundos timeout
+				});
+				
+				if (!res.ok) {
+					// Si es 503, esperar y reintentar
+					if (res.status === 503 && attempt < retries - 1) {
+						console.warn(`OpenLibrary devolvió 503, reintentando... (${attempt + 1}/${retries})`);
+						await this.sleep((attempt + 1) * 1000); // Espera incremental
+						continue;
+					}
+					throw new Error(`OpenLibrary error ${res.status} for ${url}`);
+				}
+				return res.json();
+			} catch (error) {
+				if (attempt < retries - 1) {
+					console.warn(`Error en intento ${attempt + 1}, reintentando...`, error);
+					await this.sleep((attempt + 1) * 1000);
+					continue;
+				}
+				throw error;
+			}
 		}
-		return res.json();
+	}
+
+	sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
 	getCoverUrl(coverId, size = 'L') {

@@ -75,8 +75,20 @@ class BookService {
 	}
 
 	async getPopularBooks(page = 1) {
-		const works = await BookRepository.getPopularBooks(page);
-		return works.map(w => this.formatBook(w)).filter(Boolean);
+		try {
+			const works = await BookRepository.getPopularBooks(page);
+			return works.map(w => this.formatBook(w)).filter(Boolean);
+		} catch (error) {
+			// Fallback: si trending falla, usar búsqueda por subject popular
+			console.warn('Trending endpoint falló, usando fallback...', error);
+			try {
+				const works = await BookRepository.getBooksBySubject('fiction', page);
+				return works.map(w => this.formatBook(w)).filter(Boolean);
+			} catch (fallbackError) {
+				console.error('Fallback también falló:', fallbackError);
+				throw fallbackError;
+			}
+		}
 	}
 
 	async getRecentBooks(page = 1) {

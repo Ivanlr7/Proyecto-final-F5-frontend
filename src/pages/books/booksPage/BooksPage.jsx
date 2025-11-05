@@ -101,7 +101,13 @@ const BooksPage = () => {
 			setBooks(data);
 		} catch (err) {
 			console.error('Error fetching books:', err);
-			setError('Error al cargar los libros. Por favor, intenta de nuevo.');
+			if (err.message?.includes('503')) {
+				setError('El servicio de OpenLibrary no está disponible temporalmente. Por favor, intenta de nuevo en unos minutos.');
+			} else if (err.message?.includes('NetworkError') || err.name === 'TypeError') {
+				setError('Error de conexión con OpenLibrary. Verifica tu conexión a internet e intenta de nuevo.');
+			} else {
+				setError('Error al cargar los libros. Por favor, intenta de nuevo.');
+			}
 		} finally {
 			setLoading(false);
 		}
