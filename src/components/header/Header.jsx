@@ -116,7 +116,8 @@ export default function Header() {
           {/* Opciones de usuario autenticado en menú móvil */}
           {isAuthenticated && (
             <>
-              <Link to="/me" className="header__nav-link header__nav-link--active header__nav-link--mobile-only">Área Personal</Link>
+              <Link to="/feed" className="header__nav-link header__nav-link--active header__nav-link--mobile-only">Área Personal</Link>
+              <Link to="/me" className="header__nav-link header__nav-link--active header__nav-link--mobile-only">Mi Perfil</Link>
               {Array.isArray(role) && role.includes('admin') && (
                 <Link to="/admin" className="header__nav-link header__nav-link--active header__nav-link--mobile-only">Zona Admin</Link>
               )}
@@ -172,23 +173,30 @@ export default function Header() {
                       Hola, {user?.userName || user?.username || user?.sub || 'Usuario'}
                     </span>
                   </div>
-                  <Link to="/me" className="header__avatar">
+                  <div className="header__avatar">
                     <Avatar
                       image={profileImageUrl}
                       name={user?.userName || user?.username || user?.sub || 'U'}
                       size={40}
                       className="header__avatar-image"
                     />
-                  </Link>
+                  </div>
                 </div>
                 {dropdownOpen && (
                   <div className="header__dropdown-menu">
+                    <Link
+                      to="/feed"
+                      className="header__dropdown-link"
+                      onClick={handleDropdownClose}
+                    >
+                      Área personal
+                    </Link>
                     <Link
                       to="/me"
                       className="header__dropdown-link"
                       onClick={handleDropdownClose}
                     >
-                      Área personal
+                      Mi perfil
                     </Link>
                     {Array.isArray(role) && role.includes('admin') && (
                       <Link

@@ -8,6 +8,7 @@ import NotFound from '../pages/notFound/NotFound';
 import RegisterPage from '../pages/register/RegisterPage';
 import LoginPage from '../pages/login/LoginPage';
 import UserPage from '../pages/user/UserPage';
+import UserFeed from '../pages/user/UserFeed';
 import MoviesPage from '../pages/movies/moviesPage/MoviesPage';
 import MovieDetailsPage from '../pages/movies/MovieDetails/MovieDetailsPage';
 import ShowsPage from '../pages/shows/showsPage/ShowsPage';
@@ -30,6 +31,7 @@ const AppRoutes = () => (
     <Route path="/register" element={<RegisterPage />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/me" element={<UserPage />} />
+    <Route path="/feed" element={<UserFeed />} />
     <Route path="/peliculas" element={<MoviesPage />} />
     <Route path="/peliculas/:id" element={<MovieDetailsPage />} />
     <Route path="/series" element={<ShowsPage />} />

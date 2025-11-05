@@ -1,0 +1,241 @@
+.user-feed {
+  min-height: 100vh;
+  background: var(--background-color);
+  padding: 32px 0;
+}
+
+.user-feed__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.user-feed__title {
+  font-size: 2.5rem;
+  margin-bottom: 48px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+}
+
+.user-feed__section {
+  margin-bottom: 64px;
+}
+
+.user-feed__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.user-feed__section-title {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.user-feed__create-btn {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-hover) 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.user-feed__create-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+.user-feed__create-btn:active {
+  transform: translateY(0);
+}
+
+.user-feed__reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+.user-feed__lists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 32px;
+}
+
+.user-feed__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.user-feed__empty {
+  text-align: center;
+  padding: 64px 32px;
+  background: #1a2332;
+  border-radius: 16px;
+  color: var(--text-secondary);
+}
+
+.user-feed__empty p {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.user-feed__empty-subtitle {
+  font-size: 1rem;
+  color: #7dd3fc;
+}
+
+/* Estilos heredados de ListPage para las cards */
+.list-card {
+  background: #1a2332;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px #0002;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.list-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.list-card__covers {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  margin-bottom: 16px;
+}
+
+.list-card__cover {
+  width: 60px;
+  height: 90px;
+  margin-left: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #0004;
+  background: #222;
+  position: relative;
+}
+
+.list-card__cover + .list-card__cover {
+  margin-left: -18px;
+}
+
+.list-card__cover-img-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.list-card__cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+.list-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  font-size: 32px;
+}
+
+.list-card__name {
+  margin: 12px 0 4px 0;
+  font-size: 1.25rem;
+  text-align: left;
+  color: #fff;
+}
+
+.list-card__name a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.list-card__name a:hover {
+  color: var(--primary-color);
+}
+
+.list-card__author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.list-card__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 6px;
+}
+
+.list-card__author-label {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.list-card__author-label b {
+  color: #60a5fa;
+}
+
+.list-card__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .user-feed__container {
+    padding: 0 16px;
+  }
+
+  .user-feed__title {
+    font-size: 2rem;
+  }
+
+  .user-feed__section-title {
+    font-size: 1.5rem;
+  }
+
+  .user-feed__reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-feed__lists-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-feed__section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .user-feed__create-btn {
+    width: 100%;
+  }
+}
