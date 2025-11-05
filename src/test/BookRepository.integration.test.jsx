@@ -1,10 +1,15 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import bookRepository from '../../src/api/repositories/BookRepository';
 
 describe('BookRepository integration', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.useRealTimers(); // Asegurar que empezamos con timers reales
     globalThis.fetch = vi.fn();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers(); // Limpiar timers después de cada test
   });
 
   it('searchBooks realiza búsqueda correcta', async () => {
@@ -22,7 +27,10 @@ describe('BookRepository integration', () => {
     const result = await bookRepository.searchBooks('test', 1);
 
     expect(globalThis.fetch).toHaveBeenCalledWith(
-      expect.stringContaining('/search.json?q=test&page=1&limit=20')
+      expect.stringContaining('/search.json?q=test&page=1&limit=20'),
+      expect.objectContaining({
+        headers: { 'Accept': 'application/json' }
+      })
     );
     expect(result).toEqual(mockResponse.docs);
   });
@@ -42,7 +50,10 @@ describe('BookRepository integration', () => {
     const result = await bookRepository.getPopularBooks(1);
 
     expect(globalThis.fetch).toHaveBeenCalledWith(
-      expect.stringContaining('/trending/daily.json')
+      expect.stringContaining('/trending/daily.json'),
+      expect.objectContaining({
+        headers: { 'Accept': 'application/json' }
+      })
     );
     expect(result).toEqual(mockResponse.works);
   });
@@ -62,7 +73,10 @@ describe('BookRepository integration', () => {
     const result = await bookRepository.getBookByKey('123');
 
     expect(globalThis.fetch).toHaveBeenCalledWith(
-      expect.stringContaining('/works/123.json')
+      expect.stringContaining('/works/123.json'),
+      expect.objectContaining({
+        headers: { 'Accept': 'application/json' }
+      })
     );
     expect(result).toEqual(mockBook);
   });
@@ -81,12 +95,26 @@ describe('BookRepository integration', () => {
   });
 
   it('maneja errores de fetch', async () => {
-    globalThis.fetch.mockResolvedValueOnce({
+    vi.useFakeTimers();
+    
+    // Los 3 intentos fallan
+    globalThis.fetch.mockResolvedValue({
       ok: false,
       status: 500
     });
 
-    await expect(bookRepository.searchBooks('test')).rejects.toThrow();
+    const promise = bookRepository.searchBooks('test');
+    
+    // Crear la expectativa del error ANTES de avanzar los timers
+    const expectation = expect(promise).rejects.toThrow('OpenLibrary error 500');
+    
+    // Avanzar timers para todos los reintentos
+    await vi.advanceTimersByTimeAsync(1000); // 1er reintento
+    await vi.advanceTimersByTimeAsync(2000); // 2do reintento
+
+    await expectation;
+    
+    vi.useRealTimers();
   });
 
   it('getRecentBooks obtiene libros recientes', async () => {
@@ -227,6 +255,8 @@ describe('BookRepository integration', () => {
   });
 
   it('getBookByKey maneja error al obtener autor', async () => {
+    vi.useFakeTimers();
+    
     const mockBook = {
       key: '/works/123',
       title: 'Test',
@@ -240,11 +270,20 @@ describe('BookRepository integration', () => {
       json: async () => mockBook
     });
 
-    globalThis.fetch.mockRejectedValueOnce(new Error('Author fetch error'));
+    // El fetch del autor falla 3 veces
+    globalThis.fetch.mockRejectedValue(new Error('Author fetch error'));
 
-    const result = await bookRepository.getBookByKey('123');
+    const promise = bookRepository.getBookByKey('123');
+    
+    // Avanzar timers para los reintentos del autor
+    await vi.advanceTimersByTimeAsync(1000);
+    await vi.advanceTimersByTimeAsync(2000);
+    
+    const result = await promise;
 
     expect(result.author_name).toEqual([]);
+    
+    vi.useRealTimers();
   });
 
   it('getAuthorByKey obtiene autor por clave', async () => {
@@ -295,5 +334,86 @@ describe('BookRepository integration', () => {
 
     expect(callUrl).not.toContain('q=');
     expect(callUrl).toContain('page=1');
+  });
+
+  it('reintenta cuando recibe error 503', async () => {
+    vi.useFakeTimers();
+    
+    const mockResponse = { docs: [] };
+
+    // Primer intento: 503
+    globalThis.fetch.mockResolvedValueOnce({
+      ok: false,
+      status: 503
+    });
+
+
+    globalThis.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse
+    });
+
+    const promise = bookRepository.searchBooks('test', 1);
+        await vi.advanceTimersByTimeAsync(1000);
+    
+    const result = await promise;
+
+    expect(globalThis.fetch).toHaveBeenCalledTimes(2);
+    expect(result).toEqual(mockResponse.docs);
+    
+    vi.useRealTimers();
+  });
+
+  it('reintenta hasta 3 veces y luego falla', async () => {
+    vi.useFakeTimers();
+
+    // Los 3 intentos fallan con 503
+    globalThis.fetch.mockResolvedValue({
+      ok: false,
+      status: 503
+    });
+
+    // Iniciar la promesa
+    const promise = bookRepository.searchBooks('test', 1);
+    
+    // Crear la expectativa del error ANTES de avanzar los timers
+    const expectation = expect(promise).rejects.toThrow('OpenLibrary error 503');
+    
+    // Avanzar timers para los reintentos
+    await vi.advanceTimersByTimeAsync(1000); // 1er reintento
+    await vi.advanceTimersByTimeAsync(2000); // 2do reintento
+    
+    // Esperar la expectativa
+    await expectation;
+    expect(globalThis.fetch).toHaveBeenCalledTimes(3);
+    
+    vi.useRealTimers();
+  });
+
+  it('reintenta en caso de error de red', async () => {
+    vi.useFakeTimers();
+    
+    const mockResponse = { docs: [] };
+
+    // Primer intento: error de red
+    globalThis.fetch.mockRejectedValueOnce(new Error('Network error'));
+
+    // Segundo intento: éxito
+    globalThis.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse
+    });
+
+    const promise = bookRepository.searchBooks('test', 1);
+    
+    // Avanzar el timer para el sleep
+    await vi.advanceTimersByTimeAsync(1000);
+    
+    const result = await promise;
+
+    expect(globalThis.fetch).toHaveBeenCalledTimes(2);
+    expect(result).toEqual(mockResponse.docs);
+    
+    vi.useRealTimers();
   });
 });

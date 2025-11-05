@@ -37,7 +37,7 @@ class BookService {
 		const number_of_pages_median = raw.number_of_pages_median || raw.number_of_pages;
 		const isbn = raw.isbn || raw.isbn13 || raw.isbn10 || [];
 		
-		// Person y place pueden venir como objetos con key
+	
 		const person = Array.isArray(raw.person) 
 			? raw.person.map(p => typeof p === 'string' ? p : (p.key?.replace('/subjects/', '') || null)).filter(Boolean)
 			: [];
@@ -79,7 +79,7 @@ class BookService {
 			const works = await BookRepository.getPopularBooks(page);
 			return works.map(w => this.formatBook(w)).filter(Boolean);
 		} catch (error) {
-			// Fallback: si trending falla, usar búsqueda por subject popular
+	
 			console.warn('Trending endpoint falló, usando fallback...', error);
 			try {
 				const works = await BookRepository.getBooksBySubject('fiction', page);
