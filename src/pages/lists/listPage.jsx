@@ -11,6 +11,8 @@ import BookService from '../../api/services/BookService';
 import VideogameService from '../../api/services/VideogameService';
 import Modal from '../../components/common/Modal';
 import Spinner from '../../components/common/Spinner';
+import EditButton from '../../components/common/EditButton';
+import DeleteButton from '../../components/common/DeleteButton';
 
 const listService = new ListService();
 
@@ -18,6 +20,8 @@ const AVATAR_PLACEHOLDER = 'https://ui-avatars.com/api/?background=0D8ABC&color=
 
 const ListPage = () => {
   const { token, isAuthenticated } = useSelector(state => state.auth);
+  const authUser = useSelector(state => state.auth?.user);
+  const userRole = useSelector(state => state.auth?.role);
   const [listsWithDetails, setListsWithDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -36,6 +40,40 @@ const ListPage = () => {
   const showModalMessage = (type, title, message, onConfirm = null) => {
     setModalConfig({ type, title, message, onConfirm });
     setShowModal(true);
+  };
+
+  // Función para manejar la edición de lista
+  const handleEditList = (list) => {
+    if (!isAuthenticated || !token) {
+      showModalMessage('alert', 'Autenticación requerida', 'Debes iniciar sesión para editar una lista');
+      return;
+    }
+    // Navegar a la página de creación con los datos de la lista
+    navigate('/listas/crear', { state: { editingList: list } });
+  };
+
+  // Función para manejar la eliminación de lista
+  const handleDeleteList = async (listId) => {
+    if (!isAuthenticated || !token) {
+      showModalMessage('alert', 'Autenticación requerida', 'Debes iniciar sesión para eliminar una lista');
+      return;
+    }
+
+    showModalMessage(
+      'confirm',
+      'Confirmar eliminación',
+      '¿Estás seguro de que deseas eliminar esta lista? Esta acción no se puede deshacer.',
+      async () => {
+        const res = await listService.deleteList(listId, token);
+        if (res.success) {
+          // Eliminar la lista del estado local
+          setListsWithDetails(prev => prev.filter(list => (list.idList || list.id) !== listId));
+          showModalMessage('alert', 'Éxito', 'Lista eliminada correctamente');
+        } else {
+          showModalMessage('error', 'Error', res.error || 'Error al eliminar la lista');
+        }
+      }
+    );
   };
 
   useEffect(() => {
@@ -105,41 +143,56 @@ const ListPage = () => {
         </div>
       ) : error ? <p style={{ color: 'red' }}>{error}</p> : (
         <div className="list-page__lists">
-          {listsWithDetails.map(list => (
-            <div key={list.id} className="list-card">
-              <div className="list-card__covers">
-                {(list.detailedItems && list.detailedItems.length > 0 ? list.detailedItems : [null, null, null, null]).slice(0, 4).map((item, idx) => (
-                  <div key={idx} className="list-card__cover" style={{ zIndex: 10 - idx }}>
-                    {item ? (
-                      <div className="list-card__cover-img-wrapper">
-                        <img
-                          src={item.poster_url || item.cover_url || item.backdrop_url || item.screenshot_url || item.image || item.img || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?fit=crop&w=400&q=80'}
-                          alt={item.title || item.name || ''}
-                          className="list-card__cover-img"
-                        />
-            
-                      </div>
-                    ) : (
-                      <div className="list-card__placeholder">?</div>
-                    )}
+          {listsWithDetails.map(list => {
+            // Determinar si el usuario actual es el autor de la lista
+            const listUserId = list.idUser || list.userId;
+            const currentUserId = authUser?.userId || authUser?.id;
+            const isOwnList = isAuthenticated && currentUserId && String(listUserId) === String(currentUserId);
+            const isAdmin = isAuthenticated && (Array.isArray(userRole) ? userRole.includes('admin') : userRole === 'admin');
+            const canModify = isOwnList || isAdmin;
+
+            return (
+              <div key={list.id} className="list-card">
+                <div className="list-card__covers">
+                  {(list.detailedItems && list.detailedItems.length > 0 ? list.detailedItems : [null, null, null, null]).slice(0, 4).map((item, idx) => (
+                    <div key={idx} className="list-card__cover" style={{ zIndex: 10 - idx }}>
+                      {item ? (
+                        <div className="list-card__cover-img-wrapper">
+                          <img
+                            src={item.poster_url || item.cover_url || item.backdrop_url || item.screenshot_url || item.image || item.img || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?fit=crop&w=400&q=80'}
+                            alt={item.title || item.name || ''}
+                            className="list-card__cover-img"
+                          />
+              
+                        </div>
+                      ) : (
+                        <div className="list-card__placeholder">?</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <h3 className="list-card__name">
+                  <Link to={`/listas/${list.idList || list.id}`}>{list.title || list.name}</Link>
+                </h3>
+                <div className="list-card__author">
+                  <Avatar
+                    image={list.userProfileImageUrl}
+                    name={list.userName || 'U'}
+                    size={28}
+                    className="list-card__avatar"
+                  />
+                  <span className="list-card__author-label">Creada por <b>{list.userName || 'Usuario'}</b></span>
+                </div>
+                
+                {canModify && (
+                  <div className="list-card__actions">
+                    <EditButton onClick={() => handleEditList(list)} />
+                    <DeleteButton onClick={() => handleDeleteList(list.idList || list.id)} />
                   </div>
-                ))}
+                )}
               </div>
-              <h3 className="list-card__name">
-                <Link to={`/listas/${list.idList || list.id}`}>{list.title || list.name}</Link>
-              </h3>
-              <div className="list-card__author">
-                <Avatar
-                  image={list.userProfileImageUrl}
-                  name={list.userName || 'U'}
-                  size={28}
-                  className="list-card__avatar"
-                />
-                <span className="list-card__author-label">Creada por <b>{list.userName || 'Usuario'}</b></span>
-              </div>
-    
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 

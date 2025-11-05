@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ListService from '../../api/services/ListService';
 import MovieService from '../../api/services/MovieService';
 import ShowService from '../../api/services/ShowService';
@@ -15,6 +15,9 @@ const listService = new ListService();
 const CreateListPage = () => {
   const { token, user } = useSelector(state => state.auth);
   const navigate = useNavigate();
+  const location = useLocation();
+  const editingList = location.state?.editingList;
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [contentType, setContentType] = useState('movie');
@@ -23,6 +26,7 @@ const CreateListPage = () => {
   const [addedItems, setAddedItems] = useState([]);
   const [searching, setSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   // Estados para los modales
   const [showModal, setShowModal] = useState(false);
@@ -102,6 +106,50 @@ const CreateListPage = () => {
     setShowModal(true);
   };
 
+  // useEffect para cargar los datos de la lista al editar
+  useEffect(() => {
+    const loadEditingList = async () => {
+      if (editingList) {
+        setIsEditMode(true);
+        setTitle(editingList.title || editingList.name || '');
+        setDescription(editingList.description || '');
+
+        // Cargar los items de la lista
+        if (editingList.items && editingList.items.length > 0) {
+          const loadedItems = await Promise.all(
+            editingList.items.map(async (item) => {
+              const type = (item.contentType || '').toLowerCase();
+              const contentId = item.contentId;
+              try {
+                if (type === 'movie') {
+                  const r = await MovieService.getMovieDetails(contentId);
+                  return { ...r.data, type: 'movie' };
+                } else if (type === 'series') {
+                  const r = await ShowService.getShowDetails(contentId);
+                  return { ...r.data, type: 'series' };
+                } else if (type === 'book') {
+                  const r = await BookService.getBookById ? await BookService.getBookById(contentId) : null;
+                  return r ? { ...r, type: 'book' } : { id: contentId, type: 'book' };
+                } else if (type === 'game' || type === 'videogame') {
+                  const r = await VideogameService.getGameById(contentId);
+                  return { ...r, type: 'videogame' };
+                } else {
+                  return { id: contentId, type };
+                }
+              } catch (error) {
+                console.error('Error loading item:', error);
+                return { id: contentId, type };
+              }
+            })
+          );
+          setAddedItems(loadedItems.filter(item => item !== null));
+        }
+      }
+    };
+
+    loadEditingList();
+  }, [editingList]);
+
   const handleSave = async () => {
     if (!title.trim()) {
       showModalMessage('alert', 'Campo requerido', 'Por favor, escribe un título para la lista');
@@ -112,7 +160,7 @@ const CreateListPage = () => {
       return;
     }
     if (!user) {
-      showModalMessage('error', 'Autenticación requerida', 'Debes iniciar sesión para crear una lista');
+      showModalMessage('error', 'Autenticación requerida', 'Debes iniciar sesión para ' + (isEditMode ? 'editar' : 'crear') + ' una lista');
       return;
     }
     
@@ -137,19 +185,28 @@ const CreateListPage = () => {
       apiSource: i.apiSource || inferApiSource(i.type)
     }));
 
-    const res = await listService.createList({
+    const listData = {
       title,
       description,
       userId: user.userId,
       items,
-    }, token);
+    };
+
+    let res;
+    if (isEditMode && editingList) {
+      // Actualizar lista existente
+      res = await listService.updateList(editingList.idList || editingList.id, listData, token);
+    } else {
+      // Crear nueva lista
+      res = await listService.createList(listData, token);
+    }
 
     if (res.success) {
-      showModalMessage('success', '¡Listo!', 'Lista creada con éxito', () => {
+      showModalMessage('success', '¡Listo!', `Lista ${isEditMode ? 'actualizada' : 'creada'} con éxito`, () => {
         navigate('/listas');
       });
     } else {
-      showModalMessage('error', 'Error', res.error || 'Error al crear la lista');
+      showModalMessage('error', 'Error', res.error || `Error al ${isEditMode ? 'actualizar' : 'crear'} la lista`);
     }
   };
 

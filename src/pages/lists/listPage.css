@@ -158,6 +158,14 @@
   margin: 0;
 }
 
+.list-card__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .media-card--mini {
   width: 100% !important;
   height: 100% !important;
