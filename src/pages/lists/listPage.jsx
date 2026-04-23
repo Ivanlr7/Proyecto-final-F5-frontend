@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ListService from '../../api/services/ListService';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import './ListPage.css';
+import './listPage.css';
 import Avatar from '../../components/common/Avatar';
 import MovieService from '../../api/services/MovieService';
 import ShowService from '../../api/services/ShowService';

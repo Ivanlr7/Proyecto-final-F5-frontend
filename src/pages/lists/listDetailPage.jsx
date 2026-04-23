@@ -7,7 +7,7 @@ import ShowService from '../../api/services/ShowService';
 import BookService from '../../api/services/BookService';
 import VideogameService from '../../api/services/VideogameService';
 import Spinner from '../../components/common/Spinner';
-import './ListDetailPage.css';
+import './listDetailPage.css';
 import Avatar from '../../components/common/Avatar';
 
 const ListDetailPage = () => {
