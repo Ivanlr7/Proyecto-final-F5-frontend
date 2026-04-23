@@ -18,7 +18,7 @@ import VideogameDetailsPage from '../pages/videogames/videogameDetails/Videogame
 import BooksPage from '../pages/books/booksPage/BooksPage';
 import BookDetailsPage from '../pages/books/bookDetails/BookDetailsPage';
 import ListDetailPage from '../pages/lists/listDetailPage';
-import ListPage from '../pages/lists/ListPage';
+import ListPage from '../pages/lists/listPage';
 import ListCreationPage from '../pages/lists/ListCreationPage2';
 import AdminPage from '../pages/admin/AdminPage';
 import ProtectedAdminRoute from './ProtectedAdminRoute';
