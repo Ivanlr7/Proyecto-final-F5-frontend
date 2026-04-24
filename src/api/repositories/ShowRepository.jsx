@@ -2,7 +2,7 @@ class ShowRepository {
   constructor() {
     this.baseUrl = 'https://api.themoviedb.org/3';
     this.apiKey = import.meta.env.VITE_API_TMDB_KEY;
-    
+
     if (!this.apiKey) {
       console.error('VITE_TMDB_API_KEY no está configurada en las variables de entorno');
     }
@@ -12,17 +12,17 @@ class ShowRepository {
   async makeRequest(endpoint, params = {}) {
     try {
       const url = new URL(`${this.baseUrl}${endpoint}`);
-      
+
       url.searchParams.append('api_key', this.apiKey);
       url.searchParams.append('language', 'es-ES');
-      
+
       Object.entries(params).forEach(([key, value]) => {
         if (value !== null && value !== undefined && value !== '') {
           url.searchParams.append(key, value);
         }
       });
 
-      console.log('Show API Request:', url.toString());
+
 
       const response = await fetch(url.toString());
 
@@ -53,7 +53,7 @@ class ShowRepository {
     return await this.makeRequest('/tv/popular', { page });
   }
 
- 
+
   async getShowDetails(showId) {
     return await this.makeRequest(`/tv/${showId}`, {
       append_to_response: 'credits,videos,recommendations,similar'
@@ -61,9 +61,9 @@ class ShowRepository {
   }
 
   async searchShows(query, page = 1) {
-    return await this.makeRequest('/search/tv', { 
+    return await this.makeRequest('/search/tv', {
       query: encodeURIComponent(query),
-      page 
+      page
     });
   }
 
@@ -77,7 +77,7 @@ class ShowRepository {
     };
 
     const endpoint = categoryMap[category];
-    
+
     if (!endpoint) {
       return {
         success: false,
@@ -116,7 +116,7 @@ class ShowRepository {
       params.sort_by = 'popularity.desc';
     }
 
-  
+
     if (filters.with_networks) {
       params.with_networks = filters.with_networks;
     }
