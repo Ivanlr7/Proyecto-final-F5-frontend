@@ -3,7 +3,7 @@ const IGDB_BASE_URL = '/api/igdb';
 
 class VideogameRepository {
   async makeRequest(endpoint, body) {
-    const response = await fetch(`${IGDB_BASE_URL}/${endpoint}`, {
+    const response = await fetch(IGDB_BASE_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'text/plain'

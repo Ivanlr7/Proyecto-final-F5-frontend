@@ -9,7 +9,7 @@ export default defineConfig({
       '/api/igdb': {
         target: 'https://api.igdb.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/igdb/, ''),
+        rewrite: () => '/v4/games',
         secure: false
       }
     }
