@@ -1,5 +1,5 @@
 
-const IGDB_BASE_URL = '/api/igdb/v4';
+const IGDB_BASE_URL = '/api/igdb';
 
 class VideogameRepository {
   async makeRequest(endpoint, body) {
