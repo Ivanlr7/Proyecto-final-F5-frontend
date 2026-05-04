@@ -2,11 +2,10 @@ import axios from 'axios';
 
 class MovieRepository {
   constructor() {
-    this.baseURL = 'https://api.themoviedb.org/3';
-    this.apiKey = import.meta.env.VITE_API_TMDB_KEY;
+    // Las peticiones van al proxy serverless /api/tmdb que inyecta la API key server-side
+    this.proxyBase = '/api/tmdb';
 
     this.client = axios.create({
-      baseURL: this.baseURL,
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
@@ -17,9 +16,9 @@ class MovieRepository {
 
   async getPopularMovies(page = 1) {
     try {
-      const response = await this.client.get('/movie/popular', {
+      const response = await this.client.get(this.proxyBase, {
         params: {
-          api_key: this.apiKey,
+          path: '/movie/popular',
           language: 'es-ES',
           page: page
         }
@@ -42,9 +41,9 @@ class MovieRepository {
 
   async getMovieDetails(movieId) {
     try {
-      const response = await this.client.get(`/movie/${movieId}`, {
+      const response = await this.client.get(this.proxyBase, {
         params: {
-          api_key: this.apiKey,
+          path: `/movie/${movieId}`,
           language: 'es-ES',
           append_to_response: 'credits'
         }
@@ -67,9 +66,9 @@ class MovieRepository {
 
   async searchMovies(query, page = 1) {
     try {
-      const response = await this.client.get('/search/movie', {
+      const response = await this.client.get(this.proxyBase, {
         params: {
-          api_key: this.apiKey,
+          path: '/search/movie',
           language: 'es-ES',
           query: query,
           page: page
@@ -94,9 +93,9 @@ class MovieRepository {
   // Categoría general
   async getMoviesByCategory(category, page = 1) {
     try {
-      const response = await this.client.get(`/movie/${category}`, {
+      const response = await this.client.get(this.proxyBase, {
         params: {
-          api_key: this.apiKey,
+          path: `/movie/${category}`,
           language: 'es-ES',
           page: page
         }
@@ -117,28 +116,27 @@ class MovieRepository {
     }
   }
 
-  // Filtros avanzados 
+  // Filtros avanzados
   async getMoviesWithFilters(filters = {}) {
     try {
       const params = {
-        api_key: this.apiKey,
+        path: '/discover/movie',
         language: 'es-ES',
         page: filters.page || 1,
         sort_by: filters.sortBy || 'popularity.desc'
       };
 
-
       if (filters.genres && filters.genres.length > 0) {
         params.with_genres = filters.genres.join(',');
       }
-      
+
       if (filters.year) {
         params.primary_release_year = filters.year;
       }
-      
+
       if (filters.minRating) {
         params['vote_average.gte'] = filters.minRating;
-        params['vote_count.gte'] = filters.minVotes || 100; 
+        params['vote_count.gte'] = filters.minVotes || 100;
       }
 
       // Filtro de plataformas de streaming
@@ -147,7 +145,7 @@ class MovieRepository {
         params.watch_region = filters.watchRegion || 'ES';
       }
 
-      const response = await this.client.get('/discover/movie', { params });
+      const response = await this.client.get(this.proxyBase, { params });
 
       return {
         success: true,
@@ -167,9 +165,9 @@ class MovieRepository {
 
   async getMovieGenres() {
     try {
-      const response = await this.client.get('/genre/movie/list', {
+      const response = await this.client.get(this.proxyBase, {
         params: {
-          api_key: this.apiKey,
+          path: '/genre/movie/list',
           language: 'es-ES'
         }
       });
@@ -198,9 +196,9 @@ class MovieRepository {
   // Obtener películas similares
   async getSimilarMovies(movieId, page = 1) {
     try {
-      const response = await this.client.get(`/movie/${movieId}/similar`, {
+      const response = await this.client.get(this.proxyBase, {
         params: {
-          api_key: this.apiKey,
+          path: `/movie/${movieId}/similar`,
           language: 'es-ES',
           page: page
         }
@@ -224,9 +222,9 @@ class MovieRepository {
   // Obtener recomendaciones de películas
   async getMovieRecommendations(movieId, page = 1) {
     try {
-      const response = await this.client.get(`/movie/${movieId}/recommendations`, {
+      const response = await this.client.get(this.proxyBase, {
         params: {
-          api_key: this.apiKey,
+          path: `/movie/${movieId}/recommendations`,
           language: 'es-ES',
           page: page
         }

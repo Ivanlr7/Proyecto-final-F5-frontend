@@ -1,30 +1,23 @@
 class ShowRepository {
   constructor() {
-    this.baseUrl = 'https://api.themoviedb.org/3';
-    this.apiKey = import.meta.env.VITE_API_TMDB_KEY;
-
-    if (!this.apiKey) {
-      console.error('VITE_TMDB_API_KEY no está configurada en las variables de entorno');
-    }
+    this.proxyBase = '/api/tmdb';
   }
 
 
   async makeRequest(endpoint, params = {}) {
     try {
-      const url = new URL(`${this.baseUrl}${endpoint}`);
-
-      url.searchParams.append('api_key', this.apiKey);
-      url.searchParams.append('language', 'es-ES');
+      const searchParams = new URLSearchParams({
+        path: endpoint,
+        language: 'es-ES',
+      });
 
       Object.entries(params).forEach(([key, value]) => {
         if (value !== null && value !== undefined && value !== '') {
-          url.searchParams.append(key, value);
+          searchParams.append(key, value);
         }
       });
 
-
-
-      const response = await fetch(url.toString());
+      const response = await fetch(`${this.proxyBase}?${searchParams.toString()}`);
 
       if (!response.ok) {
         throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
