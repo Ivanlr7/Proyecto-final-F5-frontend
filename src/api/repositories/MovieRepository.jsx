@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class MovieRepository {
   constructor() {
-    // Las peticiones van al proxy serverless /api/tmdb que inyecta la API key server-side
+
     this.proxyBase = '/api/tmdb';
 
     this.client = axios.create({

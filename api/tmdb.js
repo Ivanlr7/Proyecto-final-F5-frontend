@@ -9,11 +9,10 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'El parámetro "path" es obligatorio' });
   }
 
-  // Construir la URL hacia TMDB inyectando la API key desde el entorno del servidor
   const tmdbUrl = new URL(`https://api.themoviedb.org/3${path}`);
-  tmdbUrl.searchParams.set('api_key', process.env.TMDB_API_KEY);
+  tmdbUrl.searchParams.set('api_key', process.env.VITE_API_TMDB_KEY);
 
-  // Reenviar el resto de query params que llegaron del cliente (language, page, etc.)
+
   Object.entries(queryParams).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== '') {
       tmdbUrl.searchParams.set(key, value);
