@@ -227,7 +227,7 @@ export default function HomePage() {
 
           {!reviewsLoading && !reviewsError && featuredReviews.length === 0 && (
             <div className="featured-section__empty">
-              <p>No hay reseñas disponibles aún</p>
+              <p>Aún no se ha escrito ninguna reseña</p>
               <p className="featured-section__empty-subtitle">
                 Sé el primero en compartir tu opinión
               </p>
