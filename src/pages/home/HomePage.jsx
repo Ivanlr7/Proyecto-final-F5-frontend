@@ -29,7 +29,7 @@ export default function HomePage() {
     {
       title: "Series",
       description: "Análisis de series populares y nuevas tendencias",
-      imageUrl: "https://images.unsplash.com/photo-1607110654203-d5665bd64105?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0diUyMHNlcmllcyUyMHRlbGV2aXNpb24lMjBzaG93fGVufDF8fHx8MTc1OTc0NjE1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      imageUrl: "https://images.samsung.com/is/image/samsung/assets/sj_design/use-smart-hub-home-on-your-samsung-smart-tv/How-to-use-Smart-Hub-Home-on-your-Samsung-Smart-TV.jpg?$ORIGIN_JPG$",
       link: "/series"
     },
     {
