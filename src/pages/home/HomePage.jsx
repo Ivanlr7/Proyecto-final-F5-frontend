@@ -18,7 +18,7 @@ export default function HomePage() {
   const [featuredReviews, setFeaturedReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(true);
   const [reviewsError, setReviewsError] = useState(null);
-  
+
   const categories = [
     {
       title: "Películas",
@@ -51,15 +51,15 @@ export default function HomePage() {
     try {
       setReviewsLoading(true);
       setReviewsError(null);
-      
+
       const result = await ReviewService.getAllReviews();
-      
+
       if (result.success && Array.isArray(result.data)) {
-   
+
         const sortedReviews = result.data
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .slice(0, 4);
-        
+
 
 
         const enrichedReviews = await Promise.all(
@@ -79,9 +79,9 @@ export default function HomePage() {
                 if (movieResult?.data) {
                   contentData = {
                     contentTitle: movieResult.data.title,
-                    contentImageUrl: movieResult.data.backdrop_path 
+                    contentImageUrl: movieResult.data.backdrop_path
                       ? `https://image.tmdb.org/t/p/w1280${movieResult.data.backdrop_path}`
-                      : (movieResult.data.poster_path 
+                      : (movieResult.data.poster_path
                         ? `https://image.tmdb.org/t/p/w500${movieResult.data.poster_path}`
                         : '')
                   };
@@ -91,9 +91,9 @@ export default function HomePage() {
                 if (showResult?.data) {
                   contentData = {
                     contentTitle: showResult.data.name,
-                    contentImageUrl: showResult.data.backdrop_path 
+                    contentImageUrl: showResult.data.backdrop_path
                       ? `https://image.tmdb.org/t/p/w1280${showResult.data.backdrop_path}`
-                      : (showResult.data.poster_path 
+                      : (showResult.data.poster_path
                         ? `https://image.tmdb.org/t/p/w500${showResult.data.poster_path}`
                         : '')
                   };
@@ -123,16 +123,16 @@ export default function HomePage() {
             }
           })
         );
-        
+
         setFeaturedReviews(enrichedReviews);
-        console.log('✅ Reviews enriquecidas:', enrichedReviews);
+        // console.log('✅ Reviews enriquecidas:', enrichedReviews);
       } else {
-        setReviewsError('No se pudieron cargar las reviews');
+        setReviewsError('No se pudieron cargar las reseñas');
         setFeaturedReviews([]);
       }
     } catch (error) {
-      console.error('Error cargando reviews:', error);
-      setReviewsError(error.message || 'Error al cargar reviews');
+      console.error('Error cargando reseñas:', error);
+      setReviewsError(error.message || 'Error al cargar reseñas');
       setFeaturedReviews([]);
     } finally {
       setReviewsLoading(false);
@@ -150,13 +150,13 @@ export default function HomePage() {
       const movies = moviesResult.status === 'fulfilled' ? moviesResult.value.slice(0, 10) : [];
       const shows = showsResult.status === 'fulfilled' ? showsResult.value.slice(0, 10) : [];
 
-  const normalizedMovies = movies.map(item => ({ ...item, contentType: 'movie' }));
-  const normalizedShows = shows.map(item => ({ ...item, contentType: 'series' }));
+      const normalizedMovies = movies.map(item => ({ ...item, contentType: 'movie' }));
+      const normalizedShows = shows.map(item => ({ ...item, contentType: 'series' }));
 
 
       const allContent = [...normalizedMovies, ...normalizedShows];
       const shuffled = allContent.sort(() => Math.random() - 0.5);
-      
+
       return shuffled;
     } catch (error) {
       console.error('Error fetching mixed content:', error);
@@ -166,7 +166,7 @@ export default function HomePage() {
 
   // Función para renderizar diferentes tipos de contenido
   const renderMixedContentCard = (item) => {
-    return <MediaCard item={item} type={item.contentType} className='slider-card'/>;
+    return <MediaCard item={item} type={item.contentType} className='slider-card' />;
   };
 
   useEffect(() => {
@@ -176,10 +176,10 @@ export default function HomePage() {
 
   return (
     <div className="home">
-      
+
       <HeroSection />
 
-  {/* Slider de Películas y Series Populares */}
+      {/* Slider de Películas y Series Populares */}
       <section className="slider-section">
         <div className="slider-section__container">
           <Slider
@@ -190,7 +190,7 @@ export default function HomePage() {
         </div>
       </section>
 
-    <section className="categories-section">
+      <section className="categories-section">
         <div className="categories-section__container">
           <h2 className="categories-section__title">Categorías</h2>
           <div className="categories-section__grid">
@@ -207,11 +207,11 @@ export default function HomePage() {
         </div>
       </section>
 
-  {/* Featured Reviews Section */}
+      {/* Featured Reviews Section */}
       <section className="featured-section">
         <div className="featured-section__container">
           <h2 className="featured-section__title">Reseñas destacadas</h2>
-          
+
           {reviewsLoading && (
             <div className="featured-section__loading">
               <Spinner size={60} />

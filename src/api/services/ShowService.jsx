@@ -13,13 +13,13 @@ class ShowService {
       }
 
       const result = await this.showRepository.getPopularShows(page);
-      
+
       if (result.success && result.data) {
         const processedShows = this.processShowList(result.data.results);
-        
+
         return {
           success: true,
-          message: 'Series populares obtenidas exitosamente',
+          message: 'Series populares obtenidas con éxito',
           data: {
             ...result.data,
             results: processedShows
@@ -42,13 +42,13 @@ class ShowService {
       }
 
       const result = await this.showRepository.getShowDetails(showId);
-      
+
       if (result.success && result.data) {
         const processedShow = this.processShow(result.data);
-        
+
         return {
           success: true,
-          message: 'Detalles de serie obtenidos exitosamente',
+          message: 'Detalles de serie obtenidos con éxito',
           data: processedShow
         };
       } else {
@@ -72,13 +72,13 @@ class ShowService {
       }
 
       const result = await this.showRepository.searchShows(query.trim(), page);
-      
+
       if (result.success && result.data) {
         const processedShows = this.processShowList(result.data.results);
-        
+
         return {
           success: true,
-          message: `Búsqueda de "${query}" realizada exitosamente`,
+          message: `Búsqueda de "${query}" realizada con éxito`,
           data: {
             ...result.data,
             results: processedShows
@@ -97,7 +97,7 @@ class ShowService {
   async getShowsByCategory(category, page = 1) {
     try {
       const validCategories = ['airing_today', 'top_rated', 'on_the_air', 'popular'];
-      
+
       if (!validCategories.includes(category)) {
         throw new Error(`Categoría inválida. Categorías válidas: ${validCategories.join(', ')}`);
       }
@@ -107,13 +107,13 @@ class ShowService {
       }
 
       const result = await this.showRepository.getShowsByCategory(category, page);
-      
+
       if (result.success && result.data) {
         const processedShows = this.processShowList(result.data.results);
-        
+
         return {
           success: true,
-          message: `Series de categoría "${category}" obtenidas exitosamente`,
+          message: `Series de categoría "${category}" obtenidas con éxito`,
           data: {
             ...result.data,
             results: processedShows
@@ -132,11 +132,11 @@ class ShowService {
   async getShowGenres() {
     try {
       const result = await this.showRepository.getShowGenres();
-      
+
       if (result.success && result.data) {
         return {
           success: true,
-          message: 'Géneros de series obtenidos exitosamente',
+          message: 'Géneros de series obtenidos con éxito',
           data: result.data.genres
         };
       } else {
@@ -156,13 +156,13 @@ class ShowService {
       }
 
       const result = await this.showRepository.discoverShows(filters, page);
-      
+
       if (result.success && result.data) {
         const processedShows = this.processShowList(result.data.results);
-        
+
         return {
           success: true,
-          message: 'Descubrimiento de series realizado exitosamente',
+          message: 'Descubrimiento de series realizado con éxito',
           data: {
             ...result.data,
             results: processedShows
@@ -205,7 +205,7 @@ class ShowService {
       }
     }
 
-  
+
     let formattedVoteAverage = null;
     if (show.vote_average !== null && show.vote_average !== undefined) {
       formattedVoteAverage = parseFloat(show.vote_average).toFixed(1);
@@ -254,7 +254,7 @@ class ShowService {
 
   handleShowServiceError(error) {
     const errorMessage = error.message || 'Error desconocido en el servicio de series';
-    
+
     return {
       success: false,
       error: errorMessage,

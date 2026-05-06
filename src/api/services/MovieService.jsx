@@ -8,20 +8,20 @@ class MovieService {
 
   async getPopularMovies(page = 1) {
     try {
-  
+
       if (page < 1 || page > 1000) {
         throw new Error('La página debe estar entre 1 y 1000');
       }
 
       const result = await this.movieRepository.getPopularMovies(page);
-      
+
       if (result.success && result.data) {
 
         const processedMovies = this.processMovieList(result.data.results);
-        
+
         return {
           success: true,
-          message: 'Películas populares obtenidas exitosamente',
+          message: 'Películas populares obtenidas con éxito',
           data: {
             ...result.data,
             results: processedMovies
@@ -46,14 +46,14 @@ class MovieService {
       }
 
       const result = await this.movieRepository.getMovieDetails(movieId);
-      
+
       if (result.success && result.data) {
 
         const processedMovie = this.processMovie(result.data);
-        
+
         return {
           success: true,
-          message: 'Detalles de película obtenidos exitosamente',
+          message: 'Detalles de película obtenidos con éxito',
           data: processedMovie
         };
       } else {
@@ -80,13 +80,13 @@ class MovieService {
       }
 
       const result = await this.movieRepository.searchMovies(query.trim(), page);
-      
+
       if (result.success && result.data) {
         const processedMovies = this.processMovieList(result.data.results);
-        
+
         return {
           success: true,
-          message: `Búsqueda de "${query}" realizada exitosamente`,
+          message: `Búsqueda de "${query}" realizada con éxito`,
           data: {
             ...result.data,
             results: processedMovies
@@ -106,7 +106,7 @@ class MovieService {
   async getMoviesByCategory(category, page = 1) {
     try {
       const validCategories = ['now_playing', 'top_rated', 'upcoming', 'popular'];
-      
+
       if (!validCategories.includes(category)) {
         throw new Error(`Categoría inválida. Categorías válidas: ${validCategories.join(', ')}`);
       }
@@ -116,13 +116,13 @@ class MovieService {
       }
 
       const result = await this.movieRepository.getMoviesByCategory(category, page);
-      
+
       if (result.success && result.data) {
         const processedMovies = this.processMovieList(result.data.results);
-        
+
         return {
           success: true,
-          message: `Películas de categoría "${category}" obtenidas exitosamente`,
+          message: `Películas de categoría "${category}" obtenidas con éxito`,
           data: {
             ...result.data,
             results: processedMovies
@@ -141,19 +141,19 @@ class MovieService {
 
   async getMoviesWithFilters(filters = {}) {
     try {
-  
+
       if (filters.page && (filters.page < 1 || filters.page > 1000)) {
         throw new Error('La página debe estar entre 1 y 1000');
       }
 
       const result = await this.movieRepository.getMoviesWithFilters(filters);
-      
+
       if (result.success && result.data) {
         const processedMovies = this.processMovieList(result.data.results);
-        
+
         return {
           success: true,
-          message: 'Películas filtradas obtenidas exitosamente',
+          message: 'Películas filtradas obtenidas con éxito',
           data: {
             ...result.data,
             results: processedMovies
@@ -173,7 +173,7 @@ class MovieService {
   async getMovieGenres() {
     try {
       const result = await this.movieRepository.getMovieGenres();
-      
+
       if (result.success && result.data) {
         return {
           success: true,
@@ -193,7 +193,7 @@ class MovieService {
 
   processMovieList(movies) {
     if (!Array.isArray(movies)) return [];
-    
+
     return movies.map(movie => this.processMovie(movie));
   }
 
@@ -236,7 +236,7 @@ class MovieService {
     if (error.response) {
       const status = error.response.status;
       const message = error.response.data?.status_message || error.response.data;
-      
+
       if (status === 401) {
         return {
           success: false,
