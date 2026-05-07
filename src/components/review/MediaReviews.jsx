@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import ReviewModal from './ReviewModal';
 import ReviewService from '../../api/services/ReviewService';
-import userService from '../../api/services/UserService';
 import { Star, User, MessageSquare, ThumbsUp } from 'lucide-react';
 import Avatar from '../../components/common/Avatar';
 import Modal from '../common/Modal';
@@ -40,34 +39,7 @@ const MediaReviews = ({ contentType, contentId, apiSource = 'TMDB' }) => {
         const res = await reviewService.getReviewsByContent(contentType, contentId);
         if (res.success && Array.isArray(res.data)) {
           console.log('Reviews recibidas:', res.data);
-          
-          // Obtener IDs de usuarios únicos
-          const userIds = [...new Set(res.data.map(review => review.idUser || review.userId).filter(Boolean))];
-          
-          // Cargar datos de usuarios para obtener sus imágenes
-          const userDataMap = {};
-          for (const userId of userIds) {
-            try {
-              const userRes = await userService.getUserById(userId);
-              if (userRes.success && userRes.data) {
-                userDataMap[userId] = userRes.data;
-              }
-            } catch (error) {
-              console.error(`Error obteniendo datos del usuario ${userId}:`, error);
-            }
-          }
-          
-          // Enriquecer reseñas con datos de usuario
-          const enrichedReviews = res.data.map(review => {
-            const userId = review.idUser || review.userId;
-            const userData = userDataMap[userId];
-            return {
-              ...review,
-              userProfileImageUrl: userData?.profileImage || null
-            };
-          });
-          
-          setReviews(enrichedReviews);
+          setReviews(res.data);
         } else {
           setReviewsError(res.error || 'Error al cargar reseñas');
         }
