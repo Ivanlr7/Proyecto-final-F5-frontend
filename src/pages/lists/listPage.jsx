@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
 import ListService from '../../api/services/ListService';
-import userService from '../../api/services/UserService';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import './listPage.css';
@@ -83,27 +82,8 @@ const ListPage = () => {
       setError(null);
       const res = await listService.getAllLists();
       if (res.success) {
-        // Obtener IDs de usuarios únicos
-        const userIds = [...new Set(res.data.map(list => list.userId).filter(Boolean))];
-        
-        // Cargar datos de usuarios para obtener sus imágenes procesadas correctamente
-        const userDataMap = {};
-        for (const userId of userIds) {
-          try {
-            const userRes = await userService.getUserById(userId);
-            if (userRes.success && userRes.data) {
-              userDataMap[userId] = userRes.data;
-            }
-          } catch (error) {
-            console.error(`Error obteniendo datos del usuario ${userId}:`, error);
-          }
-        }
 
         const listsDetails = await Promise.all(res.data.map(async (list) => {
-          // Obtener imagen del usuario desde el mapa (ya procesada por userService)
-          const userData = userDataMap[list.userId];
-          const userProfileImageUrl = userData?.profileImage || null;
-
           if (list.items && list.items.length > 0) {
             const fetchers = list.items.slice(0, 4).map(async (item) => {
               const type = (item.contentType || '').toLowerCase();
@@ -129,9 +109,9 @@ const ListPage = () => {
               }
             });
             const details = await Promise.all(fetchers);
-            return { ...list, detailedItems: details, userProfileImageUrl };
+            return { ...list, detailedItems: details };
           } else {
-            return { ...list, detailedItems: [], userProfileImageUrl };
+            return { ...list, detailedItems: [] };
           }
         }));
         setListsWithDetails(listsDetails);

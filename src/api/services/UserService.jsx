@@ -9,16 +9,11 @@ class UserService {
 
   getImageUrl(profileImage) {
     if (!profileImage) return null;
-    if (
-      profileImage.startsWith('data:image') || 
-      profileImage.startsWith('http://') || 
-      profileImage.startsWith('https://') ||
-      profileImage.includes('cloudinary')
-    ) {
+
+    if (profileImage.startsWith('data:image') || profileImage.startsWith('http')) {
       return profileImage;
     }
   
-    // Si es solo un nombre de archivo, agregar el prefijo del servidor local
     return `${this.baseImageUrl}/${profileImage}`;
   }
 
