@@ -21,7 +21,7 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     console.log('Form submitted:', formData);
     setIsSubmitted(true);
     setTimeout(() => {
@@ -52,8 +52,7 @@ function Contact() {
                 <Mail size={32} />
               </div>
               <h3>Email</h3>
-              <p>contacto@reviewverso.com</p>
-              <p className="contact__info-secondary">support@reviewverso.com</p>
+              <p>info@reviewverso.com</p>
             </div>
 
             <div className="contact__info-card">
@@ -162,7 +161,7 @@ function Contact() {
             </div>
             <div className="contact__faq-item">
               <h3>¿Cómo puedo colaborar con ReviewVerso?</h3>
-              <p>Si estás interesado en colaborar con nosotros, envíanos un email a colaboraciones@reviewverso.com con tu propuesta.</p>
+              <p>Si estás interesado en colaborar con nosotros, envíanos un email a info@reviewverso.com con tu propuesta.</p>
             </div>
           </div>
         </div>

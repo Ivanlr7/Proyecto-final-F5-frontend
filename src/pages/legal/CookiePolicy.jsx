@@ -50,8 +50,8 @@ function CookiePolicy() {
               <h2>¿Qué son las cookies?</h2>
             </div>
             <p>
-              Las cookies son pequeños archivos de texto que los sitios web almacenan en su dispositivo 
-              cuando los visita. Se utilizan ampliamente para hacer que los sitios web funcionen de manera 
+              Las cookies son pequeños archivos de texto que los sitios web almacenan en su dispositivo
+              cuando los visita. Se utilizan ampliamente para hacer que los sitios web funcionen de manera
               más eficiente, así como para proporcionar información a los propietarios del sitio.
             </p>
           </section>
@@ -62,21 +62,21 @@ function CookiePolicy() {
               <h2>¿Cómo usamos las cookies?</h2>
             </div>
             <p>
-              ReviewVerso utiliza cookies para mejorar la experiencia del usuario, analizar el tráfico 
+              ReviewVerso utiliza cookies para mejorar la experiencia del usuario, analizar el tráfico
               y personalizar el contenido. A continuación, detallamos los tipos de cookies que utilizamos:
             </p>
           </section>
 
           <section className="cookie-policy__section">
             <h3>Tipos de Cookies</h3>
-            
+
             <div className="cookie-policy__cookie-type">
               <div className="cookie-policy__cookie-header">
                 <h4>🔒 Cookies Necesarias</h4>
                 <span className="cookie-policy__badge cookie-policy__badge--required">Obligatorias</span>
               </div>
               <p>
-                Estas cookies son esenciales para el funcionamiento del sitio web y no pueden desactivarse. 
+                Estas cookies son esenciales para el funcionamiento del sitio web y no pueden desactivarse.
                 Permiten la navegación básica y el acceso a áreas seguras.
               </p>
               <ul>
@@ -92,7 +92,7 @@ function CookiePolicy() {
                 <span className="cookie-policy__badge cookie-policy__badge--optional">Opcionales</span>
               </div>
               <p>
-                Estas cookies permiten que el sitio web recuerde las elecciones que hace (como su idioma 
+                Estas cookies permiten que el sitio web recuerde las elecciones que hace (como su idioma
                 o región) y proporcionan características mejoradas y más personales.
               </p>
               <ul>
@@ -108,7 +108,7 @@ function CookiePolicy() {
                 <span className="cookie-policy__badge cookie-policy__badge--optional">Opcionales</span>
               </div>
               <p>
-                Estas cookies nos permiten contar las visitas y fuentes de tráfico para medir y mejorar 
+                Estas cookies nos permiten contar las visitas y fuentes de tráfico para medir y mejorar
                 el rendimiento de nuestro sitio.
               </p>
               <ul>
@@ -124,7 +124,7 @@ function CookiePolicy() {
                 <span className="cookie-policy__badge cookie-policy__badge--optional">Opcionales</span>
               </div>
               <p>
-                Estas cookies se utilizan para mostrar anuncios relevantes basados en sus intereses. 
+                Estas cookies se utilizan para mostrar anuncios relevantes basados en sus intereses.
                 También limitan el número de veces que ve un anuncio.
               </p>
               <ul>
@@ -140,14 +140,14 @@ function CookiePolicy() {
               <h2>Gestión de Cookies</h2>
             </div>
             <p>
-              Puede gestionar sus preferencias de cookies utilizando el panel siguiente o configurando 
-              su navegador para rechazar las cookies. Tenga en cuenta que deshabilitar las cookies 
+              Puede gestionar sus preferencias de cookies utilizando el panel siguiente o configurando
+              su navegador para rechazar las cookies. Tenga en cuenta que deshabilitar las cookies
               puede afectar la funcionalidad del sitio web.
             </p>
 
             <div className="cookie-policy__preferences">
               <h3>Sus Preferencias de Cookies</h3>
-              
+
               <div className="cookie-policy__preference-item">
                 <div className="cookie-policy__preference-info">
                   <h4>Cookies Necesarias</h4>
@@ -163,7 +163,7 @@ function CookiePolicy() {
                   <h4>Cookies Funcionales</h4>
                   <p>Mejoran la funcionalidad y personalización</p>
                 </div>
-                <button 
+                <button
                   className={`cookie-policy__toggle ${cookiePreferences.functional ? 'cookie-policy__toggle--active' : ''}`}
                   onClick={() => handleToggle('functional')}
                 >
@@ -176,7 +176,7 @@ function CookiePolicy() {
                   <h4>Cookies Analíticas</h4>
                   <p>Nos ayudan a mejorar el rendimiento del sitio</p>
                 </div>
-                <button 
+                <button
                   className={`cookie-policy__toggle ${cookiePreferences.analytics ? 'cookie-policy__toggle--active' : ''}`}
                   onClick={() => handleToggle('analytics')}
                 >
@@ -189,7 +189,7 @@ function CookiePolicy() {
                   <h4>Cookies de Publicidad</h4>
                   <p>Permiten mostrar anuncios relevantes</p>
                 </div>
-                <button 
+                <button
                   className={`cookie-policy__toggle ${cookiePreferences.advertising ? 'cookie-policy__toggle--active' : ''}`}
                   onClick={() => handleToggle('advertising')}
                 >
@@ -209,7 +209,7 @@ function CookiePolicy() {
               <h2>Cómo Controlar las Cookies en su Navegador</h2>
             </div>
             <p>
-              La mayoría de los navegadores web permiten cierto control de las cookies a través de la 
+              La mayoría de los navegadores web permiten cierto control de las cookies a través de la
               configuración del navegador:
             </p>
             <ul>
@@ -243,7 +243,7 @@ function CookiePolicy() {
               <li><strong>OpenLibrary API:</strong> Para información de libros</li>
             </ul>
             <p>
-              Estas empresas tienen sus propias políticas de privacidad y cookies, sobre las cuales 
+              Estas empresas tienen sus propias políticas de privacidad y cookies, sobre las cuales
               ReviewVerso no tiene control.
             </p>
           </section>
@@ -254,8 +254,8 @@ function CookiePolicy() {
               <h2>Actualización de la Política</h2>
             </div>
             <p>
-              Podemos actualizar esta Política de Cookies ocasionalmente para reflejar cambios en las 
-              cookies que utilizamos o por razones operativas, legales o regulatorias. Le recomendamos 
+              Podemos actualizar esta Política de Cookies ocasionalmente para reflejar cambios en las
+              cookies que utilizamos o por razones operativas, legales o regulatorias. Le recomendamos
               que revise esta página regularmente.
             </p>
           </section>
@@ -269,7 +269,7 @@ function CookiePolicy() {
               Si tiene preguntas sobre nuestra Política de Cookies, puede contactarnos en:
             </p>
             <ul>
-              <li><strong>Email:</strong> privacy@reviewverso.com</li>
+              <li><strong>Email:</strong> info@reviewverso.com</li>
               <li><strong>Teléfono:</strong> +34 900 000 000</li>
             </ul>
           </section>
@@ -277,8 +277,8 @@ function CookiePolicy() {
 
         <div className="cookie-policy__footer">
           <p>
-            Para más información sobre cómo tratamos sus datos personales, consulte nuestra 
-            <a href="/politica-privacidad" className="cookie-policy__link"> Política de Privacidad</a> y 
+            Para más información sobre cómo tratamos sus datos personales, consulte nuestra
+            <a href="/politica-privacidad" className="cookie-policy__link"> Política de Privacidad</a> y
             <a href="/aviso-legal" className="cookie-policy__link"> Aviso Legal</a>.
           </p>
         </div>

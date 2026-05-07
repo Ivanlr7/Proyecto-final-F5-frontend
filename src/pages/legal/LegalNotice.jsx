@@ -27,15 +27,15 @@ function LegalNotice() {
               <h2>1. Información General</h2>
             </div>
             <p>
-              En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad 
-              de la Información y de Comercio Electrónico, se informa a los usuarios de los datos identificativos 
+              En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad
+              de la Información y de Comercio Electrónico, se informa a los usuarios de los datos identificativos
               de ReviewVerso:
             </p>
             <ul>
               <li><strong>Denominación social:</strong> ReviewVerso S.L.</li>
               <li><strong>NIF:</strong> B-12345678</li>
-              <li><strong>Domicilio social:</strong> Calle Ejemplo, 123, 28001 Madrid, España</li>
-              <li><strong>Correo electrónico:</strong> legal@reviewverso.com</li>
+              <li><strong>Domicilio social:</strong> Calle Ejemplo, 123</li>
+              <li><strong>Correo electrónico:</strong> info@reviewverso.com</li>
               <li><strong>Teléfono:</strong> +34 900 000 000</li>
             </ul>
           </section>
@@ -46,11 +46,11 @@ function LegalNotice() {
               <h2>2. Objeto</h2>
             </div>
             <p>
-              ReviewVerso es una plataforma digital que permite a los usuarios crear, compartir y descubrir 
+              ReviewVerso es una plataforma digital que permite a los usuarios crear, compartir y descubrir
               reseñas sobre contenido de entretenimiento, incluyendo películas, series, videojuegos y libros.
             </p>
             <p>
-              El acceso y uso de este sitio web implica la aceptación expresa y sin reservas de todos los 
+              El acceso y uso de este sitio web implica la aceptación expresa y sin reservas de todos los
               términos del presente Aviso Legal.
             </p>
           </section>
@@ -62,7 +62,7 @@ function LegalNotice() {
             </div>
             <h3>3.1 Acceso y Registro</h3>
             <p>
-              El acceso a ReviewVerso es gratuito. Para acceder a ciertas funcionalidades (como escribir reseñas 
+              El acceso a ReviewVerso es gratuito. Para acceder a ciertas funcionalidades (como escribir reseñas
               o crear listas), es necesario registrarse proporcionando información veraz y completa.
             </p>
             <h3>3.2 Responsabilidad del Usuario</h3>
@@ -76,7 +76,7 @@ function LegalNotice() {
             </ul>
             <h3>3.3 Contenido Generado por Usuarios</h3>
             <p>
-              Los usuarios son responsables del contenido que publican. ReviewVerso se reserva el derecho de 
+              Los usuarios son responsables del contenido que publican. ReviewVerso se reserva el derecho de
               eliminar cualquier contenido que considere inapropiado sin previo aviso.
             </p>
           </section>
@@ -87,14 +87,14 @@ function LegalNotice() {
               <h2>4. Propiedad Intelectual</h2>
             </div>
             <p>
-              Todos los contenidos del sitio web, incluyendo pero no limitándose a textos, fotografías, 
-              gráficos, imágenes, iconos, tecnología, software, así como su diseño gráfico y códigos fuente, 
+              Todos los contenidos del sitio web, incluyendo pero no limitándose a textos, fotografías,
+              gráficos, imágenes, iconos, tecnología, software, así como su diseño gráfico y códigos fuente,
               constituyen una obra cuya propiedad pertenece a ReviewVerso.
             </p>
             <p>
-              El contenido generado por los usuarios (reseñas, listas) permanece bajo la propiedad de sus 
-              creadores, pero al publicarlo otorgan a ReviewVerso una licencia mundial, no exclusiva, 
-              transferible y libre de regalías para usar, reproducir y distribuir dicho contenido en el 
+              El contenido generado por los usuarios (reseñas, listas) permanece bajo la propiedad de sus
+              creadores, pero al publicarlo otorgan a ReviewVerso una licencia mundial, no exclusiva,
+              transferible y libre de regalías para usar, reproducir y distribuir dicho contenido en el
               contexto de la plataforma.
             </p>
           </section>
@@ -105,11 +105,11 @@ function LegalNotice() {
               <h2>5. Protección de Datos</h2>
             </div>
             <p>
-              ReviewVerso cumple con el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 
+              ReviewVerso cumple con el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica
               3/2018 de Protección de Datos Personales y garantía de los derechos digitales.
             </p>
             <p>
-              Los datos personales proporcionados por los usuarios serán tratados conforme a nuestra 
+              Los datos personales proporcionados por los usuarios serán tratados conforme a nuestra
               <a href="/politica-privacidad" className="legal__link"> Política de Privacidad</a>.
             </p>
           </section>
@@ -139,8 +139,8 @@ function LegalNotice() {
               <h2>7. Enlaces a Terceros</h2>
             </div>
             <p>
-              ReviewVerso puede contener enlaces a sitios web de terceros (TMDB, IGDB, OpenLibrary). 
-              No nos hacemos responsables del contenido, políticas de privacidad o prácticas de estos 
+              ReviewVerso puede contener enlaces a sitios web de terceros (TMDB, IGDB, OpenLibrary).
+              No nos hacemos responsables del contenido, políticas de privacidad o prácticas de estos
               sitios externos.
             </p>
           </section>
@@ -151,7 +151,7 @@ function LegalNotice() {
               <h2>8. Modificaciones</h2>
             </div>
             <p>
-              ReviewVerso se reserva el derecho de modificar el presente Aviso Legal en cualquier momento. 
+              ReviewVerso se reserva el derecho de modificar el presente Aviso Legal en cualquier momento.
               Los cambios entrarán en vigor desde su publicación en el sitio web.
             </p>
           </section>
@@ -162,8 +162,8 @@ function LegalNotice() {
               <h2>9. Legislación Aplicable y Jurisdicción</h2>
             </div>
             <p>
-              El presente Aviso Legal se rige por la legislación española. Para la resolución de cualquier 
-              controversia, las partes se someten a los Juzgados y Tribunales de Madrid, renunciando 
+              El presente Aviso Legal se rige por la legislación española. Para la resolución de cualquier
+              controversia, las partes se someten a los Juzgados y Tribunales de Madrid, renunciando
               expresamente a cualquier otro fuero que pudiera corresponderles.
             </p>
           </section>
@@ -177,20 +177,18 @@ function LegalNotice() {
               Para cualquier consulta relacionada con este Aviso Legal, puede contactarnos en:
             </p>
             <ul>
-              <li><strong>Email:</strong> legal@reviewverso.com</li>
-              <li><strong>Dirección:</strong> Calle Ejemplo, 123, 28001 Madrid, España</li>
+              <li><strong>Email:</strong> info@reviewverso.com</li>
+              <li><strong>Dirección:</strong> Calle Ejemplo, 123</li>
               <li><strong>Teléfono:</strong> +34 900 000 000</li>
             </ul>
           </section>
-        </div>
-
-        <div className="legal__footer">
           <p>
-            Al utilizar ReviewVerso, usted acepta los términos establecidos en este Aviso Legal y en nuestra 
-            <a href="/politica-privacidad" className="legal__link"> Política de Privacidad</a> y 
+            Al utilizar ReviewVerso, usted acepta los términos establecidos en este Aviso Legal y en nuestra
             <a href="/politica-cookies" className="legal__link"> Política de Cookies</a>.
           </p>
         </div>
+
+
       </div>
     </div>
   );

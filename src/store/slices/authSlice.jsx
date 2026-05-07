@@ -10,7 +10,7 @@ const initialState = {
   loading: false,
   error: null,
   role: null,
-  isInitialized: false, 
+  isInitialized: false,
 }
 function parseJwt(token) {
   if (!token) return null;
@@ -37,7 +37,7 @@ export const loginThunk = createAsyncThunk(
   async (loginData, { rejectWithValue }) => {
     try {
       const result = await authService.login(loginData);
-      // Decodificar el token y extraer el rol (scope)
+      // Decodifica el token y extrae el rol (scope)
       const payload = parseJwt(result.token);
       let role = null;
       if (payload && payload.scope) {
@@ -63,7 +63,7 @@ export const logoutThunk = createAsyncThunk(
       const result = await authService.logout()
       return result
     } catch (error) {
- 
+
       return rejectWithValue(error.message)
     }
   }
@@ -74,11 +74,10 @@ export const checkAuthThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const isAuthenticated = authService.isAuthenticated()
-      
+
       if (isAuthenticated) {
         const user = authService.getUser();
         const token = authService.getToken();
-        // Decodificar el token y extraer el rol (scope)
         const payload = parseJwt(token);
         let role = null;
         if (payload && payload.scope) {
@@ -128,7 +127,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
- 
+
     clearError: (state) => {
       state.error = null
     },
@@ -165,7 +164,7 @@ const authSlice = createSlice({
         state.token = null
         state.error = action.payload
       })
-      
+
     // Logout
     builder
       .addCase(logoutThunk.pending, (state) => {
@@ -179,14 +178,14 @@ const authSlice = createSlice({
         state.error = null
       })
       .addCase(logoutThunk.rejected, (state, action) => {
-    
+
         state.loading = false
         state.isAuthenticated = false
         state.user = null
         state.token = null
         state.error = action.payload
       })
-      
+
 
     builder
       .addCase(checkAuthThunk.pending, (state) => {
@@ -209,7 +208,7 @@ const authSlice = createSlice({
         state.isInitialized = true
         state.error = action.payload
       })
-      
+
     builder
       .addCase(updateUserThunk.fulfilled, (state, action) => {
         state.user = action.payload;
