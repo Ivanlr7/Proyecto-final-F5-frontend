@@ -291,18 +291,6 @@ export default function UserPage({ onNavigateToHome }) {
                   )}
                 </div>
 
-                {/* Error/Success Message During Editing */}
-                {message.text && isEditing && (
-                  <div className={`user-profile__message user-profile__message--${message.type}`}>
-                    {message.type === 'success' ? (
-                      <Check className="user-profile__message-icon" />
-                    ) : (
-                      <X className="user-profile__message-icon" />
-                    )}
-                    {message.text}
-                  </div>
-                )}
-
                 {/* Action Buttons */}
                 <div className="user-profile__actions">
                   {isEditing ? (
