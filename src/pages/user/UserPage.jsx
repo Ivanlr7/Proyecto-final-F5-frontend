@@ -131,6 +131,7 @@ export default function UserPage({ onNavigateToHome }) {
     setIsEditing(true);
     setEditedData({ ...profileData });
     setImagePreview(null);
+    setMessage({ type: '', text: '' });
   };
 
   const handleSave = async () => {
@@ -148,7 +149,7 @@ export default function UserPage({ onNavigateToHome }) {
       setProfileData({ ...editedData });
       setIsEditing(false);
       setImagePreview(null);
-      setMessage({ type: 'success', text: '¡Perfil actualizado exitosamente!' });
+      setMessage({ type: 'success', text: '¡Perfil actualizado con éxito!' });
       console.log("✅ Perfil actualizado:", editedData);
     } catch (error) {
       console.error('Error actualizando perfil:', error);
@@ -162,6 +163,7 @@ export default function UserPage({ onNavigateToHome }) {
     setIsEditing(false);
     setEditedData({ ...profileData });
     setImagePreview(null);
+    setMessage({ type: '', text: '' });
   };
 
   return (
@@ -219,18 +221,6 @@ export default function UserPage({ onNavigateToHome }) {
           {/* Profile Content */}
           {isAuthenticated && !loading && (
             <div className="user-profile__content">
-              {/* Message Alert */}
-              {message.text && (
-                <div className={`user-profile__message user-profile__message--${message.type}`}>
-                  {message.type === 'success' ? (
-                    <Check className="user-profile__message-icon" />
-                  ) : (
-                    <X className="user-profile__message-icon" />
-                  )}
-                  {message.text}
-                </div>
-              )}
-
               {/* Profile Image */}
               <div className="user-profile__image-section">
                 <div className="user-profile__avatar-round-wrapper">
@@ -294,6 +284,18 @@ export default function UserPage({ onNavigateToHome }) {
                     <div className="user-profile__value">{profileData.email}</div>
                   )}
                 </div>
+
+                {/* Error/Success Message During Editing */}
+                {message.text && isEditing && (
+                  <div className={`user-profile__message user-profile__message--${message.type}`}>
+                    {message.type === 'success' ? (
+                      <Check className="user-profile__message-icon" />
+                    ) : (
+                      <X className="user-profile__message-icon" />
+                    )}
+                    {message.text}
+                  </div>
+                )}
 
                 {/* Action Buttons */}
                 <div className="user-profile__actions">
