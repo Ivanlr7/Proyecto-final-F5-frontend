@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../store/slices/authSlice";
-import { ArrowLeft, User, Mail, Edit2, Save, X } from "lucide-react";
+import { ArrowLeft, User, Mail, Edit2, Save, X, Check } from "lucide-react";
 import Avatar from "../../components/common/Avatar";
 import userService from "../../api/services/UserService";
 import { updateUserThunk } from "../../store/slices/authSlice";
@@ -13,7 +13,7 @@ export default function UserPage({ onNavigateToHome }) {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [message, setMessage] = useState({ type: '', text: '' });
   const [profileData, setProfileData] = useState({
     profileImage: null,
     userName: "",
@@ -46,13 +46,13 @@ export default function UserPage({ onNavigateToHome }) {
       async () => {
         try {
           setDeleteLoading(true);
-          setError(null);
+          setMessage({ type: '', text: '' });
           await userService.deleteUser(profileData.idUser, token);
           // Cerrar sesión y redirigir
           await dispatch(logoutThunk());
           if (onNavigateToHome) onNavigateToHome();
         } catch (error) {
-          setError(error.message || "Error al eliminar la cuenta");
+          setMessage({ type: 'error', text: error.message || "Error al eliminar la cuenta" });
           showModalMessage('error', 'Error', error.message || "Error al eliminar la cuenta");
         } finally {
           setDeleteLoading(false);
@@ -60,12 +60,11 @@ export default function UserPage({ onNavigateToHome }) {
       }
     );
   };
-  // Cargar datos del usuario al montar el componente
   useEffect(() => {
     const loadUserProfile = async () => {
       try {
         setLoading(true);
-        setError(null);
+        setMessage({ type: '', text: '' });
         
         const result = await userService.getCurrentUser(token);
         
@@ -87,7 +86,7 @@ export default function UserPage({ onNavigateToHome }) {
         }
       } catch (error) {
         console.error('Error cargando perfil:', error);
-        setError(error.message);
+        setMessage({ type: 'error', text: error.message });
         // Usar datos del authUser como fallback
         if (authUser) {
           const fallbackData = {
@@ -137,7 +136,7 @@ export default function UserPage({ onNavigateToHome }) {
   const handleSave = async () => {
     try {
       setLoading(true);
-      setError(null);
+      setMessage({ type: '', text: '' });
       
       // Usar updateUserThunk para actualizar el usuario
       await dispatch(updateUserThunk({
@@ -149,10 +148,11 @@ export default function UserPage({ onNavigateToHome }) {
       setProfileData({ ...editedData });
       setIsEditing(false);
       setImagePreview(null);
+      setMessage({ type: 'success', text: '¡Perfil actualizado exitosamente!' });
       console.log("✅ Perfil actualizado:", editedData);
     } catch (error) {
       console.error('Error actualizando perfil:', error);
-      setError(error.message);
+      setMessage({ type: 'error', text: error.message });
     } finally {
       setLoading(false);
     }
@@ -198,9 +198,14 @@ export default function UserPage({ onNavigateToHome }) {
           )}
 
           {/* Error State */}
-          {error && (
-            <div className="user-profile__error">
-              <p>❌ {error}</p>
+          {message.text && (
+            <div className={`user-profile__message user-profile__message--${message.type}`}>
+              {message.type === 'success' ? (
+                <Check className="user-profile__message-icon" />
+              ) : (
+                <X className="user-profile__message-icon" />
+              )}
+              {message.text}
             </div>
           )}
 
@@ -214,7 +219,19 @@ export default function UserPage({ onNavigateToHome }) {
           {/* Profile Content */}
           {isAuthenticated && !loading && (
             <div className="user-profile__content">
-              {/* Profile Image (visualización siempre con Avatar, edición con overlay clásico) */}
+              {/* Message Alert */}
+              {message.text && (
+                <div className={`user-profile__message user-profile__message--${message.type}`}>
+                  {message.type === 'success' ? (
+                    <Check className="user-profile__message-icon" />
+                  ) : (
+                    <X className="user-profile__message-icon" />
+                  )}
+                  {message.text}
+                </div>
+              )}
+
+              {/* Profile Image */}
               <div className="user-profile__image-section">
                 <div className="user-profile__avatar-round-wrapper">
                   <Avatar

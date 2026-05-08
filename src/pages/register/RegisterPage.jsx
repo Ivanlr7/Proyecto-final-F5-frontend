@@ -66,7 +66,7 @@ export default function RegisterPage({ onNavigateToHome, onNavigateToLogin }) {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
-      newErrors.email = "El email es requerido";
+      newErrors.email = "El email es obligatorio";
     } else if (!emailRegex.test(formData.email)) {
       newErrors.email = "El email no es válido";
     }

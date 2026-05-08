@@ -626,3 +626,34 @@ width: 20%;
     font-size: 1rem;
   }
 }
+
+/* Estilos para mensajes de éxito/error */
+.user-profile__message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  border: 1px solid transparent;
+}
+
+.user-profile__message--success {
+  background-color: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+}
+
+.user-profile__message--error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.user-profile__message-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
