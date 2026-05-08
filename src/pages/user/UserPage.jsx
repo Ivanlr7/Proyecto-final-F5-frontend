@@ -139,21 +139,27 @@ export default function UserPage({ onNavigateToHome }) {
       setLoading(true);
       setMessage({ type: '', text: '' });
       
-      // Usar updateUserThunk para actualizar el usuario
-      await dispatch(updateUserThunk({
-        id: profileData.idUser,
-        userData: editedData,
-        token
-      })).unwrap();
+      // Llamar directamente al servicio para obtener el error correctamente del backend
+      const result = await userService.updateUser(profileData.idUser, editedData, token);
       
-      setProfileData({ ...editedData });
-      setIsEditing(false);
-      setImagePreview(null);
-      setMessage({ type: 'success', text: '¡Perfil actualizado con éxito!' });
-      console.log("✅ Perfil actualizado:", editedData);
+      if (result.success && result.data) {
+        setProfileData({ ...result.data });
+        setIsEditing(false);
+        setImagePreview(null);
+        setMessage({ type: 'success', text: '¡Perfil actualizado con éxito!' });
+        
+        // Actualizar también en Redux
+        await dispatch(updateUserThunk({
+          id: profileData.idUser,
+          userData: editedData,
+          token
+        }));
+        
+        console.log("✅ Perfil actualizado:", result.data);
+      }
     } catch (error) {
       console.error('Error actualizando perfil:', error);
-      setMessage({ type: 'error', text: error.message });
+      setMessage({ type: 'error', text: error.message || 'Error al actualizar perfil' });
     } finally {
       setLoading(false);
     }
